@@ -1,1 +1,1 @@
-export { default } from './AnimatedStat'
+export { default } from "./AnimatedStat";

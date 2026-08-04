@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import Button from '../components/Button'
 import useScrollReveal from '../hooks/useScrollReveal'
 
@@ -12,7 +11,7 @@ function PhpPage() {
           <p className="eyebrow hero-eyebrow"><span className="status-dot" /> PHP backend in development</p>
           <h1>Practical backend delivery, shaped for our product.</h1>
           <p>We use modern PHP to build focused web capabilities quickly without compromising structure. Typed code, clear application boundaries, secure data access, and automated tests support a reliable first release.</p>
-          <div className="hero-actions"><Button href="/#about">About our company</Button><a className="text-link" href="#php-pipeline">Follow the request flow <ArrowRight size={17} /></a></div>
+          <div className="hero-actions"><Button className="about-company-button" href="/about">About our company</Button></div>
           <div className="php-tags"><span>PHP 8+</span><span>Laravel</span><span>REST APIs</span><span>SQL</span></div>
         </div>
         <div className="php-request-card" data-reveal aria-label="PHP web request pipeline visualization">

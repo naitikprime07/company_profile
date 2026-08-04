@@ -1,7 +1,9 @@
 import { ArrowRight, Compass, Gauge, Layers3, ShieldCheck, Sparkles, UsersRound } from 'lucide-react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import Button from '../components/Button'
 import useScrollReveal from '../hooks/useScrollReveal'
 import styles from './AboutPage.module.css'
+import { ENVIRONMENT } from '../constants/environment'
 import { mailTo } from '../constants/environment'
 
 const PRINCIPLES = [
@@ -41,6 +43,12 @@ function AboutPage() {
       </section>
 
       <section className={styles.manifesto} data-reveal><div className="container"><span className={styles.manifestoIndex}>01 / BELIEF</span><p>We do not measure our contribution by the amount of software produced. We measure it by the <em>clarity created</em>, the <em>friction removed</em>, and the <em>progress unlocked</em>.</p></div></section>
+
+      <section className={styles.motionRibbon} aria-label="From ideas to measurable impact" data-reveal>
+        <div className={styles.ribbonMotion} aria-hidden="true"><DotLottieReact className={styles.ribbonLottie} src={ENVIRONMENT.animations.about} loop autoplay /></div>
+        <div className={styles.ribbonWords} aria-hidden="true"><span><small>01</small>IDEAS</span><i>→</i><span><small>02</small>SYSTEMS</span><i>→</i><span><small>03</small>IMPACT</span></div>
+        <div className={styles.ribbonCaption}><span>Prime Softech / transformation in motion</span><b>KEEP SCROLLING ↓</b></div>
+      </section>
 
       <section className={`${styles.story} container`} id="our-story" data-reveal>
         <header className={styles.sectionHeading}><div><p className="eyebrow">Our journey</p><h2>Built deliberately,<br />one chapter at a time.</h2></div><p>Our capabilities have grown, but our way of working remains personal: understand deeply, make intentional choices, and take responsibility for the result.</p></header>

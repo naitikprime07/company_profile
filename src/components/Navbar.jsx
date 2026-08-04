@@ -1,7 +1,6 @@
 import { ChevronDown, Cloud, Code2, Database, Gamepad2, Menu, Monitor, ServerCog, ShoppingCart, Smartphone, UsersRound, X } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ENVIRONMENT, mailTo } from '../constants/environment'
 
 const serviceGroups = [
   { icon: Smartphone, title: 'Mobile apps', items: ['Native iOS apps', 'Native Android apps', 'Cross-platform apps', 'Agentic AI', 'AI & automation', 'Custom software', 'MVP development', 'SaaS products'] },
@@ -23,9 +22,9 @@ const technologyGroups = [
 
 const links = [
   { label: 'About Us', to: '/about' },
-  { label: 'Client', href: '/#clients' },
   { label: 'Portfolio', href: '/#portfolio' },
-  { label: 'Career', href: mailTo(ENVIRONMENT.careersEmail) },
+  { label: 'Career', to: '/career' },
+  { label: 'Contact Us', to: '/contact' },
 ]
 
 function Navbar() {
@@ -139,7 +138,6 @@ function Navbar() {
               ? <NavLink key={link.label} to={link.to} onClick={closeMenu}>{link.label}</NavLink>
               : <a key={link.label} href={link.href} onClick={closeMenu}>{link.label}</a>
           ))}
-          <a href="/#contact" className="nav-mobile-link" onClick={closeMenu}>Contact</a>
         </div>
 
         <button className="nav-toggle" type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}>

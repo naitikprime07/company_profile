@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import Button from '../components/Button'
 import useScrollReveal from '../hooks/useScrollReveal'
 
@@ -12,7 +11,7 @@ function JavaPage() {
           <p className="eyebrow hero-eyebrow"><span className="status-dot" /> Java backend in development</p>
           <h1>Dependable systems built for long-term growth.</h1>
           <p>We use Java where our product needs strong domain modelling, predictable performance, secure integrations, and a backend foundation designed to remain stable as complexity grows.</p>
-          <div className="hero-actions"><Button href="/#about">About our company</Button><a className="text-link" href="#java-foundation">View the JVM foundation <ArrowRight size={17} /></a></div>
+          <div className="hero-actions"><Button className="about-company-button" href="/about">About our company</Button></div>
           <div className="java-tags"><span>Java</span><span>Spring Boot</span><span>JVM</span><span>Type safe</span></div>
         </div>
         <div className="java-machine" data-reveal aria-label="Java virtual machine architecture visualization">
@@ -37,4 +36,3 @@ function JavaPage() {
 }
 
 export default JavaPage
-

@@ -7,6 +7,8 @@ import './App.css'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const CareerPage = lazy(() => import('./pages/CareerPage'))
 const IosPage = lazy(() => import('./pages/IosPage'))
 const AndroidPage = lazy(() => import('./pages/AndroidPage'))
 const FlutterPage = lazy(() => import('./pages/FlutterPage'))
@@ -26,6 +28,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/career" element={<CareerPage />} />
           <Route path="/technology/ios" element={<IosPage />} />
           <Route path="/technology/android" element={<AndroidPage />} />
           <Route path="/technology/flutter" element={<FlutterPage />} />

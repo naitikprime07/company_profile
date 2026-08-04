@@ -16,8 +16,7 @@ function IosPage() {
           <h1>Building our product for the Apple ecosystem.</h1>
           <p>Our in-house team is developing an iOS product from the ground up. Product direction, interface design, Swift engineering, and quality assurance come together as we prepare a focused first release.</p>
           <div className="hero-actions">
-            <Button href="/#about">About our company</Button>
-            <a className="text-link" href="#ios-foundation">Our development approach <ArrowRight size={17} /></a>
+            <Button className="about-company-button" href="/about">About our company</Button>
           </div>
           <div className="ios-proof" aria-label="iOS development capabilities">
             <span><Check size={14} /> Swift &amp; SwiftUI</span>

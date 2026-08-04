@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import Button from '../components/Button'
 import SectionHeading from '../components/SectionHeading'
@@ -15,7 +14,7 @@ function AndroidPage() {
           <p className="eyebrow hero-eyebrow"><span className="status-dot" /> Android product in development</p>
           <h1>Building our product for the Android ecosystem.</h1>
           <p>Our in-house team is developing an Android product from the ground up. We are combining focused product thinking, native engineering, and careful testing to create a strong foundation before launch.</p>
-          <div className="hero-actions"><Button href="/#about">About our company</Button><a className="text-link" href="#android-foundation">Our development approach <ArrowRight size={17} /></a></div>
+          <div className="hero-actions"><Button className="about-company-button" href="/about">About our company</Button></div>
           <div className="android-proof"><span>Kotlin</span><span>Jetpack Compose</span><span>Launch focused</span></div>
         </div>
         <div className="android-animation" data-reveal>

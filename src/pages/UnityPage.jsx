@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import Button from '../components/Button'
 import useScrollReveal from '../hooks/useScrollReveal'
@@ -19,7 +18,7 @@ function UnityPage() {
           <p className="eyebrow hero-eyebrow"><span className="status-dot" /> Unity game in development</p>
           <h1>Building an engaging game with Unity.</h1>
           <p>Our in-house team is using Unity to shape a responsive, polished game from the ground up. We are currently focused on gameplay systems, visual direction, performance, testing, and a dependable foundation for the first launch.</p>
-          <div className="hero-actions"><Button href="/#about">About our company</Button><a className="text-link" href="#unity-foundation">Our development approach <ArrowRight size={17} /></a></div>
+          <div className="hero-actions"><Button className="about-company-button" href="/about">About our company</Button></div>
           <div className="unity-tech-row"><span>Unity Engine</span><span>C# systems</span><span>Cross-platform</span></div>
         </div>
         <div className="unity-visual" data-reveal>

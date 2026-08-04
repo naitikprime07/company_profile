@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import Button from '../components/Button'
 import useScrollReveal from '../hooks/useScrollReveal'
@@ -45,7 +44,7 @@ function FrontendPage({ type }) {
         <div className="frontend-copy" data-reveal>
           <p className="eyebrow hero-eyebrow"><span className="status-dot" /> {page.eyebrow}</p>
           <h1>{page.title}</h1><p>{page.copy}</p>
-          <div className="hero-actions"><Button href="/#about">About our company</Button><a className="text-link" href="#frontend-foundation">Explore our approach <ArrowRight size={17} /></a></div>
+          <div className="hero-actions"><Button className="about-company-button" href="/about">About our company</Button></div>
           <div className="frontend-tags">{page.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
         </div>
         <div className={`frontend-visual frontend-visual-${type}`} data-reveal aria-label={`${page.label} product architecture illustration`}>

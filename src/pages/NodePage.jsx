@@ -1,4 +1,4 @@
-import { Activity, ArrowRight, Blocks, Globe2, ShieldCheck } from 'lucide-react'
+import { Activity, Blocks, Globe2, ShieldCheck } from 'lucide-react'
 import Button from '../components/Button'
 import useScrollReveal from '../hooks/useScrollReveal'
 
@@ -12,7 +12,7 @@ function NodePage() {
           <p className="eyebrow hero-eyebrow"><span className="status-dot" /> Node.js backend in development</p>
           <h1>The real-time engine behind our product.</h1>
           <p>We are building our product backend with Node.js to support fast APIs, asynchronous workloads, secure data flows, and an architecture that can grow cleanly from the first release.</p>
-          <div className="hero-actions"><Button href="/#about">About our company</Button><a className="text-link" href="#node-architecture">Explore the architecture <ArrowRight size={17} /></a></div>
+          <div className="hero-actions"><Button className="about-company-button" href="/about">About our company</Button></div>
           <div className="node-stack"><span>Node.js</span><span>REST APIs</span><span>Event driven</span><span>Type safe</span></div>
         </div>
 

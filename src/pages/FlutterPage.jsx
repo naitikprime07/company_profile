@@ -15,7 +15,7 @@ function FlutterPage() {
           <p className="eyebrow hero-eyebrow"><span className="status-dot" /> Flutter product development</p>
           <h1>Building one consistent product experience across platforms.</h1>
           <p>Our in-house team uses Flutter to develop shared product experiences for iOS and Android from a single, maintainable codebase. We are currently focused on architecture, interface quality, testing, and first-launch readiness.</p>
-          <div className="hero-actions"><Button href="/#about">About our company</Button><a className="text-link" href="#flutter-foundation">Our development approach <ArrowRight size={17} /></a></div>
+          <div className="hero-actions"><Button className="about-company-button" href="/about">About our company</Button></div>
           <div className="android-proof"><span>Flutter</span><span>Dart</span><span>Cross-platform</span></div>
         </div>
         <div className="android-animation" data-reveal>

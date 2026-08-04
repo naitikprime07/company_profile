@@ -13,6 +13,8 @@ npm.cmd run dev
 
 Only variables beginning with `VITE_` are available to browser code. Never place passwords, private API keys, database credentials, or other secrets in these variables.
 
+Set `VITE_DEV_PORT` in `.env` to change the local development and preview server port.
+
 The terminal will show a local address, usually `http://localhost:5173`. Open that address in your browser. Leave the terminal running while you work.
 
 ## The files you will edit most

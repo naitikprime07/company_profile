@@ -69,7 +69,7 @@ function IosPage() {
           <SectionHeading
             eyebrow="Our iOS foundation"
             title="Every layer of the first release, thoughtfully connected."
-            copy="Our in-house team combines product direction, Apple-native design, Swift engineering, and quality assurance to build a dependable product before launch."
+            copy="Our in-house team combines product direction, Apple native design, Swift engineering, and quality assurance to build a dependable product before launch."
             align="center"
           />
           <div className="ios-capability-grid">
@@ -80,7 +80,7 @@ function IosPage() {
               <small>01</small>
               <h3>Product direction</h3>
               <p>
-                Problem research, clear priorities, and early validation shape
+                Problem research, clear priorities and early validation shape
                 the roadmap for the product we are building.
               </p>
             </article>
@@ -113,7 +113,7 @@ function IosPage() {
               <small>04</small>
               <h3>Launch preparation</h3>
               <p>
-                Quality assurance, privacy reviews, performance checks, and App
+                Quality assurance, privacy reviews, performance checks and App
                 Store planning support a confident first release.
               </p>
             </article>
@@ -124,7 +124,7 @@ function IosPage() {
       <section className="ios-process container" data-reveal>
         <div className="ios-process-copy">
           <p className="eyebrow">Our development path</p>
-          <h2>From a validated idea to a launch-ready product.</h2>
+          <h2>From a validated idea to a launch ready product.</h2>
           <p>
             Our product, design, and engineering teams work together through
             short development cycles, keeping the first release focused and
@@ -178,13 +178,6 @@ function IosPage() {
         </ol>
       </section>
 
-      <section className="ios-cta container" data-reveal>
-        <div>
-          <p className="eyebrow">Currently in development</p>
-          <h2>We are building carefully toward our first launch.</h2>
-        </div>
-        <Button href="/#about">About us</Button>
-      </section>
     </main>
   );
 }

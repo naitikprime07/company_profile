@@ -66,7 +66,7 @@ const frontendPages = {
     label: "TypeScript",
     eyebrow: "TypeScript foundation in development",
     title: "Product decisions expressed in dependable types.",
-    copy: "TypeScript gives our product a shared language across interfaces, data, and business rulesâ€”catching uncertainty early and making change safer.",
+    copy: "TypeScript gives our product a shared language across interfaces, data, and business rules catching uncertainty early and making change safer.",
     tags: ["TypeScript", "Strict mode", "Typed APIs", "Shared contracts"],
     section: "Confidence in every contract",
     sectionTitle: "Types that explain how the product works.",
@@ -95,7 +95,7 @@ const frontendPages = {
     label: "HTML5",
     eyebrow: "HTML5 experience in development",
     title: "A fast, accessible foundation for every screen.",
-    copy: "We begin with semantic HTML5 so our product remains understandable, keyboard-friendly, search-ready, and resilient before visual enhancement is added.",
+    copy: "We begin with semantic HTML5 so our product remains understandable, keyboard friendly, search ready, and resilient before visual enhancement is added.",
     tags: [
       "Semantic HTML",
       "Accessibility",
@@ -113,7 +113,7 @@ const frontendPages = {
       ],
       [
         "Accessible by default",
-        "Keyboard behaviour, labels, focus order, and screen-reader meaning begin in markup.",
+        "Keyboard behaviour, labels, focus order, and screen reader meaning begin in markup.",
       ],
       [
         "Responsive media",

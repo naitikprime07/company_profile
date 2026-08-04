@@ -8,7 +8,7 @@ const databasePages = {
     accent: "#45a7e8",
     eyebrow: "Relational data, engineered clearly",
     title: "Reliable data foundations for products that keep growing.",
-    copy: "We design MySQL systems around clean relationships, predictable performance, and operational simplicityâ€”from the first schema to high-volume production workloads.",
+    copy: "We design MySQL systems around clean relationships, predictable performance, and operational simplicity from the first schema to high volume production workloads.",
     tags: [
       "Relational modeling",
       "Transactions",
@@ -41,13 +41,13 @@ const databasePages = {
     accent: "#8c79ff",
     eyebrow: "Serverless data at any scale",
     title: "Instant performance without infrastructure drag.",
-    copy: "We shape DynamoDB around real access patterns, delivering low-latency serverless storage that scales naturally with event-driven products and global demand.",
+    copy: "We shape DynamoDB around real access patterns, delivering low latency serverless storage that scales naturally with event driven products and global demand.",
     tags: ["Single-table design", "Global tables", "Streams", "Autoscaling"],
     metric: "<10ms",
     metricLabel: "target latency",
     cards: [
       [
-        "Access-first modeling",
+        "Access first modeling",
         "Keys and indexes are designed from product queries, not relational habits.",
       ],
       [
@@ -60,7 +60,7 @@ const databasePages = {
       ],
       [
         "Global delivery",
-        "Multi-region tables place resilient data close to users.",
+        "Multi region tables place resilient data close to users.",
       ],
     ],
   },
@@ -69,7 +69,7 @@ const databasePages = {
     accent: "#68a9e8",
     eyebrow: "Advanced open-source data systems",
     title: "Deep data capability with room to evolve.",
-    copy: "We use PostgreSQL for products that need trustworthy transactions, powerful querying, rich data types, and an extensible foundation for long-term growth.",
+    copy: "We use PostgreSQL for products that need trustworthy transactions, powerful querying, rich data types, and an extensible foundation for long term growth.",
     tags: ["Advanced SQL", "JSONB", "PostGIS", "Extensions"],
     metric: "ACID",
     metricLabel: "transaction integrity",
@@ -84,7 +84,7 @@ const databasePages = {
       ],
       [
         "Geospatial systems",
-        "PostGIS supports precise, scalable location-aware experiences.",
+        "PostGIS supports precise, scalable location aware experiences.",
       ],
       [
         "Observability",
@@ -96,7 +96,7 @@ const databasePages = {
     label: "Oracle",
     accent: "#f05252",
     eyebrow: "Enterprise data without compromise",
-    title: "Mission-critical systems built for continuity.",
+    title: "Mission critical systems built for continuity.",
     copy: "We engineer Oracle platforms for complex enterprise workloads where governance, availability, performance, and controlled modernization are non-negotiable.",
     tags: ["PL/SQL", "RAC", "Data Guard", "Performance"],
     metric: "24/7",
@@ -311,7 +311,7 @@ function DatabasePage({ type }) {
             <h2>{page.label} expertise across the complete data lifecycle.</h2>
             <p>
               Architecture, delivery, security, and operations are treated as
-              one systemâ€”so data remains useful, dependable, and ready for
+              one system so data remains useful, dependable, and ready for
               what comes next.
             </p>
           </div>

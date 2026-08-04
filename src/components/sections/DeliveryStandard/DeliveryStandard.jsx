@@ -52,7 +52,7 @@ const assurances = [
   {
     icon: CodeXml,
     title: "Built to remain yours",
-    text: "Clean documentation and transferable systems—without hidden platform dependency.",
+    text: "Clean documentation and transferable systems without hidden platform dependency.",
   },
 ];
 

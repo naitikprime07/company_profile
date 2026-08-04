@@ -32,7 +32,7 @@ const CAREER_PATHS = [
     ],
     highlights: [
       "Own meaningful outcomes",
-      "Work directly with decision-makers",
+      "Work directly with decision makers",
       "Shape systems, not just tickets",
     ],
     action: "Explore opportunities",
@@ -98,7 +98,7 @@ function CareerPage() {
           </h1>
           <p>
             Prime Softech is a place for curious people who care about quality,
-            take ownership, and want to understand the complete problem—not only
+            take ownership, and want to understand the complete problem not only
             their assigned part.
           </p>
           <a href="#career-paths">
@@ -273,7 +273,7 @@ function CareerPage() {
             <h3>Curiosity is useful</h3>
             <p>
               Ask better questions, explore alternatives, and improve the
-              thinking—not only the output.
+              thinking not only the output.
             </p>
           </article>
           <article>

@@ -208,7 +208,7 @@ function ContactPage() {
               <h3>We make it clear</h3>
               <p>
                 You receive an honest recommendation with practical next
-                steps—even if we are not the right fit.
+                steps even if we are not the right fit.
               </p>
             </article>
           </div>

@@ -50,7 +50,7 @@ const JOURNEY = [
   {
     year: "2018",
     title: "From builds to products",
-    copy: "Our practice expanded across product strategy, experience design, mobile, web, and long-term platform ownership.",
+    copy: "Our practice expanded across product strategy, experience design, mobile, web, and long term platform ownership.",
   },
   {
     year: "2022",
@@ -78,7 +78,7 @@ function AboutPage() {
           <p>
             We are a product and technology studio for organizations with
             important problems to solve. Strategy, design, engineering, and
-            growth work as one team—turning complexity into digital products
+            growth work as one team turning complexity into digital products
             people understand and businesses can depend on.
           </p>
           <div className="hero-actions">
@@ -267,7 +267,7 @@ function AboutPage() {
           </h2>
           <p>
             Each engagement brings together the exact disciplines the problem
-            requires. You work directly with decision-makers, see progress
+            requires. You work directly with decision makers, see progress
             continuously, and always understand what is being built, why it
             matters, and what comes next.
           </p>
@@ -283,7 +283,7 @@ function AboutPage() {
               <UsersRound size={18} />
               <span>
                 <strong>Collaboration without layers</strong>Direct access
-                replaces account-management overhead.
+                replaces account management overhead.
               </span>
             </li>
             <li>

@@ -20,7 +20,7 @@ function FlutterPage() {
             Our in-house team uses Flutter to develop shared product experiences
             for iOS and Android from a single, maintainable codebase. We are
             currently focused on architecture, interface quality, testing, and
-            first-launch readiness.
+            first launch readiness.
           </p>
           <div className="hero-actions">
             <Button className="about-company-button" href="/about">
@@ -72,7 +72,7 @@ function FlutterPage() {
               <span>03</span>
               <h3>Launch preparation</h3>
               <p>
-                Automated tests, device checks, performance profiling, and store
+                Automated tests, device checks, performance profiling and store
                 preparation support a reliable first release.
               </p>
             </article>
@@ -130,7 +130,7 @@ function FlutterPage() {
               <h3>Test and refine</h3>
               <p>
                 Verify behaviour on real devices, profile performance, resolve
-                issues, and complete launch-readiness checks.
+                issues, and complete launch readiness checks.
               </p>
             </div>
           </li>

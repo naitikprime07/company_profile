@@ -164,7 +164,7 @@ function NodePage() {
             <span>03</span>
             <h3>Verify</h3>
             <p>
-              Run unit, integration, contract, load, and security-focused tests.
+              Run unit, integration, contract, load, and security focused tests.
             </p>
           </li>
           <li>

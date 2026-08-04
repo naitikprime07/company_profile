@@ -20,7 +20,7 @@ const groups = [
     title: "Mobile apps",
     statement: "Useful mobile products built for real-world performance.",
     description:
-      "From early validation to store-ready delivery, we design and engineer mobile experiences that feel fast, dependable, and native to their platform.",
+      "From early validation to store ready delivery, we design and engineer mobile experiences that feel fast, dependable, and native to their platform.",
     services: [
       "Native iOS apps",
       "Native Android apps",
@@ -40,7 +40,7 @@ const groups = [
     title: "Web development",
     statement: "Web platforms engineered to become business infrastructure.",
     description:
-      "We create responsive, accessible, and maintainable web products—from focused customer experiences to complex operational systems.",
+      "We create responsive, accessible, and maintainable web products from focused customer experiences to complex operational systems.",
     services: [
       "Enterprise solutions",
       "Ecommerce",
@@ -54,7 +54,7 @@ const groups = [
     number: "03",
     icon: Monitor,
     title: "Product design",
-    statement: "Clarity before polish—and polish with a purpose.",
+    statement: "Clarity before polish and polish with a purpose.",
     description:
       "Research, product thinking, and interface craft come together to remove friction and make complex ideas easy to understand and use.",
     services: [

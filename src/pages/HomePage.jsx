@@ -1,8 +1,8 @@
-import { ArrowRight } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Button from "../components/Button";
 import AnimatedStat from "../components/common/AnimatedStat";
 import ProfessionalServices from "../components/sections/ProfessionalServices";
+import DeliveryStandard from "../components/sections/DeliveryStandard";
+import WhyChooseUs from "../components/sections/WhyChooseUs";
 import useScrollReveal from "../hooks/useScrollReveal";
 import { ENVIRONMENT } from "../constants/environment";
 
@@ -12,6 +12,14 @@ function HomePage() {
   return (
     <main id="top">
       <section className="hero container">
+        <div className="hero-prime-field" aria-hidden="true">
+          <span className="hero-prime-arc arc-one" />
+          <span className="hero-prime-arc arc-two" />
+          <span className="hero-prime-beam" />
+          <i className="hero-prime-node node-one" />
+          <i className="hero-prime-node node-two" />
+          <i className="hero-prime-node node-three" />
+        </div>
         <div className="hero-copy-wrap" data-reveal>
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Independent digital product studio
@@ -23,24 +31,6 @@ function HomePage() {
             into powerful technology that accelerates business growth and
             maximizes your competitive advantage.
           </p>
-          <div className="hero-actions">
-            <Button>Start a project</Button>
-            <a className="text-link" href="#services">
-              Explore services <ArrowRight size={17} />
-            </a>
-          </div>
-          <div className="hero-proof">
-            <div className="avatar-stack">
-              <span>JL</span>
-              <span>AK</span>
-              <span>MR</span>
-            </div>
-            <p>
-              <strong>4.9/5 from partners</strong>
-              <br />
-              Trusted by teams with high standards.
-            </p>
-          </div>
         </div>
         <div className="hero-art hero-lottie-stage" data-reveal>
           <div className="hero-lottie-glow" aria-hidden="true" />
@@ -125,6 +115,8 @@ function HomePage() {
         </div>
       </section>
       <ProfessionalServices />
+      <WhyChooseUs />
+      <DeliveryStandard />
     </main>
   );
 }

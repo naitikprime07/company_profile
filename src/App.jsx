@@ -9,6 +9,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const CareerPage = lazy(() => import("./pages/CareerPage"));
+const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const IosPage = lazy(() => import("./pages/IosPage"));
 const AndroidPage = lazy(() => import("./pages/AndroidPage"));
 const FlutterPage = lazy(() => import("./pages/FlutterPage"));
@@ -36,6 +37,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/career" element={<CareerPage />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />
           <Route path="/technology/android" element={<AndroidPage />} />
           <Route path="/technology/flutter" element={<FlutterPage />} />

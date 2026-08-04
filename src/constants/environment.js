@@ -39,6 +39,10 @@ export const ENVIRONMENT = Object.freeze({
     flutter: readEnvironmentValue("VITE_FLUTTER_LOTTIE_URL", ""),
     ios: readEnvironmentValue("VITE_IOS_LOTTIE_URL", ""),
     unity: readEnvironmentValue("VITE_UNITY_LOTTIE_URL", ""),
+    unityBackground: readEnvironmentValue(
+      "VITE_UNITY_BACKGROUND_LOTTIE_URL",
+      "",
+    ),
     angular: readEnvironmentValue("VITE_ANGULAR_LOTTIE_URL", ""),
     typescript: readEnvironmentValue("VITE_TYPESCRIPT_LOTTIE_URL", ""),
     html5: readEnvironmentValue("VITE_HTML5_LOTTIE_URL", ""),

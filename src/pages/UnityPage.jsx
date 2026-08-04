@@ -9,6 +9,12 @@ function UnityPage() {
   return (
     <main className="unity-page" id="top">
       <div className="unity-game-bg" aria-hidden="true">
+        <DotLottieReact
+          className="unity-page-background-lottie"
+          src={ENVIRONMENT.animations.unityBackground}
+          loop
+          autoplay
+        />
         <span className="unity-bg-orbit" />
         <span className="unity-bg-reticle" />
         <i />

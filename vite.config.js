@@ -15,6 +15,11 @@ export default defineConfig(({ mode }) => {
     server: {
       port,
       strictPort: true,
+      watch: {
+        // Windows can keep this discarded image entry locked while an editor,
+        // Explorer preview, or sync process still has a handle open.
+        ignored: ['**/public/Prime Softech bb icon  png.png'],
+      },
     },
     preview: {
       port,

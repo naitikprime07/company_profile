@@ -1,4 +1,5 @@
 import { Globe2, Mail, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { ENVIRONMENT, mailTo } from "../../../constants/environment";
 
 function Footer() {
@@ -7,14 +8,19 @@ function Footer() {
       <div className="footer-panel">
         <div className="footer-main">
           <div className="footer-brand">
-            <a className="logo" href="/">
-              <span className="logo-symbol" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-              </span>
-              <span>
-                ASTER<span className="logo-muted">/studio</span>
+            <a
+              className="logo logo-image-link"
+              href="/"
+              aria-label="Prime Softech home"
+            >
+              <span className="brand-logo-surface">
+                <img
+                  className="brand-logo-image"
+                  src="/Prime%20Softech%20logo.png"
+                  alt="Prime Softech"
+                  width="1368"
+                  height="553"
+                />
               </span>
             </a>
             <p className="footer-kicker">Build with clarity</p>
@@ -33,9 +39,9 @@ function Footer() {
               <a href={mailTo()} aria-label="Email">
                 <Mail size={17} />
               </a>
-              <a href="/#contact" aria-label="Contact">
+              <Link to="/contact" aria-label="Contact us">
                 <MessageCircle size={17} />
-              </a>
+              </Link>
             </div>
           </div>
           <nav className="footer-links" aria-label="Footer navigation">
@@ -43,8 +49,8 @@ function Footer() {
               <h2>Company</h2>
               <a href="/about">About us</a>
               <a href="/#services">Our work</a>
-              <a href={mailTo(ENVIRONMENT.careersEmail)}>Careers</a>
-              <a href={mailTo()}>Contact</a>
+              <Link to="/career">Careers</Link>
+              <Link to="/contact">Contact</Link>
             </section>
             <section>
               <h2>Services</h2>
@@ -63,15 +69,18 @@ function Footer() {
           </nav>
         </div>
         <div className="footer-bottom">
-          <span>Copyright 2026 Aster Studio. All rights reserved.</span>
+          <span>Copyright 2026 Prime Softech. All rights reserved.</span>
           <div>
             <a href="/#privacy">Privacy</a>
             <a href="/#terms">Terms</a>
             <a href="/#cookies">Cookies</a>
           </div>
         </div>
-        <div className="footer-watermark" aria-hidden="true">
-          ASTER
+        <div
+          className="footer-watermark footer-watermark-simple"
+          aria-hidden="true"
+        >
+          PRIME SOFTECH
         </div>
       </div>
     </footer>

@@ -102,6 +102,13 @@ const links = [
   { label: "Contact Us", to: "/contact" },
 ];
 
+const toSlug = (value) =>
+  value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -173,18 +180,19 @@ function Navbar() {
     <header className="navbar-shell">
       <nav className="navbar container" aria-label="Main navigation">
         <Link
-          className="logo"
+          className="logo logo-image-link"
           to="/"
-          aria-label="Aster home"
+          aria-label="Prime Softech home"
           onClick={closeMenu}
         >
-          <span className="logo-symbol" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-          <span>
-            ASTER<span className="logo-muted">/studio</span>
+          <span className="brand-logo-surface">
+            <img
+              className="brand-logo-image"
+              src="/Prime%20Softech%20logo.png"
+              alt="Prime Softech"
+              width="1368"
+              height="553"
+            />
           </span>
         </Link>
 
@@ -228,13 +236,14 @@ function Navbar() {
                     </h2>
                     <div>
                       {items.map((item) => (
-                        <button
-                          type="button"
+                        <Link
+                          className="service-item-link"
+                          to={`/services#${toSlug(item)}`}
                           key={item}
-                          onClick={() => setServicesOpen(false)}
+                          onClick={closeMenu}
                         >
                           {item}
-                        </button>
+                        </Link>
                       ))}
                     </div>
                   </section>
@@ -311,13 +320,18 @@ function Navbar() {
                             {item}
                           </Link>
                         ) : (
-                          <button
-                            type="button"
+                          <Link
+                            className="technology-item-link"
+                            to={
+                              title === "Infra & DevOps"
+                                ? "/services#devops"
+                                : "/services#web-development"
+                            }
                             key={item}
-                            onClick={() => setTechnologyOpen(false)}
+                            onClick={closeMenu}
                           >
                             {item}
-                          </button>
+                          </Link>
                         ),
                       )}
                     </div>

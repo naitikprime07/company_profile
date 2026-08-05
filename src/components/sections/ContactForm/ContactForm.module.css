@@ -124,6 +124,40 @@
   box-shadow: 0 1rem 2rem rgb(47 125 246 / 30%);
   transform: translateY(-0.2rem);
 }
+.formBottom button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+.feedback {
+  align-items: center;
+  border: 1px solid;
+  border-radius: 0.75rem;
+  display: flex;
+  font-size: 0.78rem;
+  gap: 0.55rem;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.8rem 1rem;
+}
+.success {
+  background: rgb(63 185 106 / 10%);
+  border-color: rgb(93 220 136 / 30%);
+  color: #8de8ab;
+}
+.error {
+  background: rgb(244 88 88 / 10%);
+  border-color: rgb(255 112 112 / 30%);
+  color: #ffaaaa;
+}
+.spinner {
+  animation: contact-form-spin 0.8s linear infinite;
+}
+@keyframes contact-form-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 @media (max-width: 600px) {
   .form {
     padding: 4.5rem 1.2rem 1.2rem;

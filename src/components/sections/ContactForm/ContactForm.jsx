@@ -1,7 +1,8 @@
-import { ArrowUpRight } from "lucide-react";
-import { ENVIRONMENT } from "../../../constants/environment";
+import { useState } from "react";
+import { ArrowUpRight, CheckCircle2, LoaderCircle } from "lucide-react";
 import styles from "./ContactForm.module.css";
 import SelectField from "../../common/SelectField";
+import { submitContact } from "../../../services/contactService";
 
 const SERVICE_OPTIONS = [
   "Mobile application",
@@ -20,29 +21,33 @@ const BUDGET_OPTIONS = [
 ];
 
 function ContactForm() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const subject = encodeURIComponent(
-      `Project inquiry from ${formData.get("name")}`,
-    );
-    const body = encodeURIComponent(
-      [
-        `Name: ${formData.get("name")}`,
-        `Email: ${formData.get("email")}`,
-        `Company: ${formData.get("company") || "Not provided"}`,
-        `Service: ${formData.get("service")}`,
-        `Budget: ${formData.get("budget")}`,
-        "",
-        formData.get("message"),
-      ].join("\n"),
-    );
+  const [submission, setSubmission] = useState({ status: "idle", message: "" });
 
-    window.location.href = `mailto:${ENVIRONMENT.contactEmail}?subject=${subject}&body=${body}`;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    setSubmission({ status: "loading", message: "" });
+
+    try {
+      const result = await submitContact(payload);
+      form.reset();
+      setSubmission({ status: "success", message: result.message });
+    } catch (error) {
+      const fieldMessage = Object.values(error.fields || {})[0];
+      setSubmission({
+        status: "error",
+        message: fieldMessage || error.message || "Unable to submit the form.",
+      });
+    }
   };
 
+  const isSubmitting = submission.status === "loading";
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit} aria-busy={isSubmitting}>
       <div className={styles.formTop}>
         <span>
           <i /> NEW PROJECT BRIEF
@@ -80,6 +85,10 @@ function ContactForm() {
           placeholder="Company name (optional)"
         />
       </label>
+      <label>
+        Mobile number
+        <input name="phone" type="tel" autoComplete="tel" placeholder="+91 98765 43210" required />
+      </label>
       <div className={styles.twoColumns}>
         <SelectField
           label="What can we help with?"
@@ -110,11 +119,24 @@ function ContactForm() {
           By submitting, you agree that our team may contact you about this
           inquiry.
         </p>
-        <button type="submit">
-          <span>Send project brief</span>
-          <ArrowUpRight size={18} />
+        <button type="submit" disabled={isSubmitting}>
+          <span>{isSubmitting ? "Sending brief..." : "Send project brief"}</span>
+          {isSubmitting ? (
+            <LoaderCircle className={styles.spinner} size={18} />
+          ) : (
+            <ArrowUpRight size={18} />
+          )}
         </button>
       </div>
+      {submission.status !== "idle" && submission.status !== "loading" && (
+        <p
+          className={`${styles.feedback} ${styles[submission.status]}`}
+          role={submission.status === "error" ? "alert" : "status"}
+        >
+          {submission.status === "success" && <CheckCircle2 size={18} />}
+          <span>{submission.message}</span>
+        </p>
+      )}
     </form>
   );
 }

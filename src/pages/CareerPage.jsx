@@ -12,6 +12,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { ENVIRONMENT } from "../constants/environment";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./CareerPage.module.css";
+import { Link } from "react-router-dom";
 
 const composeApplicationUrl = (path) =>
   `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(ENVIRONMENT.careersEmail)}&su=${encodeURIComponent(`${path} application — Prime Softech`)}`;
@@ -36,6 +37,7 @@ const CAREER_PATHS = [
       "Shape systems, not just tickets",
     ],
     action: "Explore opportunities",
+    path: "/career/experienced",
   },
   {
     type: "internship",
@@ -56,6 +58,7 @@ const CAREER_PATHS = [
       "Create a portfolio with substance",
     ],
     action: "Apply for an internship",
+    path: "/career/internships",
   },
 ];
 
@@ -157,6 +160,7 @@ function CareerPage() {
                 roles,
                 highlights,
                 action,
+                path,
               }) => (
                 <article
                   className={`${styles.pathCard} ${styles[type]}`}
@@ -195,14 +199,10 @@ function CareerPage() {
                       </ul>
                     </div>
                   </div>
-                  <a
-                    href={composeApplicationUrl(title)}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <Link to={path}>
                     <span>{action}</span>
                     <ArrowUpRight size={18} />
-                  </a>
+                  </Link>
                 </article>
               ),
             )}

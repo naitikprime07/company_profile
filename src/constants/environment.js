@@ -4,6 +4,10 @@ const readEnvironmentValue = (name, fallback) => {
 };
 
 export const ENVIRONMENT = Object.freeze({
+  apiBaseUrl: readEnvironmentValue(
+    "VITE_API_BASE_URL",
+    "http://localhost:5000/api",
+  ).replace(/\/$/, ""),
   contactEmail: readEnvironmentValue(
     "VITE_CONTACT_EMAIL",
     "hello@primesoftech.com",

@@ -52,43 +52,6 @@ function HomePage() {
         </div>
       </section>
 
-      <section
-        className="client-marquee"
-        id="clients"
-        aria-labelledby="client-marquee-title"
-        data-reveal
-      >
-        <div className="container client-marquee-heading client-marquee-heading-compact">
-          <h2 id="client-marquee-title">
-            Trusted by <span>industry leaders</span>
-          </h2>
-        </div>
-        <div className="marquee-viewport" aria-label="Client partners">
-          <div className="marquee-track">
-            <div className="marquee-set">
-              <span>Arcway</span>
-              <span className="wordmark-soft">bluenotary</span>
-              <span className="wordmark-mark">CIM</span>
-              <span>klogW</span>
-              <span className="wordmark-wide">CRUDO</span>
-              <span>EUKA</span>
-              <span className="wordmark-soft">Everyones</span>
-              <span>Leadingly</span>
-            </div>
-            <div className="marquee-set" aria-hidden="true">
-              <span>Arcway</span>
-              <span className="wordmark-soft">bluenotary</span>
-              <span className="wordmark-mark">CIM</span>
-              <span>klogW</span>
-              <span className="wordmark-wide">CRUDO</span>
-              <span>EUKA</span>
-              <span className="wordmark-soft">Everyones</span>
-              <span>Leadingly</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="stats-section" data-reveal>
         <div className="container stats-grid">
           <AnimatedStat

@@ -299,6 +299,7 @@
   grid-template-columns: 1fr 1fr;
   margin-top: 5rem;
 }
+.liveOpenings{border-top:1px solid var(--line);margin-top:6rem;padding-top:4rem}.liveOpenings>p{color:var(--muted)}.openingGrid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:2rem}.openingGrid article{background:rgb(255 255 255/4%);border:1px solid var(--line);border-radius:1rem;padding:1.4rem}.openingGrid small,.openingGrid a{color:var(--cyan)}.openingGrid h3{font-size:1.4rem;margin:.7rem 0}.openingGrid strong{color:var(--text-soft);font-size:.8rem}.openingGrid p{color:var(--muted);line-height:1.6}.openingGrid a{align-items:center;display:flex;font-weight:700;gap:.4rem}
 
 .pathCard {
   background: linear-gradient(

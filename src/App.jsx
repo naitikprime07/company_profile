@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./routes/ScrollToTop";
@@ -19,12 +19,16 @@ const JavaPage = lazy(() => import("./pages/JavaPage"));
 const PhpPage = lazy(() => import("./pages/PhpPage"));
 const FrontendPage = lazy(() => import("./pages/FrontendPage"));
 const DatabasePage = lazy(() => import("./pages/DatabasePage"));
+const AdminPage = lazy(() => import("./pages/AdminPage"));
+const CareerOpeningsPage = lazy(() => import("./pages/CareerOpeningsPage"));
 
 function App() {
+  const isAdminRoute = useLocation().pathname.startsWith("/admin");
+
   return (
     <div className="site-shell">
       <ScrollToTop />
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
       <Suspense
         fallback={
           <main className="route-loading" aria-live="polite">
@@ -37,6 +41,9 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/career" element={<CareerPage />} />
+          <Route path="/career/internships" element={<CareerOpeningsPage type="internship" />} />
+          <Route path="/career/experienced" element={<CareerOpeningsPage type="experienced" />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />
           <Route path="/technology/android" element={<AndroidPage />} />
@@ -87,7 +94,7 @@ function App() {
           />
         </Routes>
       </Suspense>
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </div>
   );
 }

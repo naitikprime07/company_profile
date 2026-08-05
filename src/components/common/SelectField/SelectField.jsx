@@ -23,6 +23,17 @@ function SelectField({ label, name, placeholder, options, required = false }) {
     };
   }, []);
 
+  useEffect(() => {
+    const form = rootRef.current?.closest("form");
+    const clearOnFormReset = () => {
+      setValue("");
+      setIsOpen(false);
+    };
+
+    form?.addEventListener("reset", clearOnFormReset);
+    return () => form?.removeEventListener("reset", clearOnFormReset);
+  }, []);
+
   return (
     <div className={styles.field} ref={rootRef}>
       <span className={styles.label}>{label}</span>

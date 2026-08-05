@@ -3241,52 +3241,22 @@ h3 {
 
 .brand-logo-surface {
   align-items: center;
-  background:
-    linear-gradient(105deg, rgb(255 255 255 / 98%), rgb(232 243 255 / 96%));
-  border: 1px solid rgb(91 213 255 / 42%);
-  border-radius: 8px 18px 8px 18px;
-  box-shadow:
-    0 8px 24px rgb(0 0 0 / 22%),
-    0 0 22px rgb(47 125 246 / 10%),
-    inset 0 1px 0 #fff;
   display: inline-flex;
-  isolation: isolate;
-  overflow: hidden;
-  padding: 5px 10px;
-  position: relative;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
-}
-
-.brand-logo-surface::after {
-  background: linear-gradient(180deg, var(--cyan), var(--accent));
-  border-radius: 999px;
-  bottom: 7px;
-  content: "";
-  position: absolute;
-  right: 4px;
-  top: 7px;
-  width: 2px;
-  z-index: -1;
+  padding: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .logo-image-link:hover .brand-logo-surface,
 .logo-image-link:focus-visible .brand-logo-surface {
-  border-color: rgb(91 213 255 / 78%);
-  box-shadow:
-    0 10px 30px rgb(0 0 0 / 26%),
-    0 0 28px rgb(47 125 246 / 20%),
-    inset 0 1px 0 #fff;
+  opacity: 0.88;
   transform: translateY(-1px);
 }
 
 .brand-logo-image {
   display: block;
-  filter: drop-shadow(0 5px 12px rgb(0 0 0 / 24%));
+  filter: drop-shadow(0 4px 10px rgb(0 0 0 / 22%));
   height: auto;
-  width: 142px;
+  width: 154px;
 }
 
 .footer-brand .brand-logo-image {
@@ -3299,12 +3269,7 @@ h3 {
 
 @media (max-width: 560px) {
   .brand-logo-image {
-    width: 124px;
-  }
-
-  .brand-logo-surface {
-    border-radius: 7px 15px 7px 15px;
-    padding: 4px 8px;
+    width: 132px;
   }
 
   .footer-brand .brand-logo-image {

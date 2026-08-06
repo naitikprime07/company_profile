@@ -78,6 +78,23 @@
   right: 0;
   top: calc(100% + 0.35rem);
   z-index: 20;
+  scrollbar-color: rgb(91 213 255 / 55%) #0b1422;
+  scrollbar-width: thin;
+}
+.menu::-webkit-scrollbar {
+  width: 0.45rem;
+}
+.menu::-webkit-scrollbar-track {
+  background: #0b1422;
+  border-radius: 999px;
+}
+.menu::-webkit-scrollbar-thumb {
+  background: rgb(91 213 255 / 55%);
+  border: 1px solid #0b1422;
+  border-radius: 999px;
+}
+.menu::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
 }
 .option,
 .optionSelected {

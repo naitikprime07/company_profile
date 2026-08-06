@@ -11,3 +11,4 @@
 .factBar{grid-template-columns:repeat(5,1fr)}
 @media(max-width:900px){.factBar{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.factBar{grid-template-columns:1fr}}
+.applyCard>a{background:var(--button-bg);border:1px solid var(--button-border);box-shadow:var(--button-shadow)}.applyCard>a:hover,.applyCard>a:focus-visible{background:var(--button-bg-hover)}

@@ -10,6 +10,10 @@
   --accent: #2f7df6;
   --accent-bright: #72adff;
   --cyan: #5bd5ff;
+  --button-bg: linear-gradient(110deg, #1858b8, #2178c9 62%, #248eaa);
+  --button-bg-hover: linear-gradient(110deg, #1d66cf, #2888da 62%, #2ba2bd);
+  --button-border: rgb(114 205 255 / 28%);
+  --button-shadow: 0 12px 28px rgb(10 58 130 / 34%);
   --container: 1320px;
 }
 .site-shell {
@@ -240,14 +244,15 @@
     transform 0.2s ease;
 }
 .button-primary {
-  background: var(--accent);
-  box-shadow: 0 10px 32px rgb(141 124 255 / 26%);
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  box-shadow: var(--button-shadow);
   color: #fff;
 }
 .button-primary:hover,
 .button-primary:focus-visible {
-  background: var(--accent-bright);
-  box-shadow: 0 14px 35px rgb(141 124 255 / 36%);
+  background: var(--button-bg-hover);
+  box-shadow: 0 15px 34px rgb(10 70 155 / 42%);
   transform: translateY(-2px);
 }
 .button svg {
@@ -257,8 +262,8 @@
   transform: translate(2px, -2px);
 }
 .about-company-button {
-  background: linear-gradient(110deg, #246ce2, #3a8cff 55%, #5bd5ff);
-  border: 1px solid rgb(255 255 255 / 18%);
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
   border-radius: 999px;
   box-shadow:
     0 0 0 0 rgb(91 213 255 / 0%),
@@ -297,7 +302,7 @@
 }
 .about-company-button:hover,
 .about-company-button:focus-visible {
-  background: linear-gradient(110deg, #2d7bf4, #4a9cff 55%, #70ddff);
+  background: var(--button-bg-hover);
   box-shadow:
     0 0 0 5px rgb(91 213 255 / 10%),
     0 20px 45px rgb(32 104 222 / 38%);

@@ -1,8 +1,12 @@
 import {
   ArrowRight,
+  Code2,
   Compass,
+  Crown,
   Gauge,
   Layers3,
+  Megaphone,
+  Palette,
   ShieldCheck,
   Sparkles,
   UsersRound,
@@ -63,6 +67,45 @@ const JOURNEY = [
     copy: "We partner with ambitious organizations to modernize services, launch new ventures, and improve the products people rely on.",
   },
 ];
+
+const LEADERSHIP = [
+  {
+    owner: { name: "Owner One", role: "Co-founder & Technology Lead", initials: "O1" },
+    department: "Product & Engineering",
+    icon: Code2,
+    tone: "blue",
+    members: [
+      { name: "Team Member", role: "Product Manager", initials: "PM" },
+      { name: "Team Member", role: "UI/UX Designer", initials: "UX" },
+      { name: "Team Member", role: "Lead Engineer", initials: "LE" },
+      { name: "Team Member", role: "Software Engineer", initials: "SE" },
+    ],
+  },
+  {
+    owner: { name: "Owner Two", role: "Co-founder & Business Lead", initials: "O2" },
+    department: "Growth & Operations",
+    icon: Megaphone,
+    tone: "violet",
+    members: [
+      { name: "Team Member", role: "Growth Strategist", initials: "GS" },
+      { name: "Team Member", role: "Marketing Specialist", initials: "MS" },
+      { name: "Team Member", role: "People & Culture", initials: "PC" },
+      { name: "Team Member", role: "Client Success", initials: "CS" },
+    ],
+  },
+];
+
+function TeamPortrait({ person, owner = false }) {
+  return (
+    <span className={owner ? styles.ownerPortrait : styles.memberPortrait}>
+      {person.image ? (
+        <img src={person.image} alt="" />
+      ) : (
+        <span aria-hidden="true">{person.initials}</span>
+      )}
+    </span>
+  );
+}
 
 function AboutPage() {
   useScrollReveal();
@@ -294,6 +337,66 @@ function AboutPage() {
               </span>
             </li>
           </ul>
+        </div>
+      </section>
+
+      <section className={styles.orgSection} data-reveal aria-labelledby="org-title">
+        <div className="container">
+          <header className={styles.orgHeading}>
+            <div>
+              <p className="eyebrow">The people behind the work</p>
+              <h2 id="org-title">Two leaders. Two disciplines. One connected team.</h2>
+            </div>
+            <p>
+              Clear ownership keeps decisions close to the people doing the work,
+              while both departments stay connected around every client outcome.
+            </p>
+          </header>
+
+          <div className={styles.orgChart}>
+            <div className={styles.companyNode}>
+              <span><Palette size={19} /></span>
+              <div><small>PRIME SOFTECH</small><strong>Leadership network</strong></div>
+              <i>CONNECTED</i>
+            </div>
+            <div className={styles.leadershipLine} aria-hidden="true"><span /></div>
+
+            <div className={styles.ownerBranches}>
+              {LEADERSHIP.map(({ owner, department, icon: Icon, tone, members }) => (
+                <article className={`${styles.ownerBranch} ${styles[tone]}`} key={department}>
+                  <div className={styles.ownerCard}>
+                    <span className={styles.ownerCrown}><Crown size={15} /></span>
+                    <TeamPortrait person={owner} owner />
+                    <div>
+                      <small>OWNER / DIRECTOR</small>
+                      <h3>{owner.name}</h3>
+                      <p>{owner.role}</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.branchStem} aria-hidden="true"><i /></div>
+                  <div className={styles.departmentNode}>
+                    <span><Icon size={18} /></span>
+                    <div><small>DEPARTMENT</small><strong>{department}</strong></div>
+                    <b>{String(members.length).padStart(2, "0")}</b>
+                  </div>
+                  <div className={styles.teamConnector} aria-hidden="true" />
+
+                  <div className={styles.memberGrid}>
+                    {members.map((member) => (
+                      <div className={styles.memberCard} key={`${department}-${member.role}`}>
+                        <TeamPortrait person={member} />
+                        <div><strong>{member.name}</strong><small>{member.role}</small></div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+          <p className={styles.orgNote}>
+            <span /> Shared strategy &nbsp;·&nbsp; Independent department ownership
+          </p>
         </div>
       </section>
 

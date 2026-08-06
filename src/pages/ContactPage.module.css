@@ -157,7 +157,8 @@
 }
 .ready > a {
   align-items: center;
-  background: linear-gradient(110deg, var(--accent), var(--cyan));
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
   border-radius: 999px;
   color: white;
   display: flex;
@@ -778,6 +779,7 @@
 }
 .ready > a:hover,
 .ready > a:focus-visible {
+  background: var(--button-bg-hover);
   box-shadow:
     0 1.25rem 2.8rem rgb(47 125 246 / 40%),
     0 0 0 0.28rem rgb(91 213 255 / 9%);

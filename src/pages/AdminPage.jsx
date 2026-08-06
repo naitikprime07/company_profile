@@ -36,7 +36,18 @@ function AdminPage() {
     }
   };
 
-  useEffect(() => { if (token) load(); }, [token]);
+  useEffect(() => {
+    if (token) load();
+  }, [token, activeView]);
+
+  const changeView = (view) => {
+    if (view === activeView) {
+      load();
+      return;
+    }
+
+    setActiveView(view);
+  };
 
   const stats = useMemo(() => ({
     total: contacts.length,
@@ -94,9 +105,9 @@ function AdminPage() {
       <aside className={styles.sidebar}>
         <div className={styles.brand}><span><Building2 size={21} /></span><div><strong>Prime Softech</strong><small>Admin workspace</small></div></div>
         <nav>
-          <button className={activeView === "inquiries" ? styles.navActive : ""} onClick={() => setActiveView("inquiries")}><Inbox size={18} /> Inquiries {stats.new > 0 && <b>{stats.new}</b>}</button>
-          <button className={activeView === "applications" ? styles.navActive : ""} onClick={() => setActiveView("applications")}><Files size={18} /> Applications {applications.filter((item)=>item.status==="new").length > 0 && <b>{applications.filter((item)=>item.status==="new").length}</b>}</button>
-          <button className={activeView === "openings" ? styles.navActive : ""} onClick={() => setActiveView("openings")}><BriefcaseBusiness size={18} /> Career openings</button>
+          <button className={activeView === "inquiries" ? styles.navActive : ""} onClick={() => changeView("inquiries")}><Inbox size={18} /> Inquiries {stats.new > 0 && <b>{stats.new}</b>}</button>
+          <button className={activeView === "applications" ? styles.navActive : ""} onClick={() => changeView("applications")}><Files size={18} /> Applications {applications.filter((item)=>item.status==="new").length > 0 && <b>{applications.filter((item)=>item.status==="new").length}</b>}</button>
+          <button className={activeView === "openings" ? styles.navActive : ""} onClick={() => changeView("openings")}><BriefcaseBusiness size={18} /> Career openings</button>
         </nav>
         <button className={styles.logout} onClick={logout}><LogOut size={18} /> Log out</button>
       </aside>

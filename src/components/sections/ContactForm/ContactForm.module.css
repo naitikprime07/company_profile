@@ -8,6 +8,7 @@
   overflow: hidden;
   padding: 5rem 2rem 2rem;
   position: relative;
+  scroll-margin-top: 6rem;
 }
 .formTop {
   align-items: center;
@@ -53,6 +54,16 @@
   font-weight: 700;
   gap: 0.55rem;
 }
+.labelRow {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.labelRow small {
+  color: var(--muted);
+  font: 500 0.62rem monospace;
+  letter-spacing: 0.02em;
+}
 .form input,
 .form select,
 .form textarea {
@@ -72,6 +83,23 @@
 .form textarea {
   min-height: 8.5rem;
   resize: vertical;
+  scrollbar-color: rgb(91 213 255 / 55%) #0b1422;
+  scrollbar-width: thin;
+}
+.form textarea::-webkit-scrollbar {
+  width: 0.45rem;
+}
+.form textarea::-webkit-scrollbar-track {
+  background: #0b1422;
+  border-radius: 999px;
+}
+.form textarea::-webkit-scrollbar-thumb {
+  background: rgb(91 213 255 / 55%);
+  border: 1px solid #0b1422;
+  border-radius: 999px;
+}
+.form textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
 }
 .form input::placeholder,
 .form textarea::placeholder {
@@ -105,8 +133,8 @@
 }
 .formBottom button {
   align-items: center;
-  background: linear-gradient(110deg, var(--accent), #438fff, var(--cyan));
-  border: 0;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
   border-radius: 999px;
   color: #fff;
   cursor: pointer;
@@ -115,13 +143,15 @@
   gap: 0.7rem;
   min-height: 3.2rem;
   padding: 0 1.25rem;
+  box-shadow: var(--button-shadow);
   transition:
     box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 .formBottom button:hover,
 .formBottom button:focus-visible {
-  box-shadow: 0 1rem 2rem rgb(47 125 246 / 30%);
+  background: var(--button-bg-hover);
+  box-shadow: 0 1rem 2rem rgb(10 70 155 / 42%);
   transform: translateY(-0.2rem);
 }
 .formBottom button:disabled {

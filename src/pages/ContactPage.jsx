@@ -219,12 +219,8 @@ function ContactPage() {
           <p className="eyebrow">Ready when you are</p>
           <h2>Good work begins with a clear conversation.</h2>
         </div>
-        <a
-          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(ENVIRONMENT.contactEmail)}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span>Email our studio</span>
+        <a href="#contact-form">
+          <span>Contact our studio</span>
           <ArrowUpRight size={18} />
         </a>
       </section>

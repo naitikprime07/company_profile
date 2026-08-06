@@ -19,9 +19,33 @@ const BUDGET_OPTIONS = [
   "$50k+",
   "Not decided",
 ];
+const MAX_PHONE_DIGITS = 10;
+
+function limitPhoneNumber(event) {
+  const input = event.currentTarget;
+  const digits = input.value.replace(/\D/g, "").slice(0, MAX_PHONE_DIGITS);
+
+  input.value = digits;
+  return digits.length;
+}
 
 function ContactForm() {
   const [submission, setSubmission] = useState({ status: "idle", message: "" });
+  const [counts, setCounts] = useState({ company: 0, message: 0, phone: 0 });
+
+  const updateCount = (field) => (event) => {
+    const length = event.currentTarget.value.length;
+
+    setCounts((current) => ({
+      ...current,
+      [field]: length,
+    }));
+  };
+
+  const handlePhoneInput = (event) => {
+    const phoneDigits = limitPhoneNumber(event);
+    setCounts((current) => ({ ...current, phone: phoneDigits }));
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,6 +58,7 @@ function ContactForm() {
     try {
       const result = await submitContact(payload);
       form.reset();
+      setCounts({ company: 0, message: 0, phone: 0 });
       setSubmission({ status: "success", message: result.message });
     } catch (error) {
       const fieldMessage = Object.values(error.fields || {})[0];
@@ -47,7 +72,12 @@ function ContactForm() {
   const isSubmitting = submission.status === "loading";
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} aria-busy={isSubmitting}>
+    <form
+      id="contact-form"
+      className={styles.form}
+      onSubmit={handleSubmit}
+      aria-busy={isSubmitting}
+    >
       <div className={styles.formTop}>
         <span>
           <i /> NEW PROJECT BRIEF
@@ -77,17 +107,38 @@ function ContactForm() {
         </label>
       </div>
       <label>
-        Company or organization
+        <span className={styles.labelRow}>
+          <span>Company or organization</span>
+          <small>{counts.company}/150</small>
+        </span>
         <input
           name="company"
           type="text"
           autoComplete="organization"
           placeholder="Company name (optional)"
+          maxLength={150}
+          onInput={updateCount("company")}
         />
       </label>
       <label>
-        Mobile number
-        <input name="phone" type="tel" autoComplete="tel" placeholder="+91 98765 43210" required />
+        <span className={styles.labelRow}>
+          <span>Mobile number</span>
+          <small>
+            {counts.phone}/{MAX_PHONE_DIGITS} digits
+          </small>
+        </span>
+        <input
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="9876543210"
+          maxLength={MAX_PHONE_DIGITS}
+          pattern="[1-9][0-9]{9}"
+          title="Enter a 10-digit mobile number"
+          onInput={handlePhoneInput}
+          required
+        />
       </label>
       <div className={styles.twoColumns}>
         <SelectField
@@ -106,11 +157,17 @@ function ContactForm() {
         />
       </div>
       <label>
-        Tell us about the opportunity
+        <span className={styles.labelRow}>
+          <span>Tell us about the opportunity</span>
+          <small>{counts.message}/500 · min 10</small>
+        </span>
         <textarea
           name="message"
           rows="5"
           placeholder="What are you building, improving, or trying to solve?"
+          minLength={10}
+          maxLength={500}
+          onInput={updateCount("message")}
           required
         />
       </label>
@@ -120,7 +177,9 @@ function ContactForm() {
           inquiry.
         </p>
         <button type="submit" disabled={isSubmitting}>
-          <span>{isSubmitting ? "Sending brief..." : "Send project brief"}</span>
+          <span>
+            {isSubmitting ? "Sending brief..." : "Send project brief"}
+          </span>
           {isSubmitting ? (
             <LoaderCircle className={styles.spinner} size={18} />
           ) : (

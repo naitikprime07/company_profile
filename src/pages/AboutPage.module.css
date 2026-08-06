@@ -2,6 +2,76 @@
   background: var(--bg);
   overflow: hidden;
 }
+
+/* Leadership network */
+.orgSection {
+  background: linear-gradient(180deg, #080d18, #0b1423 48%, #080d18);
+  border-block: 1px solid var(--line);
+  overflow: hidden;
+  padding: 8rem 0;
+  position: relative;
+}
+.orgSection::before {
+  background-image: linear-gradient(rgb(91 213 255 / 4%) 1px, transparent 1px), linear-gradient(90deg, rgb(91 213 255 / 4%) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+  content: "";
+  inset: 0;
+  mask-image: radial-gradient(circle at center, #000, transparent 75%);
+  pointer-events: none;
+  position: absolute;
+}
+.orgHeading {
+  align-items: end;
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: 1.25fr 0.75fr;
+  margin-bottom: 5rem;
+  position: relative;
+}
+.orgHeading h2 { font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -.065em; line-height: .95; margin: .8rem 0 0; max-width: 900px; }
+.orgHeading > p { color: var(--muted); font-size: .85rem; line-height: 1.8; margin: 0; max-width: 480px; }
+.orgChart { margin: 0 auto; max-width: 1180px; position: relative; }
+.companyNode { align-items: center; background: rgb(12 26 45 / 92%); border: 1px solid rgb(91 213 255 / 30%); border-radius: 1rem; box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 28%); display: flex; gap: .85rem; margin: 0 auto; padding: .8rem 1rem; position: relative; width: fit-content; z-index: 2; }
+.companyNode > span { align-items: center; background: rgb(47 125 246 / 18%); border-radius: .65rem; color: var(--cyan); display: flex; height: 2.7rem; justify-content: center; width: 2.7rem; }
+.companyNode > div { display: grid; gap: .2rem; }
+.companyNode small,.departmentNode small { color: #667d96; font: .48rem monospace; letter-spacing: .13em; }
+.companyNode strong { font-size: .78rem; }
+.companyNode i { color: #6fdda0; font: normal .48rem monospace; letter-spacing: .1em; margin-left: 1.5rem; }
+.leadershipLine { height: 4rem; margin: auto; position: relative; width: 50%; }
+.leadershipLine::before { background: linear-gradient(var(--cyan), rgb(91 213 255 / 20%)); content: ""; height: 50%; left: 50%; position: absolute; top: 0; width: 1px; }
+.leadershipLine::after { border-left: 1px solid rgb(91 213 255 / 28%); border-right: 1px solid rgb(91 213 255 / 28%); border-top: 1px solid rgb(91 213 255 / 28%); bottom: 0; content: ""; height: 50%; inset-inline: 0; position: absolute; }
+.leadershipLine span { background: var(--cyan); border-radius: 50%; box-shadow: 0 0 .8rem var(--cyan); height: .38rem; left: calc(50% - .19rem); position: absolute; top: calc(50% - .19rem); width: .38rem; z-index: 1; }
+.ownerBranches { display: grid; gap: 3rem; grid-template-columns: 1fr 1fr; }
+.ownerBranch { --branch:#5bd5ff; --branch-rgb:91 213 255; min-width: 0; position: relative; }
+.ownerBranch.violet { --branch:#a88cff; --branch-rgb:168 140 255; }
+.ownerCard { align-items: center; background: linear-gradient(145deg, rgb(20 37 61 / 96%), rgb(10 21 37 / 98%)); border: 1px solid rgb(var(--branch-rgb) / 30%); border-radius: 1.25rem; box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 22%); display: grid; gap: 1rem; grid-template-columns: auto 1fr; min-height: 145px; padding: 1.3rem; position: relative; }
+.ownerCard::after { background: linear-gradient(90deg, transparent, var(--branch), transparent); bottom: -1px; content: ""; height: 1px; left: 10%; position: absolute; right: 10%; }
+.ownerCrown { align-items: center; background: rgb(var(--branch-rgb) / 14%); border: 1px solid rgb(var(--branch-rgb) / 28%); border-radius: 50%; color: var(--branch); display: flex; height: 2rem; justify-content: center; position: absolute; right: 1rem; top: 1rem; width: 2rem; }
+.ownerPortrait,.memberPortrait { align-items: center; background: radial-gradient(circle at 35% 25%, rgb(255 255 255 / 18%), transparent 25%), linear-gradient(145deg, rgb(var(--branch-rgb) / 42%), #12213a); border: 2px solid rgb(var(--branch-rgb) / 38%); border-radius: 1rem; color: white; display: flex; flex: 0 0 auto; font: 800 1.05rem monospace; height: 5.6rem; justify-content: center; overflow: hidden; width: 5.6rem; }
+.ownerPortrait img,.memberPortrait img { height: 100%; object-fit: cover; width: 100%; }
+.ownerCard small { color: var(--branch); font: .48rem monospace; letter-spacing: .13em; }
+.ownerCard h3 { font-size: 1.35rem; margin: .45rem 0 .3rem; }
+.ownerCard p { color: #8fa3ba; font-size: .68rem; margin: 0; }
+.branchStem { height: 3rem; position: relative; }
+.branchStem::before { background: rgb(var(--branch-rgb) / 38%); content: ""; inset-block: 0; left: 50%; position: absolute; width: 1px; }
+.branchStem i { background: var(--branch); border-radius: 50%; box-shadow: 0 0 .7rem var(--branch); height: .35rem; left: calc(50% - .15rem); position: absolute; top: 48%; width: .35rem; }
+.departmentNode { align-items: center; background: rgb(11 24 42 / 95%); border: 1px solid rgb(var(--branch-rgb) / 24%); border-radius: .9rem; display: flex; gap: .75rem; margin: auto; max-width: 310px; padding: .75rem; position: relative; z-index: 2; }
+.departmentNode > span { align-items: center; background: rgb(var(--branch-rgb) / 13%); border-radius: .55rem; color: var(--branch); display: flex; height: 2.4rem; justify-content: center; width: 2.4rem; }
+.departmentNode > div { display: grid; gap: .2rem; }
+.departmentNode strong { font-size: .72rem; }
+.departmentNode b { color: rgb(var(--branch-rgb) / 40%); font: 1.35rem monospace; margin-left: auto; }
+.teamConnector { border-left: 1px solid rgb(var(--branch-rgb) / 25%); border-right: 1px solid rgb(var(--branch-rgb) / 25%); border-top: 1px solid rgb(var(--branch-rgb) / 25%); height: 2.5rem; margin: auto; width: 52%; }
+.memberGrid { display: grid; gap: .75rem; grid-template-columns: 1fr 1fr; }
+.memberCard { align-items: center; background: rgb(255 255 255 / 3%); border: 1px solid rgb(var(--branch-rgb) / 15%); border-radius: .85rem; display: flex; gap: .75rem; min-width: 0; padding: .75rem; transition: border-color .2s ease, transform .2s ease; }
+.memberCard:hover { border-color: rgb(var(--branch-rgb) / 42%); transform: translateY(-3px); }
+.memberPortrait { border-radius: .65rem; font-size: .67rem; height: 3.1rem; width: 3.1rem; }
+.memberCard > div { display: grid; gap: .25rem; min-width: 0; }
+.memberCard strong { font-size: .7rem; }
+.memberCard small { color: #7489a1; font-size: .58rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.orgNote { align-items: center; color: #63788f; display: flex; font: .52rem monospace; justify-content: center; letter-spacing: .08em; margin: 2.5rem 0 0; }
+.orgNote span { background: #6fdda0; border-radius: 50%; box-shadow: 0 0 .6rem #6fdda0; height: .35rem; margin-right: .55rem; width: .35rem; }
+@media (max-width: 850px) { .orgHeading { gap: 1.5rem; grid-template-columns: 1fr; } .leadershipLine { width: 70%; } .ownerBranches { gap: 2rem; } .memberGrid { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .orgSection { padding: 5rem 0; } .ownerBranches { grid-template-columns: 1fr; } .leadershipLine { height: 2.5rem; width: 1px; } .leadershipLine::after { display: none; } .ownerBranch + .ownerBranch { margin-top: 1rem; } .companyNode i { display: none; } }
 .page > section {
   position: relative;
 }

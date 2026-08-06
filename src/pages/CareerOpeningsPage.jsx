@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, Clock3, GraduationCap, MapPin, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, Clock3, GraduationCap, MapPin, Sparkles, UsersRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ENVIRONMENT } from "../constants/environment";
 import { getOpenings } from "../services/openingService";
@@ -78,9 +78,10 @@ function CareerOpeningsPage({ type }) {
           <article key={opening._id}>
             <div className={styles.cardTop}><span>{type === "internship" ? <GraduationCap size={20}/> : <BriefcaseBusiness size={20}/>}</span><small>OPEN</small></div>
             <h3>{opening.title}</h3>
-            <div className={styles.meta}><span><MapPin size={15}/>{opening.location}</span><span><Clock3 size={15}/>Posted {new Date(opening.createdAt).toLocaleDateString()}</span></div>
+            <div className={styles.meta}><span><MapPin size={15}/>{opening.location}</span><span><BriefcaseBusiness size={15}/>{opening.experience || (type === "internship" ? "Fresher" : "Experienced")}</span><span><Clock3 size={15}/>{opening.commitment || "Full-time"}</span></div>
+            <div className={styles.vacancy}><UsersRound size={15}/><strong>{Number(opening.vacancies)||1}</strong> {(Number(opening.vacancies)||1)===1?"vacancy":"vacancies"} available</div>
             <p>{opening.description}</p>
-            <a href={applicationUrl(opening.title)} target="_blank" rel="noreferrer">Apply for this role <ArrowUpRight size={18}/></a>
+            <Link to={`/career/position/${opening._id}`}>View position details <ArrowUpRight size={18}/></Link>
           </article>
         ))}</div>
       </section>

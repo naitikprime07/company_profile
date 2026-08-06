@@ -3,6 +3,9 @@ const request=async(path,options={})=>{const token=sessionStorage.getItem("admin
 export const loginAdmin=(email,password)=>request("/admin/login",{method:"POST",body:JSON.stringify({email,password})});
 export const getContacts=()=>request("/admin/contacts");
 export const setContactStatus=(id,status)=>request(`/admin/contacts/${id}`,{method:"PATCH",body:JSON.stringify({status})});
+export const getApplications=()=>request("/admin/applications");
+export const setApplicationStatus=(id,status)=>request(`/admin/applications/${id}`,{method:"PATCH",body:JSON.stringify({status})});
+export const downloadResume=async(id,fileName)=>{const token=sessionStorage.getItem("adminToken");const response=await fetch(`${ENVIRONMENT.apiBaseUrl}/admin/applications/${id}/resume`,{headers:{Authorization:`Bearer ${token}`}});if(!response.ok)throw new Error("Unable to download resume.");const url=URL.createObjectURL(await response.blob());const link=document.createElement("a");link.href=url;link.download=fileName;link.click();URL.revokeObjectURL(url);};
 export const getAdminOpenings=()=>request("/admin/openings");
 export const createOpening=data=>request("/admin/openings",{method:"POST",body:JSON.stringify(data)});
 export const deleteOpening=id=>request(`/admin/openings/${id}`,{method:"DELETE"});

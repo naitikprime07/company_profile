@@ -370,6 +370,7 @@
   color: rgb(114 173 255 / 45%);
   font: 0.58rem monospace;
 }
+.cardStatus{align-items:flex-end;display:grid;gap:.55rem;justify-items:end}.cardStatus b,.totalOpenings{align-items:center;background:rgb(5 18 27/75%);border:1px solid rgb(91 213 255/18%);border-radius:999px;color:#72dca0;display:flex;font:.52rem monospace;gap:.4rem;letter-spacing:.08em;padding:.42rem .6rem}.cardStatus b::before,.totalOpenings::before{background:#72dca0;border-radius:50%;box-shadow:0 0 .6rem #72dca0;content:"";height:.32rem;width:.32rem}.totalOpenings{justify-self:end;margin-top:1rem;width:max-content}.totalOpenings span{color:var(--cyan);font-size:.65rem;font-weight:800}
 
 .cardEyebrow {
   color: var(--cyan);
@@ -592,6 +593,8 @@
     transition: none;
   }
 }
+.heading>.totalOpenings{grid-column:2;justify-self:end;margin-top:-3rem}
+@media(max-width:1000px){.heading>.totalOpenings{grid-column:auto;justify-self:start;margin-top:0}}
 
 .growthPath {
   border-bottom: 1px solid rgb(91 213 255 / 13%);

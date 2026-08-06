@@ -21,6 +21,8 @@ const FrontendPage = lazy(() => import("./pages/FrontendPage"));
 const DatabasePage = lazy(() => import("./pages/DatabasePage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
 const CareerOpeningsPage = lazy(() => import("./pages/CareerOpeningsPage"));
+const JobApplicationPage = lazy(() => import("./pages/JobApplicationPage"));
+const PositionDetailsPage = lazy(() => import("./pages/PositionDetailsPage"));
 
 function App() {
   const isAdminRoute = useLocation().pathname.startsWith("/admin");
@@ -43,6 +45,8 @@ function App() {
           <Route path="/career" element={<CareerPage />} />
           <Route path="/career/internships" element={<CareerOpeningsPage type="internship" />} />
           <Route path="/career/experienced" element={<CareerOpeningsPage type="experienced" />} />
+          <Route path="/career/apply/:openingId" element={<JobApplicationPage />} />
+          <Route path="/career/position/:openingId" element={<PositionDetailsPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />

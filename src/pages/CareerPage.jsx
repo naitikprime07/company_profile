@@ -13,6 +13,8 @@ import { ENVIRONMENT } from "../constants/environment";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./CareerPage.module.css";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getOpenings } from "../services/openingService";
 
 const composeApplicationUrl = (path) =>
   `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(ENVIRONMENT.careersEmail)}&su=${encodeURIComponent(`${path} application — Prime Softech`)}`;
@@ -64,6 +66,10 @@ const CAREER_PATHS = [
 
 function CareerPage() {
   useScrollReveal();
+  const [openings, setOpenings] = useState([]);
+  useEffect(() => { getOpenings().then(setOpenings).catch(() => setOpenings([])); }, []);
+  const openingCount = (type) => openings.filter((opening) => opening.type === (type === "opportunity" ? "experienced" : "internship")).reduce((total,opening)=>total+(Number(opening.vacancies)||1),0);
+  const totalVacancies = openings.reduce((total,opening)=>total+(Number(opening.vacancies)||1),0);
 
   return (
     <main className={styles.page} id="top">
@@ -147,6 +153,7 @@ function CareerPage() {
               Whether you bring years of experience or are beginning your
               career, we offer a clear path into meaningful product work.
             </p>
+            <div className={styles.totalOpenings}><span>{totalVacancies}</span> open {totalVacancies === 1 ? "position" : "positions"}</div>
           </header>
           <div className={styles.pathGrid}>
             {CAREER_PATHS.map(
@@ -170,7 +177,7 @@ function CareerPage() {
                     <span>
                       <Icon size={25} />
                     </span>
-                    <small>{number}</small>
+                    <div className={styles.cardStatus}><small>{number}</small><b>{openingCount(type)} OPEN</b></div>
                   </div>
                   <p className={styles.cardEyebrow}>{eyebrow}</p>
                   <h3>{title}</h3>

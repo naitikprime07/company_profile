@@ -3040,3 +3040,6 @@ td {
         overflow: hidden
     }
 }
+
+/* Final opening-card containment and toolbar alignment. */
+.dashboard .openingLayout{align-items:stretch;width:100%}.dashboard .openingManagerBar{align-items:center;max-width:none;width:100%}.dashboard .openingManagerBar>div{flex:1;min-width:0}.dashboard .openingManagerBar strong,.dashboard .openingManagerBar span{display:block;max-width:100%;overflow-wrap:anywhere}.dashboard .openingManagerBar>button{flex:none;justify-content:center;white-space:nowrap}.dashboard .openingFilters{width:100%}.dashboard .openingList{align-items:start;grid-auto-rows:minmax(260px,auto)}.dashboard .openingList article{height:100%;min-width:0;overflow:hidden}.dashboard .openingList article>div:first-child{flex:1;min-width:0;width:auto}.dashboard .openingActions{flex:none}.dashboard .openingList h3{display:-webkit-box;max-width:100%;overflow:hidden;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}.dashboard .openingList article p{display:-webkit-box;max-width:100%;overflow:hidden;overflow-wrap:anywhere;white-space:normal;-webkit-box-orient:vertical;-webkit-line-clamp:3}.dashboard .openingDatum{max-width:100%;min-width:0;width:100%}@media(max-width:600px){.dashboard .openingManagerBar{align-items:stretch}.dashboard .openingManagerBar>button{width:100%}}

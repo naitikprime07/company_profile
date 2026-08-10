@@ -32,8 +32,6 @@ import {
   searchContacts,
   searchApplications,
   searchGeneralApplications,
-  setApplicationStatus,
-  setGeneralApplicationStatus,
   deleteGeneralApplication,
   deleteApplication,
 } from "../services/adminService";

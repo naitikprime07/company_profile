@@ -308,6 +308,9 @@
     }
 }
 
+/* Fill the shared admin panel and keep pagination on its bottom edge. */
+.tools,.summary,.pagination{flex:none}.wrap{flex:1;height:auto;max-height:none;min-height:0}.empty{flex:1;height:auto;min-height:0}.wrap table{table-layout:fixed}.wrap th:nth-child(1){width:21%}.wrap th:nth-child(2){width:17%}.wrap th:nth-child(3){width:13%}.wrap th:nth-child(4){width:20%}.wrap th:nth-child(5){width:9%}.wrap th:nth-child(6){width:8%}.wrap th:nth-child(7){width:10%}.wrap td{min-width:0;overflow:hidden}.wrap td:nth-child(4){display:table-cell;overflow-wrap:anywhere;white-space:normal;word-break:break-word}.pagination{margin-top:auto;min-height:58px}
+
 /* Keep the records area stable while API pagination changes the current page. */
 .wrap {
     height: 420px;
@@ -343,3 +346,6 @@
         max-height: 360px
     }
 }
+
+/* Final Inquiry-style sizing: scroll body fills the panel, pagination is last. */
+.tools,.summary,.pagination{flex:none}.wrap{flex:1;height:auto;max-height:none;min-height:0}.empty{flex:1;height:auto;max-height:none;min-height:0}.pagination{margin-top:0;min-height:58px}

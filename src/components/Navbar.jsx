@@ -159,7 +159,7 @@ function Navbar() {
 
   const scheduleServicesClose = () => {
     window.clearTimeout(closeTimer.current);
-    closeTimer.current = window.setTimeout(() => setServicesOpen(false), 700);
+    closeTimer.current = window.setTimeout(() => setServicesOpen(false), 300);
   };
 
   const openTechnology = () => {
@@ -172,7 +172,7 @@ function Navbar() {
     window.clearTimeout(technologyCloseTimer.current);
     technologyCloseTimer.current = window.setTimeout(
       () => setTechnologyOpen(false),
-      700,
+      300,
     );
   };
 

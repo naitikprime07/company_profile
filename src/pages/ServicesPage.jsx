@@ -88,16 +88,26 @@ const groups = [
     number: "05",
     icon: Cloud,
     title: "Cloud & DevOps",
-    statement: "Delivery infrastructure designed for calm, repeatable releases.",
+    statement:
+      "Delivery infrastructure designed for calm, repeatable releases.",
     description:
       "We improve deployment speed, reliability, visibility, and operational confidence across modern cloud environments and delivery pipelines.",
-    services: ["Cloud setup", "Automation", "Continuous delivery", "Monitoring"],
+    services: [
+      "Cloud setup",
+      "Automation",
+      "Continuous delivery",
+      "Monitoring",
+    ],
     outcome: "Manual operations → reliable delivery system",
   },
 ];
 
 const slug = (value) =>
-  value.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
 function ServicesPage() {
   useScrollReveal();
@@ -121,36 +131,57 @@ function ServicesPage() {
             around the outcome your business actually needs.
           </p>
           <nav className={styles.jumpNav} aria-label="Service categories">
-            {groups.map((group) => <a href={`#${group.id}`} key={group.id}>{group.number} {group.title}</a>)}
+            {groups.map((group) => (
+              <a href={`#${group.id}`} key={group.id}>
+                {group.number} {group.title}
+              </a>
+            ))}
           </nav>
         </div>
-        <div className={styles.heroSignal} aria-hidden="true"><i /><i /><i /><i /><i /></div>
+        <div className={styles.heroSignal} aria-hidden="true">
+          <i />
+          <i />
+          <i />
+          <i />
+          <i />
+        </div>
       </section>
 
       <section className={styles.catalog} aria-label="Service catalog">
         <div className="container">
-          {groups.map(({ id, number, icon: Icon, title, statement, description, services, outcome }) => (
-            <article className={styles.group} id={id} key={id} data-reveal>
-              <div className={styles.groupIdentity}>
-                <span>{number}</span>
-                <Icon size={25} aria-hidden="true" />
-              </div>
-              <div className={styles.groupCopy}>
-                <p className={styles.groupLabel}>{title}</p>
-                <h2>{statement}</h2>
-                <p>{description}</p>
-                <small>{outcome}</small>
-              </div>
-              <div className={styles.serviceList}>
-                {services.map((service) => (
-                  <div id={slug(service)} key={service}>
-                    <Check size={15} aria-hidden="true" />
-                    <span>{service}</span>
-                  </div>
-                ))}
-              </div>
-            </article>
-          ))}
+          {groups.map(
+            ({
+              id,
+              number,
+              icon: Icon,
+              title,
+              statement,
+              description,
+              services,
+              outcome,
+            }) => (
+              <article className={styles.group} id={id} key={id} data-reveal>
+                <div className={styles.groupIdentity}>
+                  <span>{number}</span>
+                  <Icon size={25} aria-hidden="true" />
+                </div>
+                <div className={styles.groupCopy}>
+                  <p className={styles.groupLabel}>{title}</p>
+                  <h2>{statement}</h2>
+                  <p>{description}</p>
+                  <small>{outcome}</small>
+                </div>
+                <div className={styles.serviceList}>
+                  {services.map((service) => (
+                    <div id={slug(service)} key={service}>
+                      <Check size={15} aria-hidden="true" />
+                      <span>{service}</span>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ),
+          )}
         </div>
       </section>
 
@@ -160,7 +191,9 @@ function ServicesPage() {
             <p className="eyebrow">Have a specific challenge?</p>
             <h2>Bring us the problem, not a perfect brief.</h2>
           </div>
-          <Link to="/contact">Talk with our team <ArrowRight size={18} /></Link>
+          <Link to="/contact">
+            Talk with our team <ArrowRight size={18} />
+          </Link>
         </div>
       </section>
     </main>

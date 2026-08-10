@@ -1,9 +1,11 @@
 import { lazy, Suspense } from "react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./routes/ScrollToTop";
 import "./App.css";
+import ChatBot from "./components/ChatBot";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -20,15 +22,39 @@ const PhpPage = lazy(() => import("./pages/PhpPage"));
 const FrontendPage = lazy(() => import("./pages/FrontendPage"));
 const DatabasePage = lazy(() => import("./pages/DatabasePage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
+const AdminApplicationDetailsPage = lazy(
+  () => import("./pages/AdminApplicationDetailsPage"),
+);
+const AdminInquiryDetailsPage = lazy(
+  () => import("./pages/AdminInquiryDetailsPage"),
+);
+const AdminIntroductionDetailsPage = lazy(
+  () => import("./pages/AdminIntroductionDetailsPage"),
+);
+const AdminOpeningFormPage = lazy(() => import("./pages/AdminOpeningFormPage"));
 const CareerOpeningsPage = lazy(() => import("./pages/CareerOpeningsPage"));
 const JobApplicationPage = lazy(() => import("./pages/JobApplicationPage"));
+const GeneralApplicationPage = lazy(
+  () => import("./pages/GeneralApplicationPage"),
+);
 const PositionDetailsPage = lazy(() => import("./pages/PositionDetailsPage"));
 
 function App() {
-  const isAdminRoute = useLocation().pathname.startsWith("/admin");
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+  const showIntroductionAnimation = location.pathname === "/career/introduce";
 
   return (
     <div className="site-shell">
+      {showIntroductionAnimation && (
+        <div className="introduction-background-animation" aria-hidden="true">
+          <DotLottieReact
+            src="https://lottie.host/9f146dc3-0499-4e8e-9c1d-47620eccda5a/oXMx13NSaq.lottie"
+            loop
+            autoplay
+          />
+        </div>
+      )}
       <ScrollToTop />
       {!isAdminRoute && <Navbar />}
       <Suspense
@@ -43,11 +69,47 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/career" element={<CareerPage />} />
-          <Route path="/career/internships" element={<CareerOpeningsPage type="internship" />} />
-          <Route path="/career/experienced" element={<CareerOpeningsPage type="experienced" />} />
-          <Route path="/career/apply/:openingId" element={<JobApplicationPage />} />
-          <Route path="/career/position/:openingId" element={<PositionDetailsPage />} />
+          <Route
+            path="/career/internships"
+            element={<CareerOpeningsPage type="internship" />}
+          />
+          <Route
+            path="/career/experienced"
+            element={<CareerOpeningsPage type="experienced" />}
+          />
+          <Route
+            path="/career/apply/:openingId"
+            element={<JobApplicationPage />}
+          />
+          <Route
+            path="/career/introduce"
+            element={<GeneralApplicationPage />}
+          />
+          <Route
+            path="/career/position/:openingId"
+            element={<PositionDetailsPage />}
+          />
           <Route path="/admin" element={<AdminPage />} />
+          <Route
+            path="/admin/applications/:applicationId"
+            element={<AdminApplicationDetailsPage />}
+          />
+          <Route
+            path="/admin/inquiries/:inquiryId"
+            element={<AdminInquiryDetailsPage />}
+          />
+          <Route
+            path="/admin/introductions/:id"
+            element={<AdminIntroductionDetailsPage />}
+          />
+          <Route
+            path="/admin/openings/new"
+            element={<AdminOpeningFormPage />}
+          />
+          <Route
+            path="/admin/openings/:openingId/edit"
+            element={<AdminOpeningFormPage />}
+          />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />
           <Route path="/technology/android" element={<AndroidPage />} />
@@ -99,6 +161,7 @@ function App() {
         </Routes>
       </Suspense>
       {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <ChatBot />}
     </div>
   );
 }

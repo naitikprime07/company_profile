@@ -10,3 +10,6 @@
 @media(max-width:850px){.applicationVisual{display:none}}
 @media(prefers-reduced-motion:reduce){.scanLine{animation:none}.applicationVisual{transform:none}}
 .form footer button{background:var(--button-bg);border:1px solid var(--button-border);box-shadow:var(--button-shadow)}.form footer button:hover,.form footer button:focus-visible{background:var(--button-bg-hover)}
+.phoneControl{display:grid;gap:.55rem;grid-template-columns:88px minmax(0,1fr)}.phoneControl>div,.phoneControl input{min-width:0}.phoneControl>div button{min-height:3.4rem;padding-inline:.65rem}.phoneControl>div>div{min-width:245px}@media(max-width:520px){.phoneControl{grid-template-columns:88px minmax(0,1fr)}}
+.form input[type="number"]{-moz-appearance:textfield;appearance:textfield}.form input[type="number"]::-webkit-inner-spin-button,.form input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.three>div{min-width:0}.three>div>span:first-child{color:#9fb0c5;font:.62rem monospace;letter-spacing:.1em;text-transform:uppercase}.three>div>button{background:#101c2e;border-color:#2b3e59;border-radius:.75rem;min-height:3.4rem}

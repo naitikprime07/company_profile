@@ -5,3 +5,5 @@
 @media(prefers-reduced-motion:reduce){.orbit{animation:none}}
 .vacancy{align-items:center;background:rgb(112 223 160/7%);border:1px solid rgb(112 223 160/18%);border-radius:999px;color:#7fdaa5;display:flex;font-size:.66rem;gap:.4rem;margin-top:1rem;padding:.45rem .65rem;width:max-content}.vacancy strong{color:#9aebba}
 .emptyAnimationWrap{background:radial-gradient(circle,rgb(91 213 255/12%),transparent 68%);height:190px;margin:-1.5rem auto .25rem;overflow:hidden;width:min(100%,280px)}.emptyAnimation{height:100%;width:100%}
+.grid article,.grid h3,.grid article>p,.meta,.meta span{min-width:0}.grid h3,.grid article>p,.meta span{overflow-wrap:anywhere;word-break:break-word;white-space:normal}
+.grid article,.grid h3,.grid article>p,.meta,.meta span{min-width:0}.grid h3,.grid article>p,.meta span{overflow-wrap:anywhere;word-break:break-word;white-space:normal}

@@ -1112,3 +1112,4 @@
     transition: none;
   }
 }
+.openingGrid article,.openingGrid h3,.openingGrid strong,.openingGrid p{min-width:0}.openingGrid h3,.openingGrid strong,.openingGrid p{overflow-wrap:anywhere;word-break:break-word}

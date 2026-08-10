@@ -36,3 +36,15 @@ a {
   outline: 2px solid #65ddff;
   outline-offset: 4px;
 }
+
+/* Admin searches provide their own single, consistently styled clear action. */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Keep long user-managed content inside its container throughout the app. */
+:where(h1, h2, h3, h4, h5, h6, p, li, td, th, a, span, strong, small, label) {
+  overflow-wrap: anywhere;
+}

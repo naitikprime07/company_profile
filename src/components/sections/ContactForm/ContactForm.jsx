@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ArrowUpRight, CheckCircle2, LoaderCircle } from "lucide-react";
 import styles from "./ContactForm.module.css";
 import SelectField from "../../common/SelectField";
@@ -19,17 +19,62 @@ const BUDGET_OPTIONS = [
   "$50k+",
   "Not decided",
 ];
-const MAX_PHONE_DIGITS = 10;
+const COUNTRY_CODES = [
+  {
+    value: "+91",
+    shortLabel: "+91",
+    label: "IN  +91 · India",
+    example: "9876543210",
+    digits: 10,
+  },
+  {
+    value: "+1",
+    shortLabel: "+1",
+    label: "US  +1 · USA / Canada",
+    example: "2025550123",
+    digits: 10,
+  },
+  {
+    value: "+44",
+    shortLabel: "+44",
+    label: "GB  +44 · United Kingdom",
+    example: "7700900123",
+    digits: 10,
+  },
+  {
+    value: "+61",
+    shortLabel: "+61",
+    label: "AU  +61 · Australia",
+    example: "412345678",
+    digits: 9,
+  },
+  {
+    value: "+971",
+    shortLabel: "+971",
+    label: "AE  +971 · UAE",
+    example: "501234567",
+    digits: 9,
+  },
+  {
+    value: "+65",
+    shortLabel: "+65",
+    label: "SG  +65 · Singapore",
+    example: "81234567",
+    digits: 8,
+  },
+];
 
-function limitPhoneNumber(event) {
+function limitPhoneNumber(event, maximum) {
   const input = event.currentTarget;
-  const digits = input.value.replace(/\D/g, "").slice(0, MAX_PHONE_DIGITS);
+  const digits = input.value.replace(/\D/g, "").slice(0, maximum);
 
   input.value = digits;
   return digits.length;
 }
 
 function ContactForm() {
+  const phoneRef = useRef(null);
+  const [countryCode, setCountryCode] = useState("+91");
   const [submission, setSubmission] = useState({ status: "idle", message: "" });
   const [counts, setCounts] = useState({ company: 0, message: 0, phone: 0 });
 
@@ -43,8 +88,14 @@ function ContactForm() {
   };
 
   const handlePhoneInput = (event) => {
-    const phoneDigits = limitPhoneNumber(event);
+    const phoneDigits = limitPhoneNumber(event, phoneConfig.digits);
     setCounts((current) => ({ ...current, phone: phoneDigits }));
+  };
+
+  const handleCountryChange = (code) => {
+    setCountryCode(code);
+    if (phoneRef.current) phoneRef.current.value = "";
+    setCounts((current) => ({ ...current, phone: 0 }));
   };
 
   const handleSubmit = async (event) => {
@@ -52,12 +103,15 @@ function ContactForm() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
+    payload.phone = `${payload.countryCode}${payload.phone}`;
+    delete payload.countryCode;
 
     setSubmission({ status: "loading", message: "" });
 
     try {
       const result = await submitContact(payload);
       form.reset();
+      setCountryCode("+91");
       setCounts({ company: 0, message: 0, phone: 0 });
       setSubmission({ status: "success", message: result.message });
     } catch (error) {
@@ -69,7 +123,21 @@ function ContactForm() {
     }
   };
 
+  // Auto-hide success/error message after 4 seconds
+  useEffect(() => {
+    if (submission.status === "success" || submission.status === "error") {
+      const timer = setTimeout(() => {
+        setSubmission({ status: "idle", message: "" });
+      }, 4000);
+
+      return () => clearTimeout(timer); // cleanup — jo naya submission aave to old timer cancel
+    }
+  }, [submission.status, submission.message]);
+
   const isSubmitting = submission.status === "loading";
+  const phoneConfig =
+    COUNTRY_CODES.find((country) => country.value === countryCode) ||
+    COUNTRY_CODES[0];
 
   return (
     <form
@@ -106,40 +174,55 @@ function ContactForm() {
           />
         </label>
       </div>
-      <label>
-        <span className={styles.labelRow}>
-          <span>Company or organization</span>
-          <small>{counts.company}/150</small>
-        </span>
-        <input
-          name="company"
-          type="text"
-          autoComplete="organization"
-          placeholder="Company name (optional)"
-          maxLength={150}
-          onInput={updateCount("company")}
-        />
-      </label>
-      <label>
-        <span className={styles.labelRow}>
-          <span>Mobile number</span>
-          <small>
-            {counts.phone}/{MAX_PHONE_DIGITS} digits
-          </small>
-        </span>
-        <input
-          name="phone"
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          placeholder="9876543210"
-          maxLength={MAX_PHONE_DIGITS}
-          pattern="[1-9][0-9]{9}"
-          title="Enter a 10-digit mobile number"
-          onInput={handlePhoneInput}
-          required
-        />
-      </label>
+      <div className={styles.twoColumns}>
+        <label>
+          <span className={styles.labelRow}>
+            <span>Company or organization</span>
+            <small>{counts.company}/150</small>
+          </span>
+          <input
+            name="company"
+            type="text"
+            autoComplete="organization"
+            placeholder="Company name (optional)"
+            maxLength={150}
+            onInput={updateCount("company")}
+          />
+        </label>
+        <label>
+          <span className={styles.labelRow}>
+            <span>Mobile number</span>
+            <small>
+              {counts.phone}/{phoneConfig.digits} digits
+            </small>
+          </span>
+          <span className={styles.phoneControl}>
+            <SelectField
+              label=""
+              name="countryCode"
+              placeholder="Code"
+              options={COUNTRY_CODES}
+              defaultValue="+91"
+              onChange={handleCountryChange}
+              required
+            />
+            <input
+              ref={phoneRef}
+              name="phone"
+              type="tel"
+              inputMode="numeric"
+              autoComplete="tel-national"
+              placeholder={phoneConfig.example}
+              minLength={phoneConfig.digits}
+              maxLength={phoneConfig.digits}
+              pattern={`[1-9][0-9]{${phoneConfig.digits - 1}}`}
+              title={`Enter ${phoneConfig.digits} digits without the country code`}
+              onInput={handlePhoneInput}
+              required
+            />
+          </span>
+        </label>
+      </div>
       <div className={styles.twoColumns}>
         <SelectField
           label="What can we help with?"

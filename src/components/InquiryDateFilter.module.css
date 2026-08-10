@@ -1,0 +1,166 @@
+.root {
+    flex: none;
+    position: relative
+}
+
+.trigger {
+    align-items: center;
+    background: #101f33;
+    border: 1px solid #29415e;
+    border-radius: .6rem;
+    color: #8fa5bb;
+    cursor: pointer;
+    display: flex;
+    font-size: .58rem;
+    gap: .45rem;
+    height: 38px;
+    max-width: 220px;
+    padding: 0 .65rem
+}
+
+.trigger>span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.trigger>i {
+    align-items: center;
+    color: #8096ac;
+    display: flex;
+    margin-left: auto
+}
+
+.trigger.active {
+    background: #132b46;
+    border-color: #386485;
+    color: #6edbff
+}
+
+.popover {
+    background: #101e31;
+    border: 1px solid #304a68;
+    border-radius: .8rem;
+    box-shadow: 0 1.3rem 3.5rem rgb(0 0 0/45%);
+    display: grid;
+    gap: .9rem;
+    padding: 1rem;
+    position: absolute;
+    right: 0;
+    top: calc(100% + .5rem);
+    width: 310px;
+    z-index: 20
+}
+
+.popover header {
+    display: grid;
+    gap: .18rem
+}
+
+.popover header strong {
+    font-size: .72rem
+}
+
+.popover header small {
+    color: #72879d;
+    font-size: .55rem
+}
+
+.modes {
+    background: #0a1727;
+    border-radius: .5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: .22rem
+}
+
+.modes button {
+    background: transparent;
+    border: 0;
+    border-radius: .4rem;
+    color: #71869c;
+    cursor: pointer;
+    font-size: .58rem;
+    padding: .48rem
+}
+
+.modes .selected {
+    background: #183b5e;
+    color: #6fdcff
+}
+
+.fields {
+    display: grid;
+    gap: .7rem
+}
+
+.fields label {
+    color: #71879e;
+    display: grid;
+    font-size: .52rem;
+    gap: .35rem
+}
+
+.fields input {
+    background: #0b192a;
+    border: 1px solid #2a435f;
+    border-radius: .5rem;
+    color: #d8e6f4;
+    color-scheme: dark;
+    font: inherit;
+    outline: 0;
+    padding: .65rem;
+    width: 100%
+}
+
+.fields input:focus {
+    border-color: #4b7da1;
+    box-shadow: 0 0 0 3px rgb(91 213 255/7%)
+}
+
+.popover footer {
+    align-items: center;
+    border-top: 1px solid #21344d;
+    display: flex;
+    justify-content: space-between;
+    padding-top: .8rem
+}
+
+.popover footer button {
+    background: transparent;
+    border: 0;
+    color: #8297ac;
+    cursor: pointer;
+    font-size: .58rem;
+    padding: .5rem
+}
+
+.popover footer button:last-child {
+    background: #194a75;
+    border: 1px solid #3b749b;
+    border-radius: .45rem;
+    color: #77dfff;
+    font-weight: 750
+}
+
+.popover footer button:disabled {
+    cursor: not-allowed;
+    opacity: .4
+}
+
+@media(max-width:650px) {
+    .root {
+        width: 100%
+    }
+
+    .trigger {
+        max-width: none;
+        width: 100%
+    }
+
+    .popover {
+        left: 0;
+        right: auto;
+        width: min(310px, calc(100vw - 2rem))
+    }
+}

@@ -12,3 +12,4 @@
 @media(max-width:900px){.factBar{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.factBar{grid-template-columns:1fr}}
 .applyCard>a{background:var(--button-bg);border:1px solid var(--button-border);box-shadow:var(--button-shadow)}.applyCard>a:hover,.applyCard>a:focus-visible{background:var(--button-bg-hover)}
+.heroLayout>div,.factBar article,.factBar article>div,.layout,.story,.chapter,.chapter>header>div,.requirements li,.requirements li>span{min-width:0}.hero h1,.summary,.factBar strong,.chapter h2,.prose,.requirements li span{overflow-wrap:anywhere;word-break:break-word}.prose{white-space:pre-wrap}

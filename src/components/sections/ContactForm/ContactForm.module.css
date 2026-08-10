@@ -237,3 +237,19 @@
 .form textarea:hover {
   border-color: rgb(91 213 255 / 24%);
 }
+.phoneControl {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 88px minmax(0, 1fr);
+}
+.phoneControl > div,
+.phoneControl > input {
+  min-width: 0;
+}
+.phoneControl > div > button {
+  min-height: 3.35rem;
+  padding-inline: 0.65rem;
+}
+.phoneControl > div > div {
+  min-width: 245px;
+}

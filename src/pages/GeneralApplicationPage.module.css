@@ -186,23 +186,27 @@
 
 .error,
 .success {
+    align-items: center;
     border-radius: .7rem;
-    padding: 1rem
+    box-shadow: 0 .8rem 2rem rgb(0 0 0 / 24%);
+    display: flex;
+    gap: .8rem;
+    padding: 1rem;
+    position: sticky;
+    top: 5.5rem;
+    z-index: 15
 }
 
 .error {
-    background: #351c27;
-    border: 1px solid #693044;
+    background: rgb(58 27 40 / 98%);
+    border: 1px solid rgb(255 100 120 / 35%);
     color: #ff9db3
 }
 
 .success {
-    align-items: center;
-    background: #142e2a;
-    border: 1px solid #2f6256;
+    background: rgb(17 54 46 / 98%);
+    border: 1px solid rgb(80 220 140 / 38%);
     color: #75dfa9;
-    display: flex;
-    gap: .7rem
 }
 
 .success p {

@@ -9,8 +9,9 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import InquiryDateFilter from "./InquiryDateFilter";
+import InquiryDateFilter from "./AdminDateRangeFilter";
 import styles from "./AdminRecordsTable.module.css";
+
 export default function ServerAdminRecordsTable({
   fetchPage,
   statuses,
@@ -18,6 +19,7 @@ export default function ServerAdminRecordsTable({
   onView,
   roleLabel,
   roleValue,
+  onTotalChange,
 }) {
   const [q, setQ] = useState(""),
     [status, setStatus] = useState("all"),
@@ -37,6 +39,7 @@ export default function ServerAdminRecordsTable({
           if (live) {
             setRows(r.items);
             setMeta(r.pagination);
+            onTotalChange?.(r.pagination.total);
           }
         })
         .finally(() => live && setLoading(false));
@@ -45,7 +48,7 @@ export default function ServerAdminRecordsTable({
       live = false;
       clearTimeout(timer);
     };
-  }, [fetchPage, from, page, q, reload, status, to]);
+  }, [fetchPage, from, onTotalChange, page, q, reload, status, to]);
   const reset = (fn, value) => {
     fn(value);
     setPage(1);
@@ -97,7 +100,7 @@ export default function ServerAdminRecordsTable({
       <div className={styles.summary}>
         Showing {rows.length} of {meta.total} records
       </div>
-      {loading ? (
+      {loading && rows.length === 0 ? (
         <p className={styles.empty}>Loading records…</p>
       ) : rows.length === 0 ? (
         <p className={styles.empty}>No records match these filters.</p>
@@ -124,16 +127,10 @@ export default function ServerAdminRecordsTable({
                     </strong>
                   </td>
                   <td>
-                    <a href={`mailto:${item.email}`}>
-                      <Mail size={12} />
-                      {item.email}
-                    </a>
+                    <strong>{item.email}</strong>
                   </td>
                   <td>
-                    <a href={`tel:${item.phone}`}>
-                      <Phone size={12} />
-                      {item.phone}
-                    </a>
+                    <strong>{item.phone}</strong>
                   </td>
                   <td>{roleValue(item)}</td>
                   <td>{new Date(item.createdAt).toLocaleDateString()}</td>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Activity,
@@ -17,6 +17,7 @@ import {
   Pencil,
   Plus,
   Search,
+  X,
   Trash2,
   Users,
 } from "lucide-react";
@@ -24,20 +25,20 @@ import {
   createOpening,
   deleteContact,
   deleteOpening,
+  getDashboard,
   getAdminOpenings,
-  getApplications,
-  getGeneralApplications,
-  getContacts,
   loginAdmin,
   searchContacts,
   searchApplications,
   searchGeneralApplications,
+  searchAdminOpenings,
   deleteGeneralApplication,
   deleteApplication,
 } from "../services/adminService";
 import styles from "./AdminPage.module.css";
-import InquiryDateFilter from "../components/InquiryDateFilter";
+import InquiryDateFilter from "../components/AdminDateRangeFilter";
 import ServerAdminRecordsTable from "../components/ServerAdminRecordsTable";
+import useConfirmDelete from "../hooks/useConfirmDelete";
 
 const STATUS_LABELS = {
   new: "New",
@@ -59,19 +60,26 @@ const VIEW_TITLES = {
   introductions: "Open introductions",
 };
 const OPENINGS_PER_PAGE = 6;
-
 function AdminPage() {
+  const { confirmDelete, deleteDialog } = useConfirmDelete();
   const navigate = useNavigate();
   const [token, setToken] = useState(sessionStorage.getItem("adminToken"));
   const [activeView, setActiveView] = useState(
-    ["#inquiries", "#applications", "#openings"].includes(window.location.hash)
+    ["#inquiries", "#applications", "#openings", "#introductions"].includes(
+      window.location.hash,
+    )
       ? window.location.hash.slice(1)
-      : "dashboard",
+      : sessionStorage.getItem("adminActiveView") || "dashboard",
   );
   const [contacts, setContacts] = useState([]);
   const [openings, setOpenings] = useState([]);
-  const [applications, setApplications] = useState([]);
-  const [introductions, setIntroductions] = useState([]);
+  const [applicationTotal, setApplicationTotal] = useState(0);
+  const [introductionTotal, setIntroductionTotal] = useState(0);
+  const [dashboardData, setDashboardData] = useState({
+    counts: {},
+    applicationPipeline: {},
+    recentContacts: [],
+  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [inquirySearch, setInquirySearch] = useState("");
@@ -79,7 +87,17 @@ function AdminPage() {
   const [inquiryFromDate, setInquiryFromDate] = useState("");
   const [inquiryToDate, setInquiryToDate] = useState("");
   const [openingFilter, setOpeningFilter] = useState("all");
+  const [openingSearch, setOpeningSearch] = useState("");
+  const [openingFromDate, setOpeningFromDate] = useState("");
+  const [openingToDate, setOpeningToDate] = useState("");
   const [openingPage, setOpeningPage] = useState(1);
+  const [openingPagination, setOpeningPagination] = useState({
+    page: 1,
+    limit: OPENINGS_PER_PAGE,
+    total: 0,
+    totalPages: 1,
+  });
+  const [searchingOpenings, setSearchingOpenings] = useState(false);
   const [deletingInquiry, setDeletingInquiry] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [inquiryPage, setInquiryPage] = useState(1);
@@ -91,23 +109,15 @@ function AdminPage() {
   });
   const [inquiryRefresh, setInquiryRefresh] = useState(0);
   const [searchingInquiries, setSearchingInquiries] = useState(false);
-  const loadedTokenRef = useRef(null);
-
-  const load = async () => {
+  const [inquiryStatusCounts, setInquiryStatusCounts] = useState({});
+  const loadDashboard = async () => {
     setLoading(true);
     setError("");
     try {
-      const [contactData, openingData, applicationData, introductionData] =
-        await Promise.all([
-          getContacts(),
-          getAdminOpenings(),
-          getApplications(),
-          getGeneralApplications(),
-        ]);
-      setContacts(contactData);
-      setOpenings(openingData);
-      setApplications(applicationData);
-      setIntroductions(introductionData);
+      const data = await getDashboard();
+      setDashboardData(data);
+      setContacts(data.recentContacts || []);
+      setApplicationTotal(data.counts?.totalApplications || 0);
     } catch (requestError) {
       setError(requestError.message);
     } finally {
@@ -116,59 +126,90 @@ function AdminPage() {
   };
 
   useEffect(() => {
-    if (!token) {
-      loadedTokenRef.current = null;
-      return;
+    if (!token) return;
+    if (activeView === "dashboard") {
+      loadDashboard();
     }
-    if (loadedTokenRef.current === token) return;
-    loadedTokenRef.current = token;
-    load();
-  }, [token]);
+  }, [activeView, token]);
 
   const changeView = (view) => {
     if (view === activeView) return;
+    if (view === "inquiries") {
+      setInquirySearch("");
+      setInquiryFilter("all");
+      setInquiryFromDate("");
+      setInquiryToDate("");
+      setInquiryPage(1);
+      setFilteredContacts([]);
+      setSearchingInquiries(true);
+    }
+    if (view === "openings") {
+      setOpeningFilter("all");
+      setOpeningSearch("");
+      setOpeningFromDate("");
+      setOpeningToDate("");
+      setOpeningPage(1);
+    }
+    sessionStorage.setItem("adminActiveView", view);
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}#${view}`,
+    );
     setActiveView(view);
   };
 
   const stats = useMemo(
     () => ({
-      total: contacts.length,
-      new: contacts.filter((item) => item.status === "new").length,
-      active: contacts.filter((item) => item.status === "in_progress").length,
-      openings: openings
-        .filter((item) => item.isActive)
-        .reduce((total, item) => total + (Number(item.vacancies) || 1), 0),
-      applications: applications.length,
+      total: dashboardData.counts?.totalInquiries || 0,
+      new: dashboardData.counts?.newInquiries || 0,
+      active: dashboardData.counts?.activeInquiries || 0,
+      openings: dashboardData.counts?.openVacancies || 0,
+      applications: dashboardData.counts?.totalApplications || 0,
     }),
-    [contacts, openings, applications],
+    [dashboardData],
   );
-  const filteredOpenings = useMemo(
-    () =>
-      openings.filter((opening) => {
-        if (openingFilter === "active") return opening.isActive;
-        if (openingFilter === "inactive") return !opening.isActive;
-        if (openingFilter === "internship" || openingFilter === "experienced")
-          return opening.type === openingFilter;
-        return true;
-      }),
-    [openingFilter, openings],
-  );
-  const openingTotalPages = Math.max(
-    1,
-    Math.ceil(filteredOpenings.length / OPENINGS_PER_PAGE),
-  );
-  const paginatedOpenings = useMemo(
-    () =>
-      filteredOpenings.slice(
-        (openingPage - 1) * OPENINGS_PER_PAGE,
-        openingPage * OPENINGS_PER_PAGE,
-      ),
-    [filteredOpenings, openingPage],
-  );
+  const openingTotalPages = openingPagination.totalPages;
+  const paginatedOpenings = openings;
 
   useEffect(() => {
     if (openingPage > openingTotalPages) setOpeningPage(openingTotalPages);
   }, [openingPage, openingTotalPages]);
+
+  useEffect(() => {
+    if (!token || activeView !== "openings") return undefined;
+    let current = true;
+    setSearchingOpenings(true);
+    const timer = window.setTimeout(() => {
+      searchAdminOpenings(
+        openingSearch,
+        openingFilter,
+        openingPage,
+        OPENINGS_PER_PAGE,
+        openingFromDate,
+        openingToDate,
+      )
+        .then((result) => {
+          if (!current) return;
+          setOpenings(result.items);
+          setOpeningPagination(result.pagination);
+        })
+        .catch((requestError) => current && setError(requestError.message))
+        .finally(() => current && setSearchingOpenings(false));
+    }, 300);
+    return () => {
+      current = false;
+      window.clearTimeout(timer);
+    };
+  }, [
+    activeView,
+    openingFilter,
+    openingFromDate,
+    openingPage,
+    openingSearch,
+    openingToDate,
+    token,
+  ]);
 
   useEffect(() => {
     if (!token || activeView !== "inquiries") return undefined;
@@ -188,6 +229,7 @@ function AdminPage() {
         if (current) {
           setFilteredContacts(result.items);
           setInquiryPagination(result.pagination);
+          setInquiryStatusCounts(result.statusCounts || {});
         }
       } catch (requestError) {
         if (current) setError(requestError.message);
@@ -218,6 +260,7 @@ function AdminPage() {
       const form = new FormData(event.currentTarget);
       const data = await loginAdmin(form.get("email"), form.get("password"));
       sessionStorage.setItem("adminToken", data.token);
+      sessionStorage.setItem("adminActiveView", "dashboard");
       setActiveView("dashboard");
       window.history.replaceState(null, "", window.location.pathname);
       setToken(data.token);
@@ -291,16 +334,18 @@ function AdminPage() {
       const payload = Object.fromEntries(new FormData(form));
       await createOpening({ ...payload, isActive: true });
       form.reset();
-      await load();
+      const openingData = await getAdminOpenings();
+      setOpenings(openingData);
     } catch (requestError) {
       setError(requestError.message);
     }
   };
   const removeInquiry = async (contact) => {
     if (
-      !window.confirm(
-        `Delete the inquiry from ${contact.name}? This cannot be undone.`,
-      )
+      !(await confirmDelete({
+        title: "Delete this inquiry?",
+        itemName: contact.name,
+      }))
     )
       return;
     setError("");
@@ -362,11 +407,8 @@ function AdminPage() {
             onClick={() => changeView("applications")}
           >
             <Files size={18} /> Applications{" "}
-            {applications.filter((item) => item.status === "new").length >
-              0 && (
-              <b>
-                {applications.filter((item) => item.status === "new").length}
-              </b>
+            {(dashboardData.counts?.newApplications || 0) > 0 && (
+              <b>{dashboardData.counts.newApplications}</b>
             )}
           </button>
           <button
@@ -374,11 +416,8 @@ function AdminPage() {
             onClick={() => changeView("introductions")}
           >
             <Users size={18} /> Talent introductions{" "}
-            {introductions.filter((item) => item.status === "new").length >
-              0 && (
-              <b>
-                {introductions.filter((item) => item.status === "new").length}
-              </b>
+            {(dashboardData.counts?.newIntroductions || 0) > 0 && (
+              <b>{dashboardData.counts.newIntroductions}</b>
             )}
           </button>
           <button
@@ -505,7 +544,7 @@ function AdminPage() {
                   <span>
                     <i
                       style={{
-                        width: `${contacts.length ? Math.round((stats.new / contacts.length) * 100) : 0}%`,
+                        width: `${stats.total ? Math.round((stats.new / stats.total) * 100) : 0}%`,
                       }}
                     />
                   </span>
@@ -517,17 +556,12 @@ function AdminPage() {
                   <span>
                     <i
                       style={{
-                        width: `${applications.length ? Math.round((applications.filter((item) => item.status !== "new").length / applications.length) * 100) : 0}%`,
+                        width: `${stats.applications ? Math.round(((dashboardData.counts?.reviewedApplications || 0) / stats.applications) * 100) : 0}%`,
                       }}
                     />
                   </span>
                   <p>
-                    <b>
-                      {
-                        applications.filter((item) => item.status !== "new")
-                          .length
-                      }
-                    </b>{" "}
+                    <b>{dashboardData.counts?.reviewedApplications || 0}</b>{" "}
                     applications reviewed
                   </p>
                 </div>
@@ -551,11 +585,8 @@ function AdminPage() {
                   <div>
                     <strong>Review candidates</strong>
                     <small>
-                      {
-                        applications.filter((item) => item.status === "new")
-                          .length
-                      }{" "}
-                      awaiting review
+                      {dashboardData.counts?.newApplications || 0} awaiting
+                      review
                     </small>
                   </div>
                   <ArrowUpRight size={15} />
@@ -568,17 +599,14 @@ function AdminPage() {
                   <h2>Hiring pipeline</h2>
                   <p>A live view of candidate progress.</p>
                 </div>
-                <span>{applications.length} candidates</span>
+                <span>{stats.applications} candidates</span>
               </div>
               <div className={styles.pipelineGrid}>
                 {Object.entries(APPLICATION_STATUS).map(([status, label]) => (
                   <article key={status}>
                     <span className={styles[status]}>{label}</span>
                     <strong>
-                      {
-                        applications.filter((item) => item.status === status)
-                          .length
-                      }
+                      {dashboardData.applicationPipeline?.[status] || 0}
                     </strong>
                     <small>candidates</small>
                   </article>
@@ -594,7 +622,7 @@ function AdminPage() {
                   <h2>Contact requests</h2>
                   <p>Review and follow up with prospective clients.</p>
                 </div>
-                <span>{contacts.length} records</span>
+                <span>{inquiryPagination.total} records</span>
               </div>
               <div className={styles.inquiryTools}>
                 <label>
@@ -651,12 +679,7 @@ function AdminPage() {
                       >
                         {label}
                         {value !== "all" && (
-                          <b>
-                            {
-                              contacts.filter((item) => item.status === value)
-                                .length
-                            }
-                          </b>
+                          <b>{inquiryStatusCounts[value] || 0}</b>
                         )}
                       </button>
                     );
@@ -678,7 +701,7 @@ function AdminPage() {
                 <p className={styles.empty}>Searching inquiries…</p>
               ) : filteredContacts.length === 0 ? (
                 <p className={styles.empty}>
-                  {contacts.length
+                  {inquiryPagination.total
                     ? "No inquiries match your search or filter."
                     : "No inquiries received yet."}
                 </p>
@@ -704,16 +727,10 @@ function AdminPage() {
                               <strong>{contact.name}</strong>
                             </td>
                             <td>
-                              <a href={`mailto:${contact.email}`}>
-                                <Mail size={12} />
-                                {contact.email}
-                              </a>
+                              <strong>{contact.email}</strong>
                             </td>
                             <td>
-                              <a href={`tel:${contact.phone}`}>
-                                <Phone size={12} />
-                                {contact.phone}
-                              </a>
+                              <strong>{contact.phone}</strong>
                             </td>
                             <td>
                               <span>{contact.company || "Independent"}</span>
@@ -827,25 +844,25 @@ function AdminPage() {
                   progress.
                 </p>
               </div>
-              <span>{applications.length} records</span>
+              <span>{applicationTotal} records</span>
             </div>
             <ServerAdminRecordsTable
+              key="job-applications-table"
               fetchPage={searchApplications}
               statuses={APPLICATION_STATUS}
               roleLabel="Opening"
               roleValue={(item) => item.openingTitle}
+              onTotalChange={setApplicationTotal}
               onView={(item) => navigate(`/admin/applications/${item._id}`)}
               onDelete={async (item) => {
                 if (
-                  !window.confirm(
-                    `Delete the application from ${item.firstName} ${item.lastName}?`,
-                  )
+                  !(await confirmDelete({
+                    title: "Delete this application?",
+                    itemName: `${item.firstName} ${item.lastName}`,
+                  }))
                 )
                   return;
                 await deleteApplication(item._id);
-                setApplications((list) =>
-                  list.filter((entry) => entry._id !== item._id),
-                );
               }}
             />
           </section>
@@ -859,9 +876,10 @@ function AdminPage() {
                   listed.
                 </p>
               </div>
-              <span>{introductions.length} records</span>
+              <span>{introductionTotal} records</span>
             </div>
             <ServerAdminRecordsTable
+              key="open-introductions-table"
               fetchPage={searchGeneralApplications}
               statuses={{
                 new: "New",
@@ -871,68 +889,95 @@ function AdminPage() {
               }}
               roleLabel="Interested role"
               roleValue={(item) => item.desiredRole}
+              onTotalChange={setIntroductionTotal}
               onView={(item) => navigate(`/admin/introductions/${item._id}`)}
               onDelete={async (item) => {
                 if (
-                  !window.confirm(
-                    `Delete the introduction from ${item.firstName} ${item.lastName}?`,
-                  )
+                  !(await confirmDelete({
+                    title: "Delete this introduction?",
+                    itemName: `${item.firstName} ${item.lastName}`,
+                  }))
                 )
                   return;
                 await deleteGeneralApplication(item._id);
-                setIntroductions((list) =>
-                  list.filter((entry) => entry._id !== item._id),
-                );
               }}
             />
           </section>
         ) : (
           <div className={styles.openingLayout}>
-            <div className={styles.openingManagerBar}>
-              <div>
-                <strong>Manage openings</strong>
-                <span>
-                  Filter, edit, or remove published career opportunities.
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => navigate("/admin/openings/new")}
-              >
-                <Plus size={15} /> Create opening
-              </button>
-            </div>
-            <div className={styles.openingFilters}>
-              {[
-                ["all", "All"],
-                ["active", "Active"],
-                ["inactive", "Inactive"],
-                ["experienced", "Experienced"],
-                ["internship", "Internships"],
-              ].map(([value, label]) => (
+            <div className={styles.openingControlsPanel}>
+              <div className={styles.openingManagerBar}>
+                <div>
+                  <strong>Manage openings</strong>
+                  <span>
+                    Filter, edit, or remove published career opportunities.
+                  </span>
+                </div>
                 <button
                   type="button"
-                  className={openingFilter === value ? styles.filterActive : ""}
-                  key={value}
-                  onClick={() => {
-                    setOpeningFilter(value);
+                  onClick={() => navigate("/admin/openings/new")}
+                >
+                  <Plus size={15} /> Create opening
+                </button>
+              </div>
+              <div className={styles.openingSearchTools}>
+                <label>
+                  <Search size={14} />
+                  <input
+                    type="search"
+                    value={openingSearch}
+                    onChange={(event) => {
+                      setOpeningSearch(event.target.value);
+                      setOpeningPage(1);
+                    }}
+                    placeholder="Search title, location, experience or commitment…"
+                  />
+                  {openingSearch && (
+                    <button
+                      type="button"
+                      aria-label="Clear opening search"
+                      onClick={() => {
+                        setOpeningSearch("");
+                        setOpeningPage(1);
+                      }}
+                    >
+                      <X size={13} />
+                    </button>
+                  )}
+                </label>
+                <InquiryDateFilter
+                  fromDate={openingFromDate}
+                  toDate={openingToDate}
+                  onApply={(from, to) => {
+                    setOpeningFromDate(from);
+                    setOpeningToDate(to);
                     setOpeningPage(1);
                   }}
-                >
-                  {label}
-                  <b>
-                    {value === "all"
-                      ? openings.length
-                      : openings.filter((item) =>
-                          value === "active"
-                            ? item.isActive
-                            : value === "inactive"
-                              ? !item.isActive
-                              : item.type === value,
-                        ).length}
-                  </b>
-                </button>
-              ))}
+                />
+              </div>
+              <div className={styles.openingFilters}>
+                {[
+                  ["all", "All"],
+                  ["active", "Active"],
+                  ["inactive", "Inactive"],
+                  ["experienced", "Experienced"],
+                  ["internship", "Internships"],
+                ].map(([value, label]) => (
+                  <button
+                    type="button"
+                    className={
+                      openingFilter === value ? styles.filterActive : ""
+                    }
+                    key={value}
+                    onClick={() => {
+                      setOpeningFilter(value);
+                      setOpeningPage(1);
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
             <section className={`${styles.panel} ${styles.legacyOpeningForm}`}>
               <div className={styles.panelHead}>
@@ -1048,14 +1093,16 @@ function AdminPage() {
                   <p>Currently managed positions.</p>
                 </div>
                 <span>
-                  {filteredOpenings.length} shown · {openings.length} total
+                  {openings.length} shown · {openingPagination.total} total
                 </span>
               </div>
               <div className={styles.openingList}>
-                {filteredOpenings.length === 0 ? (
+                {searchingOpenings ? (
+                  <p className={styles.empty}>Loading openings…</p>
+                ) : openings.length === 0 ? (
                   <p className={styles.empty}>
-                    {openings.length
-                      ? "No openings match this filter."
+                    {openingSearch || openingFilter !== "all" || openingFromDate
+                      ? "No openings match these filters."
                       : "No openings published."}
                   </p>
                 ) : (
@@ -1112,9 +1159,10 @@ function AdminPage() {
                           title="Delete opening"
                           onClick={async () => {
                             if (
-                              !window.confirm(
-                                `Delete ${opening.title}? This cannot be undone.`,
-                              )
+                              !(await confirmDelete({
+                                title: "Delete this opening?",
+                                itemName: opening.title,
+                              }))
                             )
                               return;
                             await deleteOpening(opening._id);
@@ -1130,7 +1178,7 @@ function AdminPage() {
                   ))
                 )}
               </div>
-              {filteredOpenings.length > 0 && (
+              {openings.length > 0 && (
                 <nav
                   className={styles.pagination}
                   aria-label="Openings pagination"
@@ -1175,6 +1223,7 @@ function AdminPage() {
           </div>
         )}
       </div>
+      {deleteDialog}
     </main>
   );
 }

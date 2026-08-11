@@ -38,14 +38,24 @@ export async function uploadResume(file) {
 }
 
 export async function submitApplication(openingId, application) {
-  const response = await fetch(`${ENVIRONMENT.apiBaseUrl}/applications/${openingId}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(application),
-  });
+  const response = await fetch(
+    `${ENVIRONMENT.apiBaseUrl}/applications/${openingId}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(application),
+    },
+  );
   return parseResponse(response, "Unable to submit your application.");
 }
 export async function submitGeneralApplication(application) {
-  const response = await fetch(`${ENVIRONMENT.apiBaseUrl}/applications/general`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(application) });
+  const response = await fetch(
+    `${ENVIRONMENT.apiBaseUrl}/applications/general`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(application),
+    },
+  );
   return parseResponse(response, "Unable to submit your introduction.");
 }

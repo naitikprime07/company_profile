@@ -94,18 +94,8 @@ export default function AdminInquiryDetailsPage() {
             <div className={styles.grid}>
               <Field label="NAME">{item.name}</Field>
               <Field label="COMPANY">{item.company || "Independent"}</Field>
-              <Field label="EMAIL">
-                <a href={`mailto:${item.email}`}>
-                  <Mail size={14} />
-                  {item.email}
-                </a>
-              </Field>
-              <Field label="PHONE">
-                <a href={`tel:${item.phone}`}>
-                  <Phone size={14} />
-                  {item.phone}
-                </a>
-              </Field>
+              <Field label="EMAIL">{item.email}</Field>
+              <Field label="PHONE">{item.phone}</Field>
             </div>
           </section>
           <section className={styles.card}>

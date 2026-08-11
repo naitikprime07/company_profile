@@ -16,6 +16,7 @@ import {
   setApplicationStatus,
 } from "../services/adminService";
 import styles from "./AdminApplicationDetailsPage.module.css";
+import useConfirmDelete from "../hooks/useConfirmDelete";
 
 const STATUSES = {
   new: "New",
@@ -35,6 +36,7 @@ function Field({ label, children }) {
 }
 
 export default function AdminApplicationDetailsPage() {
+  const { confirmDelete, deleteDialog } = useConfirmDelete();
   const { applicationId } = useParams();
   const navigate = useNavigate();
   const [application, setApplication] = useState(null);
@@ -66,9 +68,12 @@ export default function AdminApplicationDetailsPage() {
   };
   const remove = async () => {
     if (
-      !window.confirm(
-        "Delete this application permanently? This cannot be undone.",
-      )
+      !(await confirmDelete({
+        title: "Delete this application?",
+        itemName: application
+          ? `${application.firstName} ${application.lastName}`
+          : "Application record",
+      }))
     )
       return;
     setWorking(true);
@@ -148,18 +153,8 @@ export default function AdminApplicationDetailsPage() {
               <div className={styles.grid}>
                 <Field label="FULL NAME">{name}</Field>
                 <Field label="LOCATION">{application.location}</Field>
-                <Field label="EMAIL">
-                  <a href={`mailto:${application.email}`}>
-                    <Mail size={13} />
-                    {application.email}
-                  </a>
-                </Field>
-                <Field label="PHONE">
-                  <a href={`tel:${application.phone}`}>
-                    <Phone size={13} />
-                    {application.phone}
-                  </a>
-                </Field>
+                <Field label="EMAIL">{application.email}</Field>
+                <Field label="PHONE">{application.phone}</Field>
               </div>
             </section>
             <section className={styles.card}>
@@ -197,19 +192,18 @@ export default function AdminApplicationDetailsPage() {
             <section className={styles.card}>
               <h2>Resume</h2>
               {application.resumeUrl ? (
-                <a
+                <button
+                  type="button"
                   className={styles.resume}
-                  href={application.resumeUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  onClick={() => window.open(application.resumeUrl, "_blank", "noopener,noreferrer")}
                 >
                   <Files size={18} />
                   <span>
-                    <strong>Open resume</strong>
+                    <strong>View resume</strong>
                     <small>View uploaded document</small>
                   </span>
                   <ArrowUpRight size={15} />
-                </a>
+                </button>
               ) : (
                 <p>No resume uploaded.</p>
               )}
@@ -250,6 +244,7 @@ export default function AdminApplicationDetailsPage() {
           </aside>
         </div>
       </div>
+      {deleteDialog}
     </main>
   );
 }

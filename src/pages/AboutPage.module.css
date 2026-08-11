@@ -52,6 +52,18 @@
 .ownerCard small { color: var(--branch); font: .48rem monospace; letter-spacing: .13em; }
 .ownerCard h3 { font-size: 1.35rem; margin: .45rem 0 .3rem; }
 .ownerCard p { color: #8fa3ba; font-size: .68rem; margin: 0; }
+.ownerCard { color: var(--text); grid-template-columns: minmax(8rem, .72fr) minmax(0, 1.28fr); min-height: 25rem; overflow: hidden; padding: 2rem; }
+.ownerCard > .ownerPortrait { align-self: end; border-bottom: 0; border-radius: 48% 48% .35rem .35rem; grid-row: 1 / 6; height: 18rem; width: 100%; }
+.ownerCard > div { align-self: end; position: relative; z-index: 1; }
+.ownerCard h3 { font-size: 1.7rem; }
+.ownerStatement { align-self: end; font-size: clamp(1.15rem, 2vw, 1.65rem); font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+.ownerDepartment { align-items: center; color: var(--branch); display: flex; font-size: .65rem; gap: .5rem; }
+.ownerSummary { color: #8095ac; font-size: .66rem; line-height: 1.65; }
+.ownerAction { align-items: center; color: var(--branch); display: flex; font-size: .68rem; font-weight: 600; gap: .45rem; }
+.ownerCount { color: #61768e; font: .52rem monospace; letter-spacing: .1em; position: absolute; right: 1.3rem; top: 4rem; }
+.ownerCard:hover { border-color: rgb(var(--branch-rgb) / 58%); transform: translateY(-5px); }
+.ownerCard:hover .ownerAction svg { transform: translateX(.25rem); }
+.ownerAction svg,.ownerCard { transition: transform .2s ease, border-color .2s ease; }
 .branchStem { height: 3rem; position: relative; }
 .branchStem::before { background: rgb(var(--branch-rgb) / 38%); content: ""; inset-block: 0; left: 50%; position: absolute; width: 1px; }
 .branchStem i { background: var(--branch); border-radius: 50%; box-shadow: 0 0 .7rem var(--branch); height: .35rem; left: calc(50% - .15rem); position: absolute; top: 48%; width: .35rem; }
@@ -70,7 +82,7 @@
 .memberCard small { color: #7489a1; font-size: .58rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .orgNote { align-items: center; color: #63788f; display: flex; font: .52rem monospace; justify-content: center; letter-spacing: .08em; margin: 2.5rem 0 0; }
 .orgNote span { background: #6fdda0; border-radius: 50%; box-shadow: 0 0 .6rem #6fdda0; height: .35rem; margin-right: .55rem; width: .35rem; }
-@media (max-width: 850px) { .orgHeading { gap: 1.5rem; grid-template-columns: 1fr; } .leadershipLine { width: 70%; } .ownerBranches { gap: 2rem; } .memberGrid { grid-template-columns: 1fr; } }
+@media (max-width: 850px) { .orgHeading { gap: 1.5rem; grid-template-columns: 1fr; } .leadershipLine { width: 70%; } .ownerBranches { gap: 2rem; } .memberGrid { grid-template-columns: 1fr; } .ownerCard { grid-template-columns: 1fr; } .ownerCard > .ownerPortrait { display: none; } }
 @media (max-width: 620px) { .orgSection { padding: 5rem 0; } .ownerBranches { grid-template-columns: 1fr; } .leadershipLine { height: 2.5rem; width: 1px; } .leadershipLine::after { display: none; } .ownerBranch + .ownerBranch { margin-top: 1rem; } .companyNode i { display: none; } }
 .page > section {
   position: relative;

@@ -167,6 +167,25 @@
     white-space: pre-wrap
 }
 
+.resumeButton {
+    align-items: center;
+    background: #102a46;
+    border: 1px solid #315a7c;
+    border-radius: .6rem;
+    color: #69d9ff;
+    cursor: pointer;
+    display: flex;
+    gap: .5rem;
+    margin-top: 1rem;
+    min-height: 40px;
+    padding: .65rem .8rem
+}
+
+.resumeButton span {
+    flex: 1;
+    text-align: left
+}
+
 .error,
 .state p {
     background: #351c27;

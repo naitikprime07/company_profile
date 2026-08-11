@@ -1,0 +1,89 @@
+.grid {
+  gap: clamp(1.5rem, 3vw, 3rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid article {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  display: block;
+  padding: 0;
+}
+
+.grid article:hover { transform: translateY(-6px); }
+.grid article:nth-child(even) .portraitFrame { margin-top: 2.5rem; }
+
+.portraitFrame {
+  aspect-ratio: .78;
+  background: linear-gradient(155deg, rgb(var(--team-rgb) / 20%), #101b2b 58%, #080e18);
+  border: 1px solid rgb(var(--team-rgb) / 22%);
+  overflow: hidden;
+  position: relative;
+}
+
+.portraitFrame::after {
+  background: linear-gradient(transparent 60%, rgb(4 9 17 / 70%));
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.portraitFrame > small {
+  color: var(--team);
+  left: 1rem;
+  position: absolute;
+  top: 1rem;
+  z-index: 2;
+}
+
+.portraitFrame > span:last-child {
+  bottom: .8rem;
+  color: rgb(255 255 255 / 48%);
+  font: .45rem monospace;
+  letter-spacing: .14em;
+  position: absolute;
+  right: .9rem;
+  z-index: 2;
+}
+
+.portraitFrame > span:first-of-type {
+  background: radial-gradient(circle at 50% 30%, rgb(var(--team-rgb) / 34%), transparent 35%), linear-gradient(160deg, rgb(var(--team-rgb) / 20%), #0b1422);
+  border: 0;
+  border-radius: 0;
+  color: white;
+  font-size: clamp(2rem, 5vw, 4rem);
+  height: 100%;
+  width: 100%;
+}
+
+.memberCopy { padding-top: 1rem; }
+.memberCopy h3 {
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 3.3vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .9;
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+.memberCopy p {
+  color: var(--team);
+  font: .57rem monospace;
+  letter-spacing: .16em;
+  margin: .7rem 0;
+  text-transform: uppercase;
+}
+.memberCopy > span { color: #8395a9; display: block; font-size: .66rem; line-height: 1.65; }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid article:nth-child(even) .portraitFrame { margin-top: 0; }
+}
+
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+  .memberCopy h3 { font-size: 2.5rem; }
+}

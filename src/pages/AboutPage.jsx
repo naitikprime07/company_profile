@@ -1,49 +1,13 @@
-import {
-  ArrowRight,
-  Compass,
-  Crown,
-  Gauge,
-  Layers3,
-  Palette,
-  ShieldCheck,
-  Sparkles,
-  UsersRound,
-} from "lucide-react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { ArrowRight, Code2, Crown, Megaphone, Palette, X } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { LEADERSHIP } from "../data/leadership";
+import { getLeadershipTeams } from "../services/leadershipService";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./AboutPage.module.css";
 import { ENVIRONMENT } from "../constants/environment";
 import { mailTo } from "../constants/environment";
-
-const PRINCIPLES = [
-  {
-    icon: Compass,
-    number: "01",
-    title: "Clarity before velocity",
-    copy: "We define the real business problem, the user need, and the measure of success before committing a team to execution.",
-  },
-  {
-    icon: UsersRound,
-    number: "02",
-    title: "Senior people, close to the work",
-    copy: "The people shaping strategy remain involved through design, engineering, launch, and the decisions that follow.",
-  },
-  {
-    icon: Layers3,
-    number: "03",
-    title: "Systems over isolated screens",
-    copy: "We create reusable product foundations that make every new feature faster, more coherent, and easier to maintain.",
-  },
-  {
-    icon: ShieldCheck,
-    number: "04",
-    title: "Quality without ceremony",
-    copy: "Accessibility, security, performance, testing, and observability are built into delivery rather than added at the end.",
-  },
-];
 
 const JOURNEY = [
   {
@@ -68,20 +32,181 @@ const JOURNEY = [
   },
 ];
 
+const SHOW_MOTION_RIBBON = false;
+
 function TeamPortrait({ person, owner = false }) {
+  const initials = person.name
+    ?.split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
   return (
     <span className={owner ? styles.ownerPortrait : styles.memberPortrait}>
       {person.image ? (
         <img src={person.image} alt="" />
       ) : (
-        <span aria-hidden="true">{person.initials}</span>
+        <span aria-hidden="true">{initials || "?"}</span>
       )}
     </span>
   );
 }
 
+function HierarchyNodes({ members, root = false }) {
+  const levelRef = useRef(null);
+  const [flow, setFlow] = useState({ width: 0, height: 0, paths: [] });
+
+  useLayoutEffect(() => {
+    const level = levelRef.current;
+    if (!level) return undefined;
+
+    const measure = () => {
+      const levelBox = level.getBoundingClientRect();
+      const branches = Array.from(level.children).filter((element) =>
+        element.classList.contains(styles.hierarchyBranch),
+      );
+      const paths = branches
+        .map((branch) => {
+          const card = Array.from(branch.children).find((element) =>
+            element.classList.contains(styles.hierarchyPerson),
+          );
+          const cardBox = card?.getBoundingClientRect();
+          return cardBox
+            ? {
+                x: cardBox.left - levelBox.left + cardBox.width / 2,
+                y: cardBox.top - levelBox.top,
+              }
+            : null;
+        })
+        .filter(Boolean);
+      setFlow({ width: levelBox.width, height: levelBox.height, paths });
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(level);
+    Array.from(level.children).forEach((child) => observer.observe(child));
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [members]);
+
+  const center = flow.width / 2;
+  const junction = 18;
+  const start = root ? 0 : -36;
+
+  return (
+    <div className={styles.hierarchyLevel} ref={levelRef}>
+      {flow.paths.length > 0 && (
+        <svg
+          className={styles.hierarchyFlow}
+          viewBox={`0 0 ${flow.width} ${flow.height}`}
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="hierarchy-line" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#315b78" />
+              <stop offset="0.55" stopColor="#5bd5ff" />
+              <stop offset="1" stopColor="#775cff" />
+            </linearGradient>
+          </defs>
+          {flow.paths.map((point, index) => {
+            const route = `M ${center} ${start} V ${junction} H ${point.x} V ${point.y}`;
+            return (
+              <g key={`${point.x}-${index}`}>
+                <path className={styles.flowBase} d={route} />
+                <path
+                  className={styles.flowEnergy}
+                  d={route}
+                  style={{ animationDelay: `${index * 0.14}s` }}
+                />
+                <circle className={styles.flowPulse} r="3">
+                  <animateMotion
+                    path={route}
+                    dur={`${2.3 + index * 0.16}s`}
+                    begin={`${index * 0.18}s`}
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle
+                  className={styles.flowEndpoint}
+                  cx={point.x}
+                  cy={point.y}
+                  r="3"
+                />
+              </g>
+            );
+          })}
+          <circle
+            className={styles.flowJunction}
+            cx={center}
+            cy={junction}
+            r="3"
+          />
+        </svg>
+      )}
+      {members.map((member, index) => (
+        <div
+          className={styles.hierarchyBranch}
+          key={member._id || `${member.role}-${index}`}
+        >
+          <div className={styles.hierarchyPerson}>
+            <TeamPortrait person={member} />
+            <span>
+              <strong>{member.name}</strong>
+              <small>{member.role}</small>
+              {member.bio && <em>{member.bio}</em>}
+            </span>
+          </div>
+          {(member.children || []).length > 0 && (
+            <HierarchyNodes members={member.children} />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function AboutPage() {
   useScrollReveal();
+  const [leadership, setLeadership] = useState(LEADERSHIP);
+  const [activeTeam, setActiveTeam] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    getLeadershipTeams()
+      .then((items) => {
+        if (!active || !items?.length) return;
+        setLeadership(
+          items.map((item) => ({
+            ...item,
+            icon: item.slug === "business" ? Megaphone : Code2,
+          })),
+        );
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!activeTeam) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setActiveTeam(null);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [activeTeam]);
 
   return (
     <main className={styles.page} id="top">
@@ -169,37 +294,39 @@ function AboutPage() {
         </div>
       </section>
 
-      <section
-        className={styles.motionRibbon}
-        aria-label="From ideas to measurable impact"
-        data-reveal
-      >
-        <div className={styles.ribbonMotion} aria-hidden="true">
-          <DotLottieReact
-            className={styles.ribbonLottie}
-            src={ENVIRONMENT.animations.about}
-            loop
-            autoplay
-          />
-        </div>
-        <div className={styles.ribbonWords} aria-hidden="true">
-          <span>
-            <small>01</small>IDEAS
-          </span>
-          <i>→</i>
-          <span>
-            <small>02</small>SYSTEMS
-          </span>
-          <i>→</i>
-          <span>
-            <small>03</small>IMPACT
-          </span>
-        </div>
-        <div className={styles.ribbonCaption}>
-          <span>Prime Softech / transformation in motion</span>
-          <b>KEEP SCROLLING ↓</b>
-        </div>
-      </section>
+      {SHOW_MOTION_RIBBON && (
+        <section
+          className={styles.motionRibbon}
+          aria-label="From ideas to measurable impact"
+          data-reveal
+        >
+          <div className={styles.ribbonMotion} aria-hidden="true">
+            <DotLottieReact
+              className={styles.ribbonLottie}
+              src={ENVIRONMENT.animations.about}
+              loop
+              autoplay
+            />
+          </div>
+          <div className={styles.ribbonWords} aria-hidden="true">
+            <span>
+              <small>01</small>IDEAS
+            </span>
+            <i>→</i>
+            <span>
+              <small>02</small>SYSTEMS
+            </span>
+            <i>→</i>
+            <span>
+              <small>03</small>IMPACT
+            </span>
+          </div>
+          <div className={styles.ribbonCaption}>
+            <span>Prime Softech / transformation in motion</span>
+            <b>KEEP SCROLLING ↓</b>
+          </div>
+        </section>
+      )}
 
       <section
         className={`${styles.story} container`}
@@ -234,129 +361,126 @@ function AboutPage() {
         </ol>
       </section>
 
-      <section className={styles.principles} data-reveal>
-        <div className="container">
-          <header className={styles.principleHeading}>
-            <p className="eyebrow">How we think</p>
-            <h2>
-              Principles that remain true when the project gets difficult.
-            </h2>
-          </header>
-          <div className={styles.principleGrid}>
-            {PRINCIPLES.map(({ icon: Icon, number, title, copy }) => (
-              <article key={title}>
-                <div>
-                  <span>
-                    <Icon size={20} />
-                  </span>
-                  <small>{number}</small>
-                </div>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={`${styles.operating} container`} data-reveal>
-        <div className={styles.operatingVisual}>
-          <span className={styles.operatingRing}>
-            <i />
-            <i />
-            <i />
-          </span>
-          <div>
-            <Sparkles size={22} />
-            <strong>Useful progress</strong>
-            <small>Our shared destination</small>
-          </div>
-        </div>
-        <div className={styles.operatingCopy}>
-          <p className="eyebrow">How we operate</p>
-          <h2>
-            Small teams.
-            <br />
-            Wide perspective.
-            <br />
-            <span>Shared ownership.</span>
-          </h2>
-          <p>
-            Each engagement brings together the exact disciplines the problem
-            requires. You work directly with decision makers, see progress
-            continuously, and always understand what is being built, why it
-            matters, and what comes next.
-          </p>
-          <ul>
-            <li>
-              <Gauge size={18} />
-              <span>
-                <strong>Momentum with control</strong>Short feedback loops keep
-                decisions fast and visible.
-              </span>
-            </li>
-            <li>
-              <UsersRound size={18} />
-              <span>
-                <strong>Collaboration without layers</strong>Direct access
-                replaces account management overhead.
-              </span>
-            </li>
-            <li>
-              <ShieldCheck size={18} />
-              <span>
-                <strong>Ownership beyond launch</strong>We stay accountable for
-                performance in the real world.
-              </span>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section className={styles.orgSection} data-reveal aria-labelledby="org-title">
+      <section
+        className={styles.orgSection}
+        data-reveal
+        aria-labelledby="org-title"
+      >
         <div className="container">
           <header className={styles.orgHeading}>
-            <div>
-              <p className="eyebrow">The people behind the work</p>
-              <h2 id="org-title">Two leaders. Two disciplines. One connected team.</h2>
-            </div>
+            <h2 id="org-title">
+              Meet the People
+              <br />
+              Behind the Vision
+            </h2>
             <p>
-              Clear ownership keeps decisions close to the people doing the work,
-              while both departments stay connected around every client outcome.
+              Our team is a collective of dedicated leaders, strategists, and
+              makers committed to building thoughtful digital experiences and
+              making every product better through clarity and craft.
             </p>
           </header>
 
           <div className={styles.orgChart}>
             <div className={styles.companyNode}>
-              <span><Palette size={19} /></span>
-              <div><small>PRIME SOFTECH</small><strong>Leadership network</strong></div>
+              <span>
+                <Palette size={19} />
+              </span>
+              <div>
+                <small>PRIME SOFTECH</small>
+                <strong>Leadership network</strong>
+              </div>
               <i>CONNECTED</i>
             </div>
-            <div className={styles.leadershipLine} aria-hidden="true"><span /></div>
+            <div className={styles.leadershipLine} aria-hidden="true">
+              <span />
+            </div>
 
             <div className={styles.ownerBranches}>
-              {LEADERSHIP.map(({ slug, owner, department, icon: Icon, tone, members, summary }) => (
-                <article className={`${styles.ownerBranch} ${styles[tone]}`} key={department}>
-                  <Link className={styles.ownerCard} to={`/about/team/${slug}`}>
-                    <span className={styles.ownerCrown}><Crown size={15} /></span>
-                    <TeamPortrait person={owner} owner />
-                    <div>
-                      <small>OWNER / DIRECTOR</small>
-                      <h3>{owner.name}</h3>
-                      <p>{owner.role}</p>
+              {leadership.map(
+                ({ owner, department, icon: Icon, tone, members, summary }) => (
+                  <article
+                    className={[
+                      styles.ownerBranch,
+                      styles[tone],
+                      activeTeam === department ? styles.teamOpen : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    key={department}
+                  >
+                    <div
+                      className={styles.ownerCard}
+                      role="button"
+                      tabIndex="0"
+                      aria-expanded={activeTeam === department}
+                      onClick={() => setActiveTeam(department)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setActiveTeam(department);
+                        }
+                      }}
+                    >
+                      <span className={styles.ownerCrown}>
+                        <Crown size={15} />
+                      </span>
+                      <TeamPortrait person={owner} owner />
+                      <div>
+                        <small>OWNER / DIRECTOR</small>
+                        <h3>{owner.name}</h3>
+                        <p>{owner.role}</p>
+                      </div>
+                      <span className={styles.ownerStatement}>
+                        {owner.statement || owner.bio}
+                      </span>
+                      <span className={styles.ownerDepartment}>
+                        <Icon size={17} /> {department}
+                      </span>
+                      <span className={styles.ownerSummary}>{summary}</span>
+                      <span className={styles.ownerAction}>
+                        Click to view team <ArrowRight size={17} />
+                      </span>
+                      <span className={styles.ownerCount}>
+                        {String(members.length).padStart(2, "0")} people
+                      </span>
                     </div>
-                    <span className={styles.ownerStatement}>{owner.statement}</span>
-                    <span className={styles.ownerDepartment}><Icon size={17} /> {department}</span>
-                    <span className={styles.ownerSummary}>{summary}</span>
-                    <span className={styles.ownerAction}>Explore the team <ArrowRight size={17} /></span>
-                    <span className={styles.ownerCount}>{String(members.length).padStart(2, "0")} people</span>
-                  </Link>
-                </article>
-              ))}
+                    <div
+                      className={styles.teamHoverPanel}
+                      aria-hidden={activeTeam !== department}
+                      aria-label={`${department} team hierarchy`}
+                    >
+                      <button
+                        className={styles.teamClose}
+                        type="button"
+                        aria-label="Close team hierarchy"
+                        onClick={() => setActiveTeam(null)}
+                      >
+                        <X size={19} />
+                      </button>
+                      <div className={styles.chartTitle}>
+                        <Icon size={15} /> {department}
+                      </div>
+                      <div className={styles.chartOwner}>
+                        <TeamPortrait person={owner} />
+                        <span>
+                          <small>OWNER / DIRECTOR</small>
+                          <strong>{owner.name}</strong>
+                          <em>{owner.role}</em>
+                        </span>
+                      </div>
+                      <div className={styles.chartConnector} aria-hidden="true">
+                        <i />
+                      </div>
+                      <HierarchyNodes members={members} root />
+                    </div>
+                  </article>
+                ),
+              )}
             </div>
           </div>
           <p className={styles.orgNote}>
-            <span /> Shared strategy &nbsp;·&nbsp; Independent department ownership
+            <span /> Shared strategy &nbsp;·&nbsp; Independent department
+            ownership
           </p>
         </div>
       </section>

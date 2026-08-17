@@ -9,6 +9,7 @@ import ChatBot from "./components/ChatBot";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
+const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
 const LeadershipTeamPage = lazy(() => import("./pages/LeadershipTeamPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const CareerPage = lazy(() => import("./pages/CareerPage"));
@@ -68,7 +69,11 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/about/team/:teamSlug" element={<LeadershipTeamPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route
+            path="/about/team/:teamSlug"
+            element={<LeadershipTeamPage />}
+          />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/career" element={<CareerPage />} />
           <Route

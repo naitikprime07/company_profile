@@ -13,6 +13,7 @@ import {
   LogOut,
   Mail,
   MapPin,
+  Network,
   Phone,
   Pencil,
   Plus,
@@ -39,6 +40,7 @@ import styles from "./AdminPage.module.css";
 import InquiryDateFilter from "../components/AdminDateRangeFilter";
 import ServerAdminRecordsTable from "../components/ServerAdminRecordsTable";
 import useConfirmDelete from "../hooks/useConfirmDelete";
+import AdminLeadershipManager from "../components/AdminLeadershipManager";
 
 const STATUS_LABELS = {
   new: "New",
@@ -58,6 +60,7 @@ const VIEW_TITLES = {
   applications: "Job applications",
   openings: "Career openings",
   introductions: "Open introductions",
+  leadership: "People hierarchy",
 };
 const OPENINGS_PER_PAGE = 6;
 function AdminPage() {
@@ -65,9 +68,13 @@ function AdminPage() {
   const navigate = useNavigate();
   const [token, setToken] = useState(sessionStorage.getItem("adminToken"));
   const [activeView, setActiveView] = useState(
-    ["#inquiries", "#applications", "#openings", "#introductions"].includes(
-      window.location.hash,
-    )
+    [
+      "#inquiries",
+      "#applications",
+      "#openings",
+      "#introductions",
+      "#leadership",
+    ].includes(window.location.hash)
       ? window.location.hash.slice(1)
       : sessionStorage.getItem("adminActiveView") || "dashboard",
   );
@@ -316,8 +323,15 @@ function AdminPage() {
           <small>Protected administrative access</small>
         </section>
         <div className={styles.loginVisual}>
-          <span>Manage your business</span>
-          <h2>One workspace for every new opportunity.</h2>
+          <img
+            className={styles.loginImage}
+            src="/loginPage.png"
+            alt="Prime Softech admin workspace"
+          />
+          <div className={styles.loginVisualCopy}>
+            <span>Manage your business</span>
+            <h2>One workspace for every new opportunity.</h2>
+          </div>
         </div>
       </main>
     );
@@ -425,6 +439,12 @@ function AdminPage() {
             onClick={() => changeView("openings")}
           >
             <BriefcaseBusiness size={18} /> Career openings
+          </button>
+          <button
+            className={activeView === "leadership" ? styles.navActive : ""}
+            onClick={() => changeView("leadership")}
+          >
+            <Network size={18} /> People hierarchy
           </button>
         </nav>
         <button className={styles.logout} onClick={logout}>
@@ -903,6 +923,8 @@ function AdminPage() {
               }}
             />
           </section>
+        ) : activeView === "leadership" ? (
+          <AdminLeadershipManager confirmDelete={confirmDelete} />
         ) : (
           <div className={styles.openingLayout}>
             <div className={styles.openingControlsPanel}>

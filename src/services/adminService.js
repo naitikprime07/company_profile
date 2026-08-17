@@ -19,7 +19,9 @@ const request = (path, options = {}) => {
   const token = sessionStorage.getItem("adminToken") || "anonymous";
   const key = `${token}:${path}`;
   if (inFlight.has(key)) return inFlight.get(key);
-  const pending = executeRequest(path, options).finally(() => inFlight.delete(key));
+  const pending = executeRequest(path, options).finally(() =>
+    inFlight.delete(key),
+  );
   inFlight.set(key, pending);
   return pending;
 };
@@ -121,9 +123,19 @@ export const setGeneralApplicationStatus = (id, status) =>
   });
 export const deleteGeneralApplication = (id) =>
   request(`/admin/general-applications/${id}`, { method: "DELETE" });
-export const getAdminOpenings = () => requestOnce("openings", "/admin/openings");
-export const searchAdminOpenings = (query = "", status = "all", page = 1, limit = 6, fromDate = "", toDate = "") =>
-  request(`/admin/openings/search?${new URLSearchParams({ query, status, page: String(page), limit: String(limit), fromDate, toDate })}`);
+export const getAdminOpenings = () =>
+  requestOnce("openings", "/admin/openings");
+export const searchAdminOpenings = (
+  query = "",
+  status = "all",
+  page = 1,
+  limit = 6,
+  fromDate = "",
+  toDate = "",
+) =>
+  request(
+    `/admin/openings/search?${new URLSearchParams({ query, status, page: String(page), limit: String(limit), fromDate, toDate })}`,
+  );
 export const getAdminOpening = (id) => request(`/admin/openings/${id}`);
 export const createOpening = (data) =>
   request("/admin/openings", { method: "POST", body: JSON.stringify(data) });
@@ -134,3 +146,35 @@ export const updateOpening = (id, data) =>
   });
 export const deleteOpening = (id) =>
   request(`/admin/openings/${id}`, { method: "DELETE" });
+
+export const getAdminLeadership = () => request("/admin/leadership");
+export const createLeadershipTeam = (data) =>
+  request("/admin/leadership", { method: "POST", body: JSON.stringify(data) });
+export const updateLeadershipTeam = (id, data) =>
+  request(`/admin/leadership/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+export const deleteLeadershipTeam = (id) =>
+  request(`/admin/leadership/${id}`, { method: "DELETE" });
+export const uploadTeamImage = async (file, previousImage = "") => {
+  const signed = await request("/admin/leadership/image-upload-url", {
+    method: "POST",
+    body: JSON.stringify({
+      fileName: file.name,
+      contentType: file.type,
+      size: file.size,
+      previousImage,
+    }),
+  });
+  const response = await fetch(signed.uploadUrl, {
+    method: "PUT",
+    headers: { "Content-Type": file.type },
+    body: file,
+  });
+  if (!response.ok)
+    throw new Error(
+      "Image upload failed. Check the R2 CORS configuration and try again.",
+    );
+  return signed.fileUrl;
+};

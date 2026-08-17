@@ -3,6 +3,126 @@
   overflow: hidden;
 }
 
+/* Formal leadership directory */
+.orgChart {
+  max-width: 1100px;
+}
+
+.companyNode,
+.leadershipLine,
+.orgNote,
+.ownerCrown,
+.ownerStatement,
+.ownerSummary,
+.ownerCount {
+  display: none;
+}
+
+.ownerBranches {
+  gap: 2rem;
+}
+
+.ownerBranch {
+  min-width: 0;
+}
+
+.ownerCard {
+  align-items: stretch;
+  background: #0e1a2b;
+  border: 1px solid #293e57;
+  border-radius: 1rem;
+  box-shadow: none;
+  color: var(--text);
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(190px, 42%) minmax(0, 1fr);
+  min-height: 310px;
+  overflow: hidden;
+  padding: 0;
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.ownerCard::after {
+  display: none;
+}
+
+.ownerCard:hover {
+  border-color: #416684;
+  transform: translateY(-3px);
+}
+
+.ownerCard>.ownerPortrait {
+  align-self: stretch;
+  background: #14243a;
+  border: 0;
+  border-radius: 0;
+  grid-row: 1 / 5;
+  height: 100%;
+  min-height: 310px;
+  width: 100%;
+}
+
+.ownerCard>.ownerPortrait img {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.ownerCard>div {
+  align-content: end;
+  align-self: stretch;
+  display: grid;
+  padding: 2rem 2rem .5rem;
+}
+
+.ownerCard small {
+  color: var(--cyan);
+  font-size: .5rem;
+}
+
+.ownerCard h3 {
+  font-size: 1.55rem;
+  font-weight: 600;
+  margin: .8rem 0 .3rem;
+}
+
+.ownerCard p {
+  color: #94a5b9;
+  font-size: .7rem;
+}
+
+.ownerDepartment {
+  border-top: 1px solid #293e57;
+  color: #c2cfdd;
+  margin: 0 2rem;
+  padding-top: 1rem;
+}
+
+.ownerAction {
+  align-self: start;
+  color: var(--cyan);
+  margin: .8rem 2rem 2rem;
+}
+
+@media (max-width: 850px) {
+  .ownerCard {
+    grid-template-columns: 1fr;
+  }
+
+  .ownerCard>.ownerPortrait {
+    display: flex;
+    grid-row: auto;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1.25;
+  }
+}
+
+@media (max-width: 620px) {
+  .ownerBranches {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Leadership network */
 .orgSection {
   background: linear-gradient(180deg, #080d18, #0b1423 48%, #080d18);
@@ -11,6 +131,7 @@
   padding: 8rem 0;
   position: relative;
 }
+
 .orgSection::before {
   background-image: linear-gradient(rgb(91 213 255 / 4%) 1px, transparent 1px), linear-gradient(90deg, rgb(91 213 255 / 4%) 1px, transparent 1px);
   background-size: 3.5rem 3.5rem;
@@ -20,6 +141,7 @@
   pointer-events: none;
   position: absolute;
 }
+
 .orgHeading {
   align-items: end;
   display: grid;
@@ -28,65 +150,495 @@
   margin-bottom: 5rem;
   position: relative;
 }
-.orgHeading h2 { font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -.065em; line-height: .95; margin: .8rem 0 0; max-width: 900px; }
-.orgHeading > p { color: var(--muted); font-size: .85rem; line-height: 1.8; margin: 0; max-width: 480px; }
-.orgChart { margin: 0 auto; max-width: 1180px; position: relative; }
-.companyNode { align-items: center; background: rgb(12 26 45 / 92%); border: 1px solid rgb(91 213 255 / 30%); border-radius: 1rem; box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 28%); display: flex; gap: .85rem; margin: 0 auto; padding: .8rem 1rem; position: relative; width: fit-content; z-index: 2; }
-.companyNode > span { align-items: center; background: rgb(47 125 246 / 18%); border-radius: .65rem; color: var(--cyan); display: flex; height: 2.7rem; justify-content: center; width: 2.7rem; }
-.companyNode > div { display: grid; gap: .2rem; }
-.companyNode small,.departmentNode small { color: #667d96; font: .48rem monospace; letter-spacing: .13em; }
-.companyNode strong { font-size: .78rem; }
-.companyNode i { color: #6fdda0; font: normal .48rem monospace; letter-spacing: .1em; margin-left: 1.5rem; }
-.leadershipLine { height: 4rem; margin: auto; position: relative; width: 50%; }
-.leadershipLine::before { background: linear-gradient(var(--cyan), rgb(91 213 255 / 20%)); content: ""; height: 50%; left: 50%; position: absolute; top: 0; width: 1px; }
-.leadershipLine::after { border-left: 1px solid rgb(91 213 255 / 28%); border-right: 1px solid rgb(91 213 255 / 28%); border-top: 1px solid rgb(91 213 255 / 28%); bottom: 0; content: ""; height: 50%; inset-inline: 0; position: absolute; }
-.leadershipLine span { background: var(--cyan); border-radius: 50%; box-shadow: 0 0 .8rem var(--cyan); height: .38rem; left: calc(50% - .19rem); position: absolute; top: calc(50% - .19rem); width: .38rem; z-index: 1; }
-.ownerBranches { display: grid; gap: 3rem; grid-template-columns: 1fr 1fr; }
-.ownerBranch { --branch:#5bd5ff; --branch-rgb:91 213 255; min-width: 0; position: relative; }
-.ownerBranch.violet { --branch:#a88cff; --branch-rgb:168 140 255; }
-.ownerCard { align-items: center; background: linear-gradient(145deg, rgb(20 37 61 / 96%), rgb(10 21 37 / 98%)); border: 1px solid rgb(var(--branch-rgb) / 30%); border-radius: 1.25rem; box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 22%); display: grid; gap: 1rem; grid-template-columns: auto 1fr; min-height: 145px; padding: 1.3rem; position: relative; }
-.ownerCard::after { background: linear-gradient(90deg, transparent, var(--branch), transparent); bottom: -1px; content: ""; height: 1px; left: 10%; position: absolute; right: 10%; }
-.ownerCrown { align-items: center; background: rgb(var(--branch-rgb) / 14%); border: 1px solid rgb(var(--branch-rgb) / 28%); border-radius: 50%; color: var(--branch); display: flex; height: 2rem; justify-content: center; position: absolute; right: 1rem; top: 1rem; width: 2rem; }
-.ownerPortrait,.memberPortrait { align-items: center; background: radial-gradient(circle at 35% 25%, rgb(255 255 255 / 18%), transparent 25%), linear-gradient(145deg, rgb(var(--branch-rgb) / 42%), #12213a); border: 2px solid rgb(var(--branch-rgb) / 38%); border-radius: 1rem; color: white; display: flex; flex: 0 0 auto; font: 800 1.05rem monospace; height: 5.6rem; justify-content: center; overflow: hidden; width: 5.6rem; }
-.ownerPortrait img,.memberPortrait img { height: 100%; object-fit: cover; width: 100%; }
-.ownerCard small { color: var(--branch); font: .48rem monospace; letter-spacing: .13em; }
-.ownerCard h3 { font-size: 1.35rem; margin: .45rem 0 .3rem; }
-.ownerCard p { color: #8fa3ba; font-size: .68rem; margin: 0; }
-.ownerCard { color: var(--text); grid-template-columns: minmax(8rem, .72fr) minmax(0, 1.28fr); min-height: 25rem; overflow: hidden; padding: 2rem; }
-.ownerCard > .ownerPortrait { align-self: end; border-bottom: 0; border-radius: 48% 48% .35rem .35rem; grid-row: 1 / 6; height: 18rem; width: 100%; }
-.ownerCard > div { align-self: end; position: relative; z-index: 1; }
-.ownerCard h3 { font-size: 1.7rem; }
-.ownerStatement { align-self: end; font-size: clamp(1.15rem, 2vw, 1.65rem); font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
-.ownerDepartment { align-items: center; color: var(--branch); display: flex; font-size: .65rem; gap: .5rem; }
-.ownerSummary { color: #8095ac; font-size: .66rem; line-height: 1.65; }
-.ownerAction { align-items: center; color: var(--branch); display: flex; font-size: .68rem; font-weight: 600; gap: .45rem; }
-.ownerCount { color: #61768e; font: .52rem monospace; letter-spacing: .1em; position: absolute; right: 1.3rem; top: 4rem; }
-.ownerCard:hover { border-color: rgb(var(--branch-rgb) / 58%); transform: translateY(-5px); }
-.ownerCard:hover .ownerAction svg { transform: translateX(.25rem); }
-.ownerAction svg,.ownerCard { transition: transform .2s ease, border-color .2s ease; }
-.branchStem { height: 3rem; position: relative; }
-.branchStem::before { background: rgb(var(--branch-rgb) / 38%); content: ""; inset-block: 0; left: 50%; position: absolute; width: 1px; }
-.branchStem i { background: var(--branch); border-radius: 50%; box-shadow: 0 0 .7rem var(--branch); height: .35rem; left: calc(50% - .15rem); position: absolute; top: 48%; width: .35rem; }
-.departmentNode { align-items: center; background: rgb(11 24 42 / 95%); border: 1px solid rgb(var(--branch-rgb) / 24%); border-radius: .9rem; display: flex; gap: .75rem; margin: auto; max-width: 310px; padding: .75rem; position: relative; z-index: 2; }
-.departmentNode > span { align-items: center; background: rgb(var(--branch-rgb) / 13%); border-radius: .55rem; color: var(--branch); display: flex; height: 2.4rem; justify-content: center; width: 2.4rem; }
-.departmentNode > div { display: grid; gap: .2rem; }
-.departmentNode strong { font-size: .72rem; }
-.departmentNode b { color: rgb(var(--branch-rgb) / 40%); font: 1.35rem monospace; margin-left: auto; }
-.teamConnector { border-left: 1px solid rgb(var(--branch-rgb) / 25%); border-right: 1px solid rgb(var(--branch-rgb) / 25%); border-top: 1px solid rgb(var(--branch-rgb) / 25%); height: 2.5rem; margin: auto; width: 52%; }
-.memberGrid { display: grid; gap: .75rem; grid-template-columns: 1fr 1fr; }
-.memberCard { align-items: center; background: rgb(255 255 255 / 3%); border: 1px solid rgb(var(--branch-rgb) / 15%); border-radius: .85rem; display: flex; gap: .75rem; min-width: 0; padding: .75rem; transition: border-color .2s ease, transform .2s ease; }
-.memberCard:hover { border-color: rgb(var(--branch-rgb) / 42%); transform: translateY(-3px); }
-.memberPortrait { border-radius: .65rem; font-size: .67rem; height: 3.1rem; width: 3.1rem; }
-.memberCard > div { display: grid; gap: .25rem; min-width: 0; }
-.memberCard strong { font-size: .7rem; }
-.memberCard small { color: #7489a1; font-size: .58rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.orgNote { align-items: center; color: #63788f; display: flex; font: .52rem monospace; justify-content: center; letter-spacing: .08em; margin: 2.5rem 0 0; }
-.orgNote span { background: #6fdda0; border-radius: 50%; box-shadow: 0 0 .6rem #6fdda0; height: .35rem; margin-right: .55rem; width: .35rem; }
-@media (max-width: 850px) { .orgHeading { gap: 1.5rem; grid-template-columns: 1fr; } .leadershipLine { width: 70%; } .ownerBranches { gap: 2rem; } .memberGrid { grid-template-columns: 1fr; } .ownerCard { grid-template-columns: 1fr; } .ownerCard > .ownerPortrait { display: none; } }
-@media (max-width: 620px) { .orgSection { padding: 5rem 0; } .ownerBranches { grid-template-columns: 1fr; } .leadershipLine { height: 2.5rem; width: 1px; } .leadershipLine::after { display: none; } .ownerBranch + .ownerBranch { margin-top: 1rem; } .companyNode i { display: none; } }
-.page > section {
+
+.orgHeading h2 {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  letter-spacing: -.065em;
+  line-height: .95;
+  margin: .8rem 0 0;
+  max-width: 900px;
+}
+
+.orgHeading>p {
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.8;
+  margin: 0;
+  max-width: 480px;
+}
+
+.orgChart {
+  margin: 0 auto;
+  max-width: 1180px;
   position: relative;
 }
+
+.companyNode {
+  align-items: center;
+  background: rgb(12 26 45 / 92%);
+  border: 1px solid rgb(91 213 255 / 30%);
+  border-radius: 1rem;
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 28%);
+  display: flex;
+  gap: .85rem;
+  margin: 0 auto;
+  padding: .8rem 1rem;
+  position: relative;
+  width: fit-content;
+  z-index: 2;
+}
+
+.companyNode>span {
+  align-items: center;
+  background: rgb(47 125 246 / 18%);
+  border-radius: .65rem;
+  color: var(--cyan);
+  display: flex;
+  height: 2.7rem;
+  justify-content: center;
+  width: 2.7rem;
+}
+
+.companyNode>div {
+  display: grid;
+  gap: .2rem;
+}
+
+.companyNode small,
+.departmentNode small {
+  color: #667d96;
+  font: .48rem monospace;
+  letter-spacing: .13em;
+}
+
+.companyNode strong {
+  font-size: .78rem;
+}
+
+.companyNode i {
+  color: #6fdda0;
+  font: normal .48rem monospace;
+  letter-spacing: .1em;
+  margin-left: 1.5rem;
+}
+
+.leadershipLine {
+  height: 4rem;
+  margin: auto;
+  position: relative;
+  width: 50%;
+}
+
+.leadershipLine::before {
+  background: linear-gradient(var(--cyan), rgb(91 213 255 / 20%));
+  content: "";
+  height: 50%;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  width: 1px;
+}
+
+.leadershipLine::after {
+  border-left: 1px solid rgb(91 213 255 / 28%);
+  border-right: 1px solid rgb(91 213 255 / 28%);
+  border-top: 1px solid rgb(91 213 255 / 28%);
+  bottom: 0;
+  content: "";
+  height: 50%;
+  inset-inline: 0;
+  position: absolute;
+}
+
+.leadershipLine span {
+  background: var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 .8rem var(--cyan);
+  height: .38rem;
+  left: calc(50% - .19rem);
+  position: absolute;
+  top: calc(50% - .19rem);
+  width: .38rem;
+  z-index: 1;
+}
+
+.ownerBranches {
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.ownerBranch {
+  --branch: #5bd5ff;
+  --branch-rgb: 91 213 255;
+  min-width: 0;
+  position: relative;
+}
+
+.ownerBranch.violet {
+  --branch: #a88cff;
+  --branch-rgb: 168 140 255;
+}
+
+.ownerCard {
+  align-items: center;
+  background: linear-gradient(145deg, rgb(20 37 61 / 96%), rgb(10 21 37 / 98%));
+  border: 1px solid rgb(var(--branch-rgb) / 30%);
+  border-radius: 1.25rem;
+  box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 22%);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr;
+  min-height: 145px;
+  padding: 1.3rem;
+  position: relative;
+}
+
+.ownerCard::after {
+  background: linear-gradient(90deg, transparent, var(--branch), transparent);
+  bottom: -1px;
+  content: "";
+  height: 1px;
+  left: 10%;
+  position: absolute;
+  right: 10%;
+}
+
+.ownerCrown {
+  align-items: center;
+  background: rgb(var(--branch-rgb) / 14%);
+  border: 1px solid rgb(var(--branch-rgb) / 28%);
+  border-radius: 50%;
+  color: var(--branch);
+  display: flex;
+  height: 2rem;
+  justify-content: center;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 2rem;
+}
+
+.ownerPortrait,
+.memberPortrait {
+  align-items: center;
+  background: radial-gradient(circle at 35% 25%, rgb(255 255 255 / 18%), transparent 25%), linear-gradient(145deg, rgb(var(--branch-rgb) / 42%), #12213a);
+  border: 2px solid rgb(var(--branch-rgb) / 38%);
+  border-radius: 1rem;
+  color: white;
+  display: flex;
+  flex: 0 0 auto;
+  font: 800 1.05rem monospace;
+  height: 5.6rem;
+  justify-content: center;
+  overflow: hidden;
+  width: 5.6rem;
+}
+
+.ownerPortrait img,
+.memberPortrait img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.ownerCard small {
+  color: var(--branch);
+  font: .48rem monospace;
+  letter-spacing: .13em;
+}
+
+.ownerCard h3 {
+  font-size: 1.35rem;
+  margin: .45rem 0 .3rem;
+}
+
+.ownerCard p {
+  color: #8fa3ba;
+  font-size: .68rem;
+  margin: 0;
+}
+
+.ownerCard {
+  color: var(--text);
+  grid-template-columns: minmax(8rem, .72fr) minmax(0, 1.28fr);
+  min-height: 25rem;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.ownerCard>.ownerPortrait {
+  align-self: end;
+  border-bottom: 0;
+  border-radius: 48% 48% .35rem .35rem;
+  grid-row: 1 / 6;
+  height: 18rem;
+  width: 100%;
+}
+
+.ownerCard>div {
+  align-self: end;
+  position: relative;
+  z-index: 1;
+}
+
+.ownerCard h3 {
+  font-size: 1.7rem;
+}
+
+.ownerStatement {
+  align-self: end;
+  font-size: clamp(1.15rem, 2vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.ownerDepartment {
+  align-items: center;
+  color: var(--branch);
+  display: flex;
+  font-size: .65rem;
+  gap: .5rem;
+}
+
+.ownerSummary {
+  color: #8095ac;
+  font-size: .66rem;
+  line-height: 1.65;
+}
+
+.ownerAction {
+  align-items: center;
+  color: var(--branch);
+  display: flex;
+  font-size: .68rem;
+  font-weight: 600;
+  gap: .45rem;
+}
+
+.ownerCount {
+  color: #61768e;
+  font: .52rem monospace;
+  letter-spacing: .1em;
+  position: absolute;
+  right: 1.3rem;
+  top: 4rem;
+}
+
+.ownerCard:hover {
+  border-color: rgb(var(--branch-rgb) / 58%);
+  transform: translateY(-5px);
+}
+
+.ownerCard:hover .ownerAction svg {
+  transform: translateX(.25rem);
+}
+
+.ownerAction svg,
+.ownerCard {
+  transition: transform .2s ease, border-color .2s ease;
+}
+
+.branchStem {
+  height: 3rem;
+  position: relative;
+}
+
+.branchStem::before {
+  background: rgb(var(--branch-rgb) / 38%);
+  content: "";
+  inset-block: 0;
+  left: 50%;
+  position: absolute;
+  width: 1px;
+}
+
+.branchStem i {
+  background: var(--branch);
+  border-radius: 50%;
+  box-shadow: 0 0 .7rem var(--branch);
+  height: .35rem;
+  left: calc(50% - .15rem);
+  position: absolute;
+  top: 48%;
+  width: .35rem;
+}
+
+.departmentNode {
+  align-items: center;
+  background: rgb(11 24 42 / 95%);
+  border: 1px solid rgb(var(--branch-rgb) / 24%);
+  border-radius: .9rem;
+  display: flex;
+  gap: .75rem;
+  margin: auto;
+  max-width: 310px;
+  padding: .75rem;
+  position: relative;
+  z-index: 2;
+}
+
+.departmentNode>span {
+  align-items: center;
+  background: rgb(var(--branch-rgb) / 13%);
+  border-radius: .55rem;
+  color: var(--branch);
+  display: flex;
+  height: 2.4rem;
+  justify-content: center;
+  width: 2.4rem;
+}
+
+.departmentNode>div {
+  display: grid;
+  gap: .2rem;
+}
+
+.departmentNode strong {
+  font-size: .72rem;
+}
+
+.departmentNode b {
+  color: rgb(var(--branch-rgb) / 40%);
+  font: 1.35rem monospace;
+  margin-left: auto;
+}
+
+.teamConnector {
+  border-left: 1px solid rgb(var(--branch-rgb) / 25%);
+  border-right: 1px solid rgb(var(--branch-rgb) / 25%);
+  border-top: 1px solid rgb(var(--branch-rgb) / 25%);
+  height: 2.5rem;
+  margin: auto;
+  width: 52%;
+}
+
+.memberGrid {
+  display: grid;
+  gap: .75rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.memberCard {
+  align-items: center;
+  background: rgb(255 255 255 / 3%);
+  border: 1px solid rgb(var(--branch-rgb) / 15%);
+  border-radius: .85rem;
+  display: flex;
+  gap: .75rem;
+  min-width: 0;
+  padding: .75rem;
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.memberCard:hover {
+  border-color: rgb(var(--branch-rgb) / 42%);
+  transform: translateY(-3px);
+}
+
+.memberPortrait {
+  border-radius: .65rem;
+  font-size: .67rem;
+  height: 3.1rem;
+  width: 3.1rem;
+}
+
+.memberCard>div {
+  display: grid;
+  gap: .25rem;
+  min-width: 0;
+}
+
+.memberCard strong {
+  font-size: .7rem;
+}
+
+.memberCard small {
+  color: #7489a1;
+  font-size: .58rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orgNote {
+  align-items: center;
+  color: #63788f;
+  display: flex;
+  font: .52rem monospace;
+  justify-content: center;
+  letter-spacing: .08em;
+  margin: 2.5rem 0 0;
+}
+
+.orgNote span {
+  background: #6fdda0;
+  border-radius: 50%;
+  box-shadow: 0 0 .6rem #6fdda0;
+  height: .35rem;
+  margin-right: .55rem;
+  width: .35rem;
+}
+
+@media (max-width: 850px) {
+  .orgHeading {
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  .leadershipLine {
+    width: 70%;
+  }
+
+  .ownerBranches {
+    gap: 2rem;
+  }
+
+  .memberGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ownerCard {
+    grid-template-columns: 1fr;
+  }
+
+  .ownerCard>.ownerPortrait {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .orgSection {
+    padding: 5rem 0;
+  }
+
+  .ownerBranches {
+    grid-template-columns: 1fr;
+  }
+
+  .leadershipLine {
+    height: 2.5rem;
+    width: 1px;
+  }
+
+  .leadershipLine::after {
+    display: none;
+  }
+
+  .ownerBranch+.ownerBranch {
+    margin-top: 1rem;
+  }
+
+  .companyNode i {
+    display: none;
+  }
+}
+
+.page>section {
+  position: relative;
+}
+
 .hero {
   align-items: center;
   display: grid;
@@ -96,19 +648,22 @@
   padding-bottom: 7rem;
   padding-top: 7rem;
 }
+
 .heroCopy h1 {
   font-size: clamp(3.3rem, 5.2vw, 5.7rem);
   letter-spacing: -0.065em;
   line-height: 0.95;
   margin: 0 0 1.75rem;
 }
-.heroCopy > p:not(.eyebrow) {
+
+.heroCopy>p:not(.eyebrow) {
   color: var(--text-soft);
   font-size: 1.03rem;
   line-height: 1.78;
   margin-bottom: 2rem;
   max-width: 42rem;
 }
+
 .heroFacts {
   border-top: 1px solid var(--line);
   display: flex;
@@ -116,17 +671,21 @@
   margin-top: 3rem;
   padding-top: 1.4rem;
 }
+
 .heroFacts span {
   display: grid;
   gap: 0.2rem;
 }
+
 .heroFacts strong {
   font-size: 1.35rem;
 }
+
 .heroFacts small {
   color: var(--muted);
   font-size: 0.67rem;
 }
+
 .studioSystem {
   background:
     radial-gradient(circle at center, rgb(47 125 246 / 24%), transparent 42%),
@@ -138,6 +697,7 @@
   overflow: hidden;
   position: relative;
 }
+
 .studioSystem::before {
   background-image:
     linear-gradient(rgb(91 213 255 / 6%) 1px, transparent 1px),
@@ -148,6 +708,7 @@
   mask-image: radial-gradient(circle, #000, transparent 73%);
   position: absolute;
 }
+
 .systemTop {
   align-items: center;
   background: rgb(6 12 23 / 65%);
@@ -161,6 +722,7 @@
   top: 0;
   z-index: 4;
 }
+
 .systemTop span {
   align-items: center;
   color: var(--muted);
@@ -169,6 +731,7 @@
   gap: 0.45rem;
   letter-spacing: 0.08em;
 }
+
 .systemTop i {
   background: var(--cyan);
   border-radius: 50%;
@@ -176,11 +739,13 @@
   height: 0.35rem;
   width: 0.35rem;
 }
+
 .systemTop b {
   color: #70dda1;
   font: 0.54rem monospace;
   margin-left: auto;
 }
+
 .systemOrbit {
   animation: orbit 24s linear infinite;
   border: 1px dashed rgb(91 213 255 / 28%);
@@ -192,6 +757,7 @@
   translate: -50% -50%;
   width: 21rem;
 }
+
 .systemOrbit i {
   background: var(--cyan);
   border: 0.2rem solid #0b1321;
@@ -203,21 +769,25 @@
   top: 7%;
   width: 0.75rem;
 }
+
 .systemOrbit i:nth-child(2) {
   left: auto;
   right: 4%;
   top: 34%;
 }
+
 .systemOrbit i:nth-child(3) {
   bottom: 4%;
   left: 56%;
   top: auto;
 }
+
 .systemOrbit i:nth-child(4) {
   bottom: 28%;
   left: -2%;
   top: auto;
 }
+
 .systemCore {
   align-items: center;
   background: linear-gradient(145deg, var(--accent), #174fa3);
@@ -236,16 +806,19 @@
   width: 7.5rem;
   z-index: 2;
 }
+
 .systemCore span {
   font-size: 2rem;
   font-weight: 900;
   letter-spacing: -0.08em;
 }
+
 .systemCore small {
   font: 0.48rem monospace;
   letter-spacing: 0.12em;
   margin-top: 0.35rem;
 }
+
 .discipline {
   backdrop-filter: blur(0.7rem);
   background: rgb(8 16 29 / 78%);
@@ -257,22 +830,27 @@
   position: absolute;
   z-index: 3;
 }
+
 .strategy {
   left: 7%;
   top: 25%;
 }
+
 .design {
   right: 7%;
   top: 29%;
 }
+
 .engineering {
   bottom: 21%;
   left: 8%;
 }
+
 .growth {
   bottom: 18%;
   right: 8%;
 }
+
 .systemSignal {
   bottom: 1.1rem;
   display: grid;
@@ -280,21 +858,25 @@
   position: absolute;
   z-index: 3;
 }
+
 .systemSignal span {
   color: var(--muted);
   font-size: 0.55rem;
 }
+
 .systemSignal b {
   color: var(--cyan);
   font-size: 1.1rem;
   margin-top: 0.15rem;
 }
+
 .systemSignal i {
   background: linear-gradient(90deg, var(--accent), var(--cyan));
   height: 0.1rem;
   margin-top: 0.45rem;
   width: 5rem;
 }
+
 .manifesto {
   background:
     linear-gradient(135deg, rgb(47 125 246 / 12%), transparent 40%),
@@ -303,11 +885,13 @@
   border-top: 1px solid var(--line);
   padding: 8rem 0;
 }
+
 .manifestoIndex {
   color: var(--cyan);
   font: 0.62rem monospace;
   letter-spacing: 0.12em;
 }
+
 .manifesto p {
   font-size: clamp(2.2rem, 4vw, 4.25rem);
   letter-spacing: -0.055em;
@@ -315,20 +899,24 @@
   margin: 2rem 0 0;
   max-width: 72rem;
 }
+
 .manifesto em {
   color: var(--cyan);
   font-style: normal;
 }
+
 .story {
   padding-bottom: 9rem;
   padding-top: 9rem;
 }
+
 .sectionHeading {
   align-items: end;
   display: grid;
   gap: 5rem;
   grid-template-columns: 1fr 0.75fr;
 }
+
 .sectionHeading h2,
 .principleHeading h2,
 .operatingCopy h2,
@@ -338,16 +926,19 @@
   line-height: 1.03;
   margin: 0;
 }
-.sectionHeading > p {
+
+.sectionHeading>p {
   color: var(--text-soft);
   line-height: 1.75;
   margin: 0;
 }
+
 .timeline {
   list-style: none;
   margin: 6rem 0 0;
   padding: 0;
 }
+
 .timeline li {
   border-top: 1px solid var(--line);
   display: grid;
@@ -356,38 +947,46 @@
   padding: 2.2rem 0;
   transition: padding-left 0.25s ease;
 }
+
 .timeline li:hover {
   padding-left: 1rem;
 }
-.timeline li > span {
+
+.timeline li>span {
   color: var(--cyan);
   font: 0.68rem monospace;
   padding-top: 0.3rem;
 }
+
 .timeline h3 {
   font-size: 1.35rem;
   margin: 0 0 0.6rem;
 }
+
 .timeline p {
   color: var(--muted);
   line-height: 1.65;
   margin: 0;
   max-width: 42rem;
 }
+
 .principles {
   background: linear-gradient(180deg, var(--bg-soft), var(--bg));
   border-top: 1px solid var(--line);
   padding: 9rem 0;
 }
+
 .principleHeading {
   max-width: 52rem;
 }
+
 .principleGrid {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(2, 1fr);
   margin-top: 5rem;
 }
+
 .principleGrid article {
   background: rgb(255 255 255 / 3%);
   border: 1px solid var(--line);
@@ -398,16 +997,19 @@
     border-color 0.25s ease,
     transform 0.25s ease;
 }
+
 .principleGrid article:hover {
   border-color: rgb(91 213 255 / 35%);
   transform: translateY(-0.4rem);
 }
-.principleGrid article > div {
+
+.principleGrid article>div {
   align-items: start;
   display: flex;
   justify-content: space-between;
 }
-.principleGrid article > div span {
+
+.principleGrid article>div span {
   align-items: center;
   background: rgb(47 125 246 / 15%);
   border: 1px solid rgb(114 173 255 / 22%);
@@ -418,20 +1020,24 @@
   justify-content: center;
   width: 3rem;
 }
+
 .principleGrid small {
   color: rgb(114 173 255 / 48%);
   font: 0.58rem monospace;
 }
+
 .principleGrid h3 {
   font-size: 1.3rem;
   margin: 3.6rem 0 0.8rem;
 }
+
 .principleGrid p {
   color: var(--muted);
   line-height: 1.68;
   margin: 0;
   max-width: 31rem;
 }
+
 .operating {
   align-items: center;
   display: grid;
@@ -440,11 +1046,13 @@
   padding-bottom: 10rem;
   padding-top: 10rem;
 }
+
 .operatingVisual {
   aspect-ratio: 1;
   background: radial-gradient(circle, rgb(47 125 246 / 18%), transparent 62%);
   position: relative;
 }
+
 .operatingRing {
   animation: orbit 20s linear infinite reverse;
   border: 1px dashed rgb(91 213 255 / 30%);
@@ -452,6 +1060,7 @@
   inset: 8%;
   position: absolute;
 }
+
 .operatingRing i {
   background: var(--cyan);
   border-radius: 50%;
@@ -462,15 +1071,18 @@
   top: -0.3rem;
   width: 0.6rem;
 }
+
 .operatingRing i:nth-child(2) {
   left: 8%;
   top: 73%;
 }
+
 .operatingRing i:nth-child(3) {
   left: 88%;
   top: 69%;
 }
-.operatingVisual > div {
+
+.operatingVisual>div {
   align-items: center;
   background: linear-gradient(145deg, #17263f, #0e1727);
   border: 1px solid rgb(91 213 255 / 24%);
@@ -482,26 +1094,32 @@
   position: absolute;
   text-align: center;
 }
+
 .operatingVisual svg {
   color: var(--cyan);
   margin-bottom: 1rem;
 }
+
 .operatingVisual strong {
   font-size: 1.1rem;
 }
+
 .operatingVisual small {
   color: var(--muted);
   font-size: 0.62rem;
   margin-top: 0.3rem;
 }
+
 .operatingCopy h2 span {
   color: var(--cyan);
 }
-.operatingCopy > p:not(.eyebrow) {
+
+.operatingCopy>p:not(.eyebrow) {
   color: var(--text-soft);
   line-height: 1.75;
   margin: 1.8rem 0 2.5rem;
 }
+
 .operatingCopy ul {
   display: grid;
   gap: 0;
@@ -509,6 +1127,7 @@
   margin: 0;
   padding: 0;
 }
+
 .operatingCopy li {
   border-top: 1px solid var(--line);
   color: var(--cyan);
@@ -517,17 +1136,20 @@
   grid-template-columns: 2rem 1fr;
   padding: 1.2rem 0;
 }
+
 .operatingCopy li span {
   color: var(--muted);
   font-size: 0.82rem;
   line-height: 1.5;
 }
+
 .operatingCopy li strong {
   color: var(--text);
   display: block;
   font-size: 0.95rem;
   margin-bottom: 0.25rem;
 }
+
 .closing {
   background:
     radial-gradient(circle at 50% 120%, rgb(47 125 246 / 35%), transparent 50%),
@@ -536,59 +1158,74 @@
   padding: 9rem 0;
   text-align: center;
 }
+
 .closing h2 {
   margin-bottom: 1.2rem;
 }
-.closing > div > p:not(.eyebrow) {
+
+.closing>div>p:not(.eyebrow) {
   color: var(--text-soft);
   margin: 0 auto 2.2rem;
 }
+
 .closing a {
   margin: 0 auto;
 }
+
 @keyframes orbit {
   to {
     transform: rotate(360deg);
   }
 }
+
 @media (max-width: 1000px) {
   .hero {
     grid-template-columns: 1fr;
   }
+
   .studioSystem {
     max-width: 43rem;
   }
+
   .sectionHeading,
   .operating {
     grid-template-columns: 1fr;
   }
+
   .sectionHeading {
     align-items: start;
     gap: 2rem;
   }
+
   .operatingVisual {
     max-width: 30rem;
     width: 100%;
   }
 }
+
 @media (max-width: 650px) {
   .hero {
     padding-bottom: 5rem;
     padding-top: 4.5rem;
   }
+
   .heroCopy h1 {
     font-size: 3.1rem;
   }
+
   .heroFacts {
     gap: 1.3rem;
   }
+
   .studioSystem {
     min-height: 27rem;
   }
+
   .systemOrbit {
     height: 16rem;
     width: 16rem;
   }
+
   .manifesto,
   .story,
   .principles,
@@ -596,35 +1233,44 @@
     padding-bottom: 6rem;
     padding-top: 6rem;
   }
+
   .principleGrid {
     grid-template-columns: 1fr;
   }
+
   .timeline li {
     gap: 1rem;
     grid-template-columns: 4rem 1fr;
   }
+
   .operating {
     padding-bottom: 7rem;
     padding-top: 7rem;
   }
+
   .discipline {
     font-size: 0.47rem;
   }
+
   .systemCore {
     height: 6rem;
     width: 6rem;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
+
   .systemOrbit,
   .operatingRing {
     animation: none;
   }
+
   .timeline li,
   .principleGrid article {
     transition: none;
   }
 }
+
 .motionRibbon {
   background: #050a13;
   height: clamp(22rem, 36vw, 35rem);
@@ -632,67 +1278,64 @@
   overflow: hidden;
   position: relative;
 }
+
 .motionRibbon::before {
-  background: linear-gradient(
-    90deg,
-    var(--bg) 0%,
-    transparent 18% 82%,
-    var(--bg) 100%
-  );
+  background: linear-gradient(90deg,
+      var(--bg) 0%,
+      transparent 18% 82%,
+      var(--bg) 100%);
   content: "";
   inset: 0;
   pointer-events: none;
   position: absolute;
   z-index: 3;
 }
+
 .motionRibbon::after {
-  background: linear-gradient(
-    180deg,
-    var(--bg-soft),
-    transparent 20% 78%,
-    var(--bg)
-  );
+  background: linear-gradient(180deg,
+      var(--bg-soft),
+      transparent 20% 78%,
+      var(--bg));
   content: "";
   inset: 0;
   pointer-events: none;
   position: absolute;
   z-index: 3;
 }
+
 .ribbonMotion {
   animation: ribbon-breathe 7s ease-in-out infinite alternate;
-  clip-path: polygon(
-    0 22%,
-    14% 10%,
-    31% 19%,
-    48% 4%,
-    67% 16%,
-    84% 7%,
-    100% 21%,
-    100% 78%,
-    82% 91%,
-    66% 80%,
-    48% 96%,
-    29% 82%,
-    13% 92%,
-    0 78%
-  );
+  clip-path: polygon(0 22%,
+      14% 10%,
+      31% 19%,
+      48% 4%,
+      67% 16%,
+      84% 7%,
+      100% 21%,
+      100% 78%,
+      82% 91%,
+      66% 80%,
+      48% 96%,
+      29% 82%,
+      13% 92%,
+      0 78%);
   inset: -8%;
   mask-image: linear-gradient(90deg, transparent, #000 11% 89%, transparent);
   position: absolute;
 }
+
 .ribbonMotion::before {
-  background: linear-gradient(
-    110deg,
-    rgb(47 125 246 / 22%),
-    transparent 38%,
-    rgb(91 213 255 / 18%)
-  );
+  background: linear-gradient(110deg,
+      rgb(47 125 246 / 22%),
+      transparent 38%,
+      rgb(91 213 255 / 18%));
   content: "";
   inset: 0;
   mix-blend-mode: screen;
   position: absolute;
   z-index: 2;
 }
+
 .ribbonLottie {
   filter: saturate(1.25) contrast(1.08);
   height: 100%;
@@ -700,6 +1343,7 @@
   transform: scale(1.08);
   width: 100%;
 }
+
 .ribbonWords {
   align-items: center;
   display: flex;
@@ -708,7 +1352,8 @@
   position: absolute;
   z-index: 4;
 }
-.ribbonWords > span {
+
+.ribbonWords>span {
   color: rgb(246 249 255 / 92%);
   display: grid;
   font-size: clamp(2.6rem, 7vw, 8rem);
@@ -717,18 +1362,21 @@
   line-height: 0.8;
   text-shadow: 0 0.4rem 2rem rgb(0 0 0 / 55%);
 }
+
 .ribbonWords small {
   color: var(--cyan);
   font: 0.52rem monospace;
   letter-spacing: 0.12em;
   margin-bottom: 0.65rem;
 }
-.ribbonWords > i {
+
+.ribbonWords>i {
   color: rgb(91 213 255 / 40%);
   font-size: clamp(1.4rem, 3vw, 3.4rem);
   font-style: normal;
   margin: 1.2rem clamp(1rem, 3vw, 3rem) 0;
 }
+
 .ribbonCaption {
   bottom: 1.3rem;
   display: flex;
@@ -738,28 +1386,34 @@
   right: max(1.25rem, calc((100% - var(--container)) / 2 + 3.5rem));
   z-index: 5;
 }
+
 .ribbonCaption span,
 .ribbonCaption b {
   color: rgb(181 192 208 / 45%);
   font: 0.5rem monospace;
   letter-spacing: 0.1em;
 }
+
 .ribbonCaption b {
   color: var(--cyan);
 }
+
 .story {
   border-top: 0;
 }
+
 @keyframes ribbon-breathe {
   to {
     filter: hue-rotate(8deg);
     transform: scale(1.04) translateX(1.5%);
   }
 }
+
 @media (max-width: 700px) {
   .motionRibbon {
     height: 27rem;
   }
+
   .ribbonWords {
     align-items: flex-start;
     flex-direction: column;
@@ -767,24 +1421,2532 @@
     justify-content: center;
     left: 15%;
   }
-  .ribbonWords > span {
+
+  .ribbonWords>span {
     font-size: 3.3rem;
   }
-  .ribbonWords > i {
+
+  .ribbonWords>i {
     display: none;
   }
+
   .ribbonCaption span {
     display: none;
   }
+
   .ribbonMotion {
     inset: -14% -35%;
   }
+
   .ribbonLottie {
     opacity: 0.5;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .ribbonMotion {
     animation: none;
+  }
+}
+
+/* Keep the leadership presentation simple and formal. */
+.orgSection .companyNode,
+.orgSection .leadershipLine,
+.orgSection .orgNote,
+.orgSection .ownerCrown,
+.orgSection .ownerStatement,
+.orgSection .ownerSummary,
+.orgSection .ownerCount {
+  display: none
+}
+
+.orgSection .orgChart {
+  max-width: 1100px
+}
+
+.orgSection .ownerBranches {
+  gap: 2rem
+}
+
+.orgSection .ownerCard {
+  align-items: stretch;
+  background: #0e1a2b;
+  border: 1px solid #293e57;
+  border-radius: 1rem;
+  box-shadow: none;
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(190px, 42%) minmax(0, 1fr);
+  min-height: 310px;
+  overflow: hidden;
+  padding: 0
+}
+
+.orgSection .ownerCard::after {
+  display: none
+}
+
+.orgSection .ownerCard:hover {
+  border-color: #416684;
+  transform: translateY(-3px)
+}
+
+.orgSection .ownerCard>.ownerPortrait {
+  align-self: stretch;
+  background: #14243a;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  grid-row: 1/5;
+  height: 100%;
+  min-height: 310px;
+  width: 100%
+}
+
+.orgSection .ownerCard>.ownerPortrait img {
+  object-fit: cover;
+  object-position: center top
+}
+
+.orgSection .ownerCard>div {
+  align-content: end;
+  align-self: stretch;
+  display: grid;
+  padding: 2rem 2rem .5rem
+}
+
+.orgSection .ownerCard small {
+  color: var(--cyan);
+  font-size: .5rem
+}
+
+.orgSection .ownerCard h3 {
+  font-size: 1.55rem;
+  font-weight: 600;
+  margin: .8rem 0 .3rem
+}
+
+.orgSection .ownerCard p {
+  color: #94a5b9;
+  font-size: .7rem
+}
+
+.orgSection .ownerDepartment {
+  border-top: 1px solid #293e57;
+  color: #c2cfdd;
+  margin: 0 2rem;
+  padding-top: 1rem
+}
+
+.orgSection .ownerAction {
+  align-self: start;
+  color: var(--cyan);
+  margin: .8rem 2rem 2rem
+}
+
+@media(max-width:850px) {
+  .orgSection .ownerCard {
+    grid-template-columns: 1fr
+  }
+
+  .orgSection .ownerCard>.ownerPortrait {
+    aspect-ratio: 1.25;
+    display: flex;
+    grid-row: auto;
+    height: auto;
+    min-height: 0
+  }
+}
+
+@media(max-width:620px) {
+  .orgSection .ownerBranches {
+    grid-template-columns: 1fr
+  }
+}
+
+/* Reference-inspired people section */
+.orgSection {
+  background: #f3f2f0;
+  border: 0;
+  color: #101221;
+  padding: 7rem 0
+}
+
+.orgSection::before {
+  display: none
+}
+
+.orgSection .orgHeading {
+  align-items: start;
+  gap: 5rem;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 6rem
+}
+
+.orgSection .orgHeading h2 {
+  color: #0c0e1c;
+  font-size: clamp(2.4rem, 4vw, 4.2rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: 1.15;
+  margin: 0;
+  max-width: 580px
+}
+
+.orgSection .orgHeading>p {
+  color: #73706f;
+  font-size: .92rem;
+  letter-spacing: .02em;
+  line-height: 1.6;
+  max-width: 600px
+}
+
+.orgSection .orgChart {
+  max-width: none
+}
+
+.orgSection .ownerBranches {
+  gap: 1.4rem
+}
+
+.orgSection .ownerBranch {
+  --branch: #111;
+  --branch-rgb: 20 20 20
+}
+
+.orgSection .ownerCard {
+  background: #e7e6e4;
+  border: 0;
+  border-radius: 0;
+  color: #141414;
+  grid-template-columns: 48% 52%;
+  height: 300px;
+  min-height: 300px
+}
+
+.orgSection .ownerCard:hover {
+  border: 0;
+  transform: none
+}
+
+.orgSection .ownerCard>.ownerPortrait {
+  background: #d5d5d5;
+  grid-row: 1/7;
+  height: 300px;
+  min-height: 300px
+}
+
+.orgSection .ownerCard>div {
+  align-content: end;
+  padding: 2rem 1.5rem .5rem
+}
+
+.orgSection .ownerCard small {
+  color: #777;
+  font-family: Poppins, sans-serif;
+  font-size: .58rem;
+  letter-spacing: .08em
+}
+
+.orgSection .ownerCard h3 {
+  color: #171717;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -.025em;
+  margin: .65rem 0 .25rem
+}
+
+.orgSection .ownerCard p {
+  color: #555;
+  font-size: .68rem;
+  line-height: 1.5
+}
+
+.orgSection .ownerDepartment {
+  border: 0;
+  color: #555;
+  font-size: .62rem;
+  margin: 0 1.5rem;
+  padding: 0
+}
+
+.orgSection .ownerDepartment svg {
+  display: none
+}
+
+.orgSection .ownerSummary {
+  color: #666;
+  display: block;
+  font-size: .64rem;
+  line-height: 1.55;
+  margin: .45rem 1.5rem 0
+}
+
+.orgSection .ownerAction {
+  color: #151515;
+  font-size: .63rem;
+  margin: .9rem 1.5rem 1.5rem
+}
+
+.orgSection .ownerStatement,
+.orgSection .ownerCount,
+.orgSection .ownerCrown {
+  display: none
+}
+
+@media(max-width:850px) {
+  .orgSection .orgHeading {
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 3.5rem
+  }
+
+  .orgSection .ownerCard {
+    grid-template-columns: 1fr;
+    height: auto
+  }
+
+  .orgSection .ownerCard>.ownerPortrait {
+    aspect-ratio: 1.15;
+    height: auto;
+    min-height: 0
+  }
+
+  .orgSection .ownerCard>div {
+    padding-top: 1.5rem
+  }
+}
+
+@media(max-width:620px) {
+  .orgSection {
+    padding: 5rem 0
+  }
+
+  .orgSection .ownerBranches {
+    grid-template-columns: 1fr
+  }
+}
+
+/* Team hierarchy revealed from each owner card. */
+.orgSection .ownerBranch {
+  outline: none;
+  position: relative
+}
+
+.teamHoverPanel {
+  background: #e7e6e4;
+  color: #171717;
+  display: grid;
+  inset: 0;
+  opacity: 0;
+  padding: 1.5rem;
+  pointer-events: none;
+  position: absolute;
+  transform: translateY(10px);
+  transition: opacity .22s ease, transform .22s ease;
+  visibility: hidden;
+  z-index: 5
+}
+
+.ownerBranch:hover .teamHoverPanel,
+.ownerBranch:focus .teamHoverPanel,
+.ownerBranch:focus-within .teamHoverPanel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible
+}
+
+.teamHoverPanel>header {
+  align-items: center;
+  border-bottom: 1px solid #c9c7c4;
+  display: flex;
+  gap: .75rem;
+  padding-bottom: 1rem
+}
+
+.teamHoverPanel>header>span {
+  align-items: center;
+  background: #171717;
+  color: white;
+  display: flex;
+  height: 2.6rem;
+  justify-content: center;
+  width: 2.6rem
+}
+
+.teamHoverPanel>header>div {
+  display: grid;
+  gap: .2rem
+}
+
+.teamHoverPanel header small {
+  color: #777;
+  font: .5rem monospace;
+  letter-spacing: .11em
+}
+
+.teamHoverPanel header h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0
+}
+
+.teamHoverLine {
+  background: #b8b5b1;
+  height: 1.5rem;
+  margin-left: 1.3rem;
+  width: 1px
+}
+
+.teamHoverGrid {
+  display: grid;
+  gap: .6rem;
+  grid-template-columns: 1fr 1fr;
+  overflow: auto
+}
+
+.teamHoverGrid>div {
+  align-items: center;
+  background: #f3f2f0;
+  border: 1px solid #d4d1cd;
+  display: flex;
+  gap: .65rem;
+  min-width: 0;
+  padding: .65rem
+}
+
+.teamHoverGrid .memberPortrait {
+  background: #d1d1d1;
+  border: 0;
+  border-radius: 0;
+  color: #333;
+  height: 2.8rem;
+  width: 2.8rem
+}
+
+.teamHoverGrid>div>span {
+  display: grid;
+  gap: .2rem;
+  min-width: 0
+}
+
+.teamHoverGrid strong {
+  font-size: .65rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.teamHoverGrid small {
+  color: #74716f;
+  font-size: .55rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.orgSection .ownerBranch:focus {
+  outline: 2px solid #111;
+  outline-offset: 3px
+}
+
+@media(hover:none) {
+  .teamHoverPanel {
+    inset: auto;
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+    transform: none;
+    visibility: visible
+  }
+
+  .orgSection .ownerCard {
+    display: none
+  }
+}
+
+@media(max-width:620px) {
+  .teamHoverGrid {
+    grid-template-columns: 1fr
+  }
+
+  .teamHoverPanel {
+    min-height: 300px
+  }
+}
+
+/* Prime Softech dark-theme treatment for the people section. */
+.orgSection {
+  background: linear-gradient(180deg, #080d18, #0b1423 50%, #080d18);
+  border-block: 1px solid var(--line);
+  color: var(--text)
+}
+
+.orgSection .orgHeading h2 {
+  color: var(--text)
+}
+
+.orgSection .orgHeading>p {
+  color: #8fa1b6
+}
+
+.orgSection .ownerCard {
+  background: #101d30;
+  border: 1px solid #293f5b;
+  color: var(--text)
+}
+
+.orgSection .ownerCard:hover {
+  border: 1px solid #3c6f91
+}
+
+.orgSection .ownerCard>.ownerPortrait {
+  background: #142942
+}
+
+.orgSection .ownerCard h3 {
+  color: var(--text)
+}
+
+.orgSection .ownerCard p {
+  color: #90a3b9
+}
+
+.orgSection .ownerDepartment {
+  border-color: #293f5b;
+  color: #bac9d9
+}
+
+.orgSection .ownerSummary {
+  color: #8297ae
+}
+
+.orgSection .ownerAction {
+  color: var(--cyan)
+}
+
+.teamHoverPanel {
+  background: #0d1a2c;
+  color: var(--text)
+}
+
+.teamHoverGrid>div {
+  background: #111f33;
+  border-color: #29415d
+}
+
+.teamHoverGrid .memberPortrait {
+  background: #172c46;
+  color: #dff6ff
+}
+
+.teamHoverGrid strong {
+  color: #edf6ff
+}
+
+.teamHoverGrid small {
+  color: #8296ad
+}
+
+.orgSection .ownerBranch:focus {
+  outline-color: var(--cyan)
+}
+
+/* Organizational chart shown over an owner profile. */
+.teamHoverPanel {
+  align-content: start;
+  overflow: hidden;
+  padding: .75rem 1rem 1rem
+}
+
+.chartTitle {
+  align-items: center;
+  color: #8fa4bb;
+  display: flex;
+  font: .48rem monospace;
+  gap: .4rem;
+  letter-spacing: .1em;
+  position: absolute;
+  right: .8rem;
+  top: .7rem
+}
+
+.chartTitle svg {
+  color: var(--cyan)
+}
+
+.chartOwner {
+  align-items: center;
+  background: #142a45;
+  border: 1px solid #365b7b;
+  border-radius: .7rem;
+  display: flex;
+  gap: .55rem;
+  margin: 0 auto;
+  padding: .45rem .65rem;
+  position: relative;
+  width: min(230px, 68%);
+  z-index: 3
+}
+
+.chartOwner>.memberPortrait {
+  border: 2px solid #4a789a;
+  border-radius: 50%;
+  height: 2.8rem;
+  width: 2.8rem
+}
+
+.chartOwner>span {
+  display: grid;
+  gap: .1rem;
+  min-width: 0
+}
+
+.chartOwner small {
+  color: var(--cyan);
+  font: .42rem monospace;
+  letter-spacing: .08em
+}
+
+.chartOwner strong {
+  font-size: .63rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.chartOwner em {
+  color: #8398af;
+  font-size: .48rem;
+  font-style: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.chartConnector {
+  height: 2rem;
+  margin: 0 auto;
+  position: relative;
+  width: calc(100% - 5rem)
+}
+
+.chartConnector::before {
+  background: #41617d;
+  content: "";
+  height: 50%;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  width: 1px
+}
+
+.chartConnector::after {
+  border-left: 1px solid #41617d;
+  border-right: 1px solid #41617d;
+  border-top: 1px solid #41617d;
+  bottom: 0;
+  content: "";
+  height: 50%;
+  left: 5%;
+  position: absolute;
+  right: 5%
+}
+
+.chartConnector i {
+  background: var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 .45rem var(--cyan);
+  height: .28rem;
+  left: calc(50% - .12rem);
+  position: absolute;
+  top: calc(50% - .12rem);
+  width: .28rem;
+  z-index: 2
+}
+
+.teamHoverGrid {
+  align-items: start;
+  gap: .45rem;
+  grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+  overflow: visible
+}
+
+.teamHoverGrid>div {
+  align-content: start;
+  border-radius: .65rem;
+  display: grid;
+  gap: .25rem;
+  justify-items: center;
+  min-height: 105px;
+  padding: .55rem .35rem;
+  position: relative;
+  text-align: center
+}
+
+.teamHoverGrid>div>i {
+  background: #41617d;
+  height: .7rem;
+  left: 50%;
+  position: absolute;
+  top: -.7rem;
+  width: 1px
+}
+
+.teamHoverGrid .memberPortrait {
+  border: 2px solid #355a78;
+  border-radius: 50%;
+  height: 2.6rem;
+  width: 2.6rem
+}
+
+.teamHoverGrid>div>span {
+  justify-items: center;
+  width: 100%
+}
+
+.teamHoverGrid strong {
+  font-size: .54rem;
+  max-width: 100%
+}
+
+.teamHoverGrid small {
+  font-size: .45rem;
+  max-width: 100%
+}
+
+@media(max-width:850px) {
+  .chartConnector {
+    width: calc(100% - 2rem)
+  }
+
+  .teamHoverGrid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+
+@media(hover:none) {
+  .teamHoverPanel {
+    padding: 1rem
+  }
+
+  .chartTitle {
+    margin-bottom: .8rem;
+    position: static
+  }
+
+  .teamHoverGrid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+
+/* Large page-level hierarchy panel on desktop hover. */
+@media(hover:hover) and (min-width:851px) {
+  .teamHoverPanel {
+    background: rgb(8 18 32/98%);
+    border: 1px solid #31516d;
+    border-radius: 1.2rem;
+    box-shadow: 0 2rem 6rem rgb(0 0 0/65%);
+    height: calc(100vh - 8rem);
+    inset: 4rem 3vw auto;
+    max-height: 760px;
+    overflow: auto;
+    padding: 2rem 3rem;
+    position: fixed;
+    width: 94vw;
+    z-index: 120
+  }
+
+  .ownerBranch:hover .teamHoverPanel,
+  .ownerBranch:focus .teamHoverPanel,
+  .ownerBranch:focus-within .teamHoverPanel {
+    transform: translateY(0)
+  }
+
+  .chartTitle {
+    font-size: .58rem;
+    right: 2rem;
+    top: 1.6rem
+  }
+
+  .chartOwner {
+    border-radius: 1rem;
+    gap: 1rem;
+    margin-top: .5rem;
+    padding: 1rem 1.3rem;
+    width: min(390px, 42%)
+  }
+
+  .chartOwner>.memberPortrait {
+    height: 5.2rem;
+    width: 5.2rem
+  }
+
+  .chartOwner small {
+    font-size: .5rem
+  }
+
+  .chartOwner strong {
+    font-size: 1rem
+  }
+
+  .chartOwner em {
+    font-size: .62rem
+  }
+
+  .chartConnector {
+    height: 5rem;
+    width: 78%
+  }
+
+  .chartConnector::before {
+    height: 50%
+  }
+
+  .chartConnector::after {
+    height: 50%;
+    left: 3%;
+    right: 3%
+  }
+
+  .teamHoverGrid {
+    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    margin: 0 auto;
+    max-width: 1200px
+  }
+
+  .teamHoverGrid>div {
+    border-radius: 1rem;
+    min-height: 190px;
+    padding: 1.2rem .8rem
+  }
+
+  .teamHoverGrid>div>i {
+    height: 1.3rem;
+    top: -1.3rem
+  }
+
+  .teamHoverGrid .memberPortrait {
+    height: 6rem;
+    width: 6rem
+  }
+
+  .teamHoverGrid strong {
+    font-size: .72rem;
+    margin-top: .35rem
+  }
+
+  .teamHoverGrid small {
+    font-size: .56rem
+  }
+
+  .orgSection .ownerBranch:focus {
+    outline: none
+  }
+}
+
+/* Recursive reporting tree */
+.hierarchyLevel {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  min-width: max-content;
+  position: relative
+}
+
+.hierarchyBranch {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  position: relative
+}
+
+.hierarchyBranch::before {
+  background: #41617d;
+  content: "";
+  height: 1.2rem;
+  left: 50%;
+  position: absolute;
+  top: -1.2rem;
+  width: 1px
+}
+
+.hierarchyPerson {
+  align-items: center;
+  background: #111f33;
+  border: 1px solid #304963;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 175px;
+  padding: 1rem;
+  text-align: center;
+  width: 145px
+}
+
+.hierarchyPerson>.memberPortrait {
+  border: 2px solid #355a78;
+  border-radius: 50%;
+  height: 5rem;
+  width: 5rem
+}
+
+.hierarchyPerson>span {
+  display: grid;
+  gap: .25rem;
+  justify-items: center;
+  margin-top: .55rem;
+  width: 100%
+}
+
+.hierarchyPerson strong {
+  font-size: .68rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.hierarchyPerson small {
+  color: #8296ad;
+  font-size: .52rem
+}
+
+.hierarchyPerson em {
+  color: #667d95;
+  font-size: .45rem;
+  font-style: normal;
+  line-height: 1.4;
+  max-width: 125px
+}
+
+.hierarchyBranch>.hierarchyLevel {
+  border-top: 1px solid #41617d;
+  margin-top: 2.2rem;
+  padding-top: 1.2rem
+}
+
+.hierarchyBranch>.hierarchyLevel::before {
+  background: #41617d;
+  content: "";
+  height: 2.2rem;
+  left: 50%;
+  position: absolute;
+  top: -2.2rem;
+  width: 1px
+}
+
+.teamHoverPanel>.hierarchyLevel {
+  margin: 0 auto;
+  overflow: visible;
+  width: max-content
+}
+
+.teamHoverPanel>.hierarchyLevel>.hierarchyBranch::before {
+  display: none
+}
+
+@media(max-width:850px) {
+  .hierarchyLevel {
+    flex-wrap: wrap;
+    min-width: 0
+  }
+
+  .hierarchyPerson {
+    width: 130px
+  }
+
+  .hierarchyBranch>.hierarchyLevel {
+    border-top: 0
+  }
+}
+
+/* Wide organization-chart presentation. */
+@media(hover:hover) and (min-width:851px) {
+  .teamHoverPanel {
+    border-radius: 1rem;
+    height: calc(100dvh - 3rem);
+    inset: 1.5rem 1.5vw auto;
+    max-height: none;
+    max-width: none;
+    overscroll-behavior: contain;
+    padding: 2rem 2.5rem 3rem;
+    scrollbar-color: #365d7d #091423;
+    scrollbar-width: thin;
+    width: 97vw;
+    z-index: 10000
+  }
+
+  .teamHoverPanel::-webkit-scrollbar {
+    height: 8px;
+    width: 8px
+  }
+
+  .teamHoverPanel::-webkit-scrollbar-track {
+    background: #091423
+  }
+
+  .teamHoverPanel::-webkit-scrollbar-thumb {
+    background: #365d7d;
+    border-radius: 999px
+  }
+
+  .chartTitle {
+    right: 2.5rem;
+    top: 2rem
+  }
+
+  .chartOwner {
+    min-height: 105px;
+    width: min(440px, 40vw)
+  }
+
+  .chartOwner>.memberPortrait {
+    height: 5.8rem;
+    width: 5.8rem
+  }
+
+  .chartOwner strong {
+    font-size: 1.08rem
+  }
+
+  .chartOwner em {
+    font-size: .68rem
+  }
+
+  .chartConnector {
+    height: 5.5rem;
+    min-width: 900px;
+    width: 82%
+  }
+
+  .teamHoverPanel>.hierarchyLevel {
+    justify-content: space-around;
+    min-width: max(1100px, 100%);
+    padding: 0 1rem
+  }
+
+  .hierarchyLevel {
+    gap: 2rem
+  }
+
+  .hierarchyBranch {
+    min-width: 190px
+  }
+
+  .hierarchyPerson {
+    min-height: 205px;
+    padding: 1.2rem;
+    width: 185px
+  }
+
+  .hierarchyPerson>.memberPortrait {
+    height: 6.4rem;
+    width: 6.4rem
+  }
+
+  .hierarchyPerson strong {
+    font-size: .76rem
+  }
+
+  .hierarchyPerson small {
+    font-size: .58rem
+  }
+
+  .hierarchyPerson em {
+    font-size: .5rem;
+    max-width: 155px
+  }
+
+  .hierarchyBranch>.hierarchyLevel {
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 1.7rem
+  }
+
+  .hierarchyBranch>.hierarchyLevel::before {
+    height: 3rem;
+    top: -3rem
+  }
+}
+
+/* Dynamic tree geometry: every branch owns the width of its descendants. */
+@media(hover:hover) and (min-width:851px) {
+  .chartConnector {
+    height: 2.75rem;
+    min-width: 0;
+    width: 1px
+  }
+
+  .chartConnector::before {
+    height: 100%;
+    left: 0
+  }
+
+  .chartConnector::after,
+  .chartConnector i {
+    display: none
+  }
+
+  .teamHoverPanel>.hierarchyLevel {
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    min-width: max-content;
+    padding: 0 1.5rem;
+    width: max-content
+  }
+
+  .hierarchyLevel {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    justify-content: center;
+    min-width: max-content;
+    padding-top: 0;
+    position: relative;
+    width: max-content
+  }
+
+  .hierarchyBranch {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    min-width: 0;
+    padding: 2rem .75rem 0;
+    position: relative
+  }
+
+  .hierarchyLevel>.hierarchyBranch::before,
+  .hierarchyLevel>.hierarchyBranch::after {
+    background: transparent;
+    border-top: 1px solid #41617d;
+    content: "";
+    height: 2rem;
+    position: absolute;
+    right: 50%;
+    top: 0;
+    width: 50%
+  }
+
+  .hierarchyLevel>.hierarchyBranch::after {
+    border-left: 1px solid #41617d;
+    left: 50%;
+    right: auto
+  }
+
+  .hierarchyLevel>.hierarchyBranch:only-child {
+    padding-top: 0
+  }
+
+  .hierarchyLevel>.hierarchyBranch:only-child::before,
+  .hierarchyLevel>.hierarchyBranch:only-child::after {
+    display: none
+  }
+
+  .hierarchyLevel>.hierarchyBranch:first-child::before,
+  .hierarchyLevel>.hierarchyBranch:last-child::after {
+    border: 0
+  }
+
+  .hierarchyLevel>.hierarchyBranch:last-child::before {
+    border-right: 1px solid #41617d;
+    border-radius: 0 6px 0 0
+  }
+
+  .hierarchyLevel>.hierarchyBranch:first-child::after {
+    border-radius: 6px 0 0
+  }
+
+  .hierarchyBranch>.hierarchyLevel {
+    border: 0;
+    gap: 0;
+    margin-top: 2.25rem;
+    padding-top: 0
+  }
+
+  .hierarchyBranch>.hierarchyLevel::before {
+    background: #41617d;
+    content: "";
+    height: 2.25rem;
+    left: 50%;
+    position: absolute;
+    top: -2.25rem;
+    width: 1px
+  }
+
+  .hierarchyPerson {
+    flex: 0 0 auto;
+    overflow: hidden
+  }
+
+  .hierarchyPerson strong,
+  .hierarchyPerson small {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+  }
+
+  .hierarchyPerson em {
+    display: -webkit-box;
+    max-height: 2.8em;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2
+  }
+
+  .teamHoverPanel>.hierarchyLevel>.hierarchyBranch::before,
+  .teamHoverPanel>.hierarchyLevel>.hierarchyBranch::after {
+    display: block
+  }
+
+  .teamHoverPanel>.hierarchyLevel>.hierarchyBranch:only-child::before,
+  .teamHoverPanel>.hierarchyLevel>.hierarchyBranch:only-child::after {
+    display: none
+  }
+}
+
+/* Final responsive hierarchy presentation. */
+@media (hover:hover) and (min-width:851px) {
+  .teamHoverPanel {
+    background: linear-gradient(180deg, rgb(8 18 32/99%), rgb(7 15 27/99%));
+    border: 1px solid #31516d;
+    border-radius: 1rem;
+    box-shadow: 0 1.5rem 5rem rgb(0 0 0/70%);
+    height: auto;
+    inset: clamp(.75rem, 2vh, 1.5rem) clamp(.75rem, 1.5vw, 1.5rem);
+    max-height: none;
+    overflow: auto;
+    padding: 1.25rem clamp(1rem, 2vw, 2rem) 2rem;
+    position: fixed;
+    width: auto;
+    z-index: 10000
+  }
+
+  .chartTitle {
+    background: #0e2136;
+    border: 1px solid #294964;
+    border-radius: 999px;
+    padding: .45rem .7rem;
+    position: sticky;
+    right: auto;
+    top: 0;
+    width: max-content;
+    z-index: 5
+  }
+
+  .chartOwner {
+    min-height: 82px;
+    padding: .7rem 1rem;
+    width: min(360px, 42vw)
+  }
+
+  .chartOwner>.memberPortrait {
+    height: 4.2rem;
+    width: 4.2rem
+  }
+
+  .chartOwner strong {
+    font-size: .9rem
+  }
+
+  .chartOwner em {
+    font-size: .58rem
+  }
+
+  .chartConnector {
+    height: 2.25rem
+  }
+
+  .teamHoverPanel>.hierarchyLevel {
+    padding-inline: 1rem
+  }
+
+  .hierarchyBranch {
+    padding-inline: .5rem
+  }
+
+  .hierarchyPerson {
+    min-height: 168px;
+    padding: .85rem;
+    width: 150px
+  }
+
+  .hierarchyPerson>.memberPortrait {
+    height: 4.6rem;
+    width: 4.6rem
+  }
+
+  .hierarchyPerson strong {
+    font-size: .66rem
+  }
+
+  .hierarchyPerson small {
+    font-size: .52rem
+  }
+
+  .hierarchyPerson em {
+    font-size: .46rem;
+    max-width: 130px
+  }
+
+  .teamHoverPanel::-webkit-scrollbar {
+    height: 7px;
+    width: 7px
+  }
+}
+
+@media (max-width:850px),
+(hover:none) {
+  .orgSection {
+    padding-block: 4.5rem
+  }
+
+  .orgSection .orgHeading {
+    margin-bottom: 3rem
+  }
+
+  .orgSection .ownerBranches {
+    grid-template-columns: 1fr
+  }
+
+  .orgSection .ownerCard {
+    display: grid
+  }
+
+  .teamHoverPanel {
+    background: #0b1829;
+    border: 1px solid #29425d;
+    border-radius: 1rem;
+    box-shadow: none;
+    display: block;
+    height: auto;
+    inset: auto;
+    margin-top: .75rem;
+    opacity: 1;
+    overflow: visible;
+    padding: 1rem;
+    pointer-events: auto;
+    position: relative;
+    transform: none;
+    visibility: visible;
+    width: 100%
+  }
+
+  .chartTitle {
+    margin: 0 0 .85rem;
+    padding: 0;
+    position: static
+  }
+
+  .chartOwner {
+    margin: 0;
+    min-height: 0;
+    padding: .65rem;
+    width: 100%
+  }
+
+  .chartOwner>.memberPortrait {
+    height: 3.25rem;
+    width: 3.25rem
+  }
+
+  .chartConnector {
+    height: 1rem;
+    margin-left: 1.65rem;
+    width: 1px
+  }
+
+  .chartConnector::before {
+    height: 100%;
+    left: 0
+  }
+
+  .chartConnector::after,
+  .chartConnector i {
+    display: none
+  }
+
+  .teamHoverPanel>.hierarchyLevel,
+  .hierarchyLevel {
+    display: grid;
+    gap: .7rem;
+    justify-content: stretch;
+    min-width: 0;
+    padding: 0;
+    width: 100%
+  }
+
+  .hierarchyBranch {
+    align-items: stretch;
+    display: grid;
+    min-width: 0;
+    padding: 0;
+    width: 100%
+  }
+
+  .hierarchyLevel>.hierarchyBranch::before,
+  .hierarchyLevel>.hierarchyBranch::after,
+  .hierarchyBranch::before {
+    display: none !important
+  }
+
+  .hierarchyPerson {
+    align-items: center;
+    border-radius: .75rem;
+    display: grid;
+    gap: .75rem;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    min-height: 0;
+    padding: .7rem;
+    text-align: left;
+    width: 100%
+  }
+
+  .hierarchyPerson>.memberPortrait {
+    height: 3.5rem;
+    width: 3.5rem
+  }
+
+  .hierarchyPerson>span {
+    justify-items: start;
+    margin: 0;
+    min-width: 0
+  }
+
+  .hierarchyPerson strong,
+  .hierarchyPerson small {
+    white-space: normal
+  }
+
+  .hierarchyPerson em {
+    max-width: none;
+    text-align: left
+  }
+
+  .hierarchyBranch>.hierarchyLevel {
+    border: 0;
+    border-left: 1px solid #31516d;
+    gap: .65rem;
+    margin: .65rem 0 0 1.75rem;
+    padding: 0 0 0 .85rem;
+    width: calc(100% - 1.75rem)
+  }
+
+  .hierarchyBranch>.hierarchyLevel::before {
+    display: none
+  }
+}
+
+@media(max-width:520px) {
+  .orgSection {
+    padding-block: 3.5rem
+  }
+
+  .orgSection .orgHeading h2 {
+    font-size: 2rem
+  }
+
+  .orgSection .ownerCard {
+    grid-template-columns: 1fr
+  }
+
+  .orgSection .ownerCard>.ownerPortrait {
+    aspect-ratio: 1.15
+  }
+
+  .teamHoverPanel {
+    border-radius: .8rem;
+    padding: .75rem
+  }
+
+  .chartOwner {
+    gap: .65rem
+  }
+
+  .hierarchyPerson {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    padding: .6rem
+  }
+
+  .hierarchyPerson>.memberPortrait {
+    height: 3rem;
+    width: 3rem
+  }
+
+  .hierarchyBranch>.hierarchyLevel {
+    margin-left: 1.25rem;
+    width: calc(100% - 1.25rem)
+  }
+}
+
+/* Measured circuit connectors keep every reporting path continuous. */
+.hierarchyLevel {
+  isolation: isolate
+}
+
+.hierarchyFlow {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: 0
+}
+
+.hierarchyFlow path {
+  animation: hierarchy-flow 1.1s ease both;
+  fill: none;
+  stroke: #4d7899;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke
+}
+
+.hierarchyFlow circle {
+  fill: #69dcff;
+  filter: drop-shadow(0 0 4px #54d5ff)
+}
+
+.hierarchyFlow .flowJunction {
+  fill: #8fe7ff
+}
+
+.hierarchyBranch,
+.hierarchyPerson {
+  position: relative;
+  z-index: 1
+}
+
+@keyframes hierarchy-flow {
+  from {
+    opacity: .15;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1
+  }
+
+  to {
+    opacity: 1;
+    stroke-dasharray: 1 0;
+    stroke-dashoffset: 0
+  }
+}
+
+@media(hover:hover) and (min-width:851px) {
+
+  .hierarchyLevel>.hierarchyBranch::before,
+  .hierarchyLevel>.hierarchyBranch::after,
+  .hierarchyBranch>.hierarchyLevel::before {
+    display: none !important
+  }
+}
+
+@media(max-width:850px), (hover:none) {
+  .hierarchyFlow {
+    display: none
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .hierarchyFlow path {
+    animation: none
+  }
+}
+
+/* Animated digital-circuit finish. */
+@media(hover:hover) and (min-width:851px) {
+  .teamHoverPanel {
+    background-color: #07111f;
+    background-image: radial-gradient(circle at 50% 0, rgb(54 126 180/16%), transparent 34%), linear-gradient(rgb(91 213 255/3%) 1px, transparent 1px), linear-gradient(90deg, rgb(91 213 255/3%) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px
+  }
+
+  .chartOwner {
+    box-shadow: 0 1rem 2.5rem rgb(0 0 0/25%), 0 0 0 1px rgb(91 213 255/4%);
+    overflow: visible
+  }
+
+  .chartOwner::after {
+    animation: owner-signal 2.4s ease-out infinite;
+    border: 1px solid rgb(91 213 255/45%);
+    border-radius: 1rem;
+    content: "";
+    inset: -1px;
+    pointer-events: none;
+    position: absolute
+  }
+}
+
+.hierarchyFlow .flowBase {
+  animation: none;
+  opacity: .48;
+  stroke: #31516c;
+  stroke-width: 3
+}
+
+.hierarchyFlow .flowEnergy {
+  stroke: url(#hierarchy-line);
+  stroke-dasharray: 5 7;
+  stroke-width: 1.25
+}
+
+.hierarchyFlow .flowPulse {
+  fill: #c4f4ff;
+  filter: drop-shadow(0 0 5px #5bd5ff) drop-shadow(0 0 10px #377dff)
+}
+
+.hierarchyFlow .flowEndpoint {
+  fill: #091828;
+  stroke: #73ddff;
+  stroke-width: 2
+}
+
+.hierarchyPerson {
+  box-shadow: 0 .8rem 2rem rgb(0 0 0/16%);
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease
+}
+
+.hierarchyPerson:hover {
+  border-color: #5790b8;
+  box-shadow: 0 1rem 2.5rem rgb(0 0 0/25%), 0 0 1.2rem rgb(91 213 255/10%);
+  transform: translateY(-3px)
+}
+
+@keyframes owner-signal {
+  0% {
+    opacity: .75;
+    transform: scale(1)
+  }
+
+  75%,
+  100% {
+    opacity: 0;
+    transform: scale(1.08)
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  .chartOwner::after,
+  .hierarchyFlow .flowEnergy {
+    animation: none
+  }
+
+  .flowPulse {
+    display: none
+  }
+
+  .hierarchyPerson {
+    transition: none
+  }
+}
+
+/* Strong but controlled member focus on hover. */
+.hierarchyPerson {
+  transform-origin: center;
+  transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease
+}
+
+.hierarchyPerson>.memberPortrait {
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease
+}
+
+.hierarchyPerson:hover {
+  background: #162a42;
+  border-color: #69d8ff;
+  box-shadow: 0 1.25rem 3rem rgb(0 0 0/35%), 0 0 1.8rem rgb(91 213 255/20%);
+  transform: translateY(-5px) scale(1.055);
+  z-index: 8
+}
+
+.hierarchyPerson:hover>.memberPortrait {
+  border-color: #73ddff;
+  box-shadow: 0 0 1.2rem rgb(91 213 255/28%);
+  transform: scale(1.06)
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  .hierarchyPerson,
+  .hierarchyPerson>.memberPortrait {
+    transition: none
+  }
+}
+
+/* Full member details open above the chart without changing tree geometry. */
+.memberHoverDetails {
+  display: none
+}
+
+@media(hover:hover) and (min-width:851px) {
+  .hierarchyPerson:hover {
+    overflow: visible
+  }
+
+  .memberHoverDetails {
+    align-items: center;
+    background: linear-gradient(145deg, #172d48, #0d1b2e);
+    border: 1px solid #69d8ff;
+    border-radius: 1rem;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0/55%), 0 0 2rem rgb(91 213 255/18%);
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    left: 50%;
+    min-height: 155px;
+    opacity: 0;
+    padding: 1rem;
+    pointer-events: none;
+    position: absolute;
+    text-align: left;
+    top: 50%;
+    transform: translate(-50%, -46%) scale(.88);
+    transition: opacity .2s ease, transform .24s ease, visibility .2s;
+    visibility: hidden;
+    width: 250px;
+    z-index: 20
+  }
+
+  .hierarchyPerson:hover .memberHoverDetails {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+    visibility: visible
+  }
+
+  .memberHoverDetails>.memberPortrait {
+    border: 2px solid #73ddff;
+    box-shadow: 0 0 1.25rem rgb(91 213 255/20%);
+    height: 5rem;
+    width: 5rem
+  }
+
+  .memberHoverDetails>span {
+    align-items: start;
+    display: grid;
+    gap: .28rem;
+    justify-items: start;
+    margin: 0;
+    min-width: 0
+  }
+
+  .memberHoverDetails b {
+    color: #5bd5ff;
+    font: .46rem monospace;
+    letter-spacing: .1em
+  }
+
+  .memberHoverDetails strong {
+    color: #f4f9ff;
+    font-size: .82rem;
+    overflow-wrap: anywhere;
+    white-space: normal
+  }
+
+  .memberHoverDetails small {
+    color: #a8bad0;
+    font-size: .58rem;
+    overflow-wrap: anywhere;
+    white-space: normal
+  }
+
+  .memberHoverDetails em {
+    color: #8198b1;
+    display: block;
+    font-size: .52rem;
+    font-style: normal;
+    line-height: 1.55;
+    max-height: none;
+    max-width: none;
+    overflow: visible;
+    text-align: left;
+    -webkit-line-clamp: unset;
+    white-space: normal
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .memberHoverDetails {
+    transition: none
+  }
+}
+
+/* Structured member preview drawer. */
+.memberPreview {
+  display: none
+}
+
+@media(hover:hover) and (min-width:851px) {
+  .memberHoverDetails {
+    display: none !important
+  }
+
+  .memberPreview {
+    animation: member-preview-in .24s ease both;
+    background: linear-gradient(160deg, #142b46, #0a1728 72%);
+    border: 1px solid #4f89af;
+    border-radius: 1rem;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0/60%), 0 0 2rem rgb(91 213 255/12%);
+    display: grid;
+    overflow: hidden;
+    pointer-events: none;
+    position: fixed;
+    right: clamp(2rem, 3vw, 3.5rem);
+    top: 5rem;
+    width: min(300px, 28vw);
+    z-index: 10020
+  }
+
+  .previewImage {
+    aspect-ratio: 1.55;
+    background: #11243a;
+    overflow: hidden;
+    position: relative
+  }
+
+  .previewImage>.memberPortrait {
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+    width: 100%
+  }
+
+  .previewImage>.memberPortrait img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    width: 100%
+  }
+
+  .previewImage>span {
+    background: rgb(4 13 24/82%);
+    bottom: .65rem;
+    color: #68dbff;
+    font: .46rem monospace;
+    left: .65rem;
+    letter-spacing: .12em;
+    padding: .38rem .5rem;
+    position: absolute
+  }
+
+  .previewContent {
+    display: grid;
+    gap: .45rem;
+    padding: 1.1rem
+  }
+
+  .previewContent small {
+    color: #5bd5ff;
+    font: .46rem monospace;
+    letter-spacing: .09em
+  }
+
+  .previewContent h3 {
+    color: #f3f8ff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: .3rem 0 0;
+    overflow-wrap: anywhere
+  }
+
+  .previewContent p {
+    color: #b0c2d5;
+    font-size: .65rem;
+    margin: 0
+  }
+
+  .previewContent div {
+    border-top: 1px solid #29435e;
+    color: #8ea3ba;
+    font-size: .58rem;
+    line-height: 1.65;
+    margin-top: .35rem;
+    overflow-wrap: anywhere;
+    padding-top: .75rem
+  }
+
+  @keyframes member-preview-in {
+    from {
+      opacity: 0;
+      transform: translateX(18px) scale(.97)
+    }
+
+    to {
+      opacity: 1;
+      transform: none
+    }
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .memberPreview {
+    animation: none
+  }
+}
+
+/* Member spotlight dock: a wide, non-obstructive profile reveal. */
+@media(hover:hover) and (min-width:851px) {
+  .teamHoverPanel:has(.memberPreview) {
+    padding-bottom: 12rem
+  }
+
+  .teamHoverPanel:has(.memberPreview) .hierarchyPerson {
+    filter: saturate(.7);
+    opacity: .5;
+    transition: filter .24s ease, opacity .24s ease, transform .24s ease
+  }
+
+  .teamHoverPanel:has(.memberPreview) .hierarchyPerson:hover {
+    filter: none;
+    opacity: 1
+  }
+
+  .teamHoverPanel:has(.memberPreview) .hierarchyFlow {
+    opacity: .38
+  }
+
+  .memberPreview {
+    align-items: stretch;
+    animation: spotlight-dock-in .28s cubic-bezier(.2, .8, .2, 1) both;
+    backdrop-filter: blur(18px);
+    background: linear-gradient(110deg, rgb(15 35 57/96%), rgb(9 22 38/96%));
+    border: 1px solid rgb(105 216 255/55%);
+    border-radius: 1rem;
+    bottom: 1.25rem;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0/62%), 0 0 2.5rem rgb(91 213 255/14%);
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    left: 50%;
+    max-width: 760px;
+    overflow: hidden;
+    pointer-events: none;
+    position: fixed;
+    right: auto;
+    top: auto;
+    width: calc(100vw - 4rem);
+    z-index: 10020
+  }
+
+  .memberPreview::before {
+    background: linear-gradient(90deg, transparent, #5bd5ff, #775cff, transparent);
+    content: "";
+    height: 2px;
+    left: 5%;
+    position: absolute;
+    right: 5%;
+    top: 0
+  }
+
+  .memberPreview .previewImage {
+    aspect-ratio: auto;
+    background: #10243a;
+    height: 120px
+  }
+
+  .memberPreview .previewImage>.memberPortrait {
+    height: 100%;
+    width: 100%
+  }
+
+  .memberPreview .previewImage>span {
+    bottom: .5rem;
+    font-size: .42rem;
+    left: .5rem
+  }
+
+  .memberPreview .previewContent {
+    align-content: center;
+    gap: .35rem;
+    padding: 1rem 1.25rem
+  }
+
+  .memberPreview .previewContent small {
+    font-size: .44rem
+  }
+
+  .memberPreview .previewContent h3 {
+    font-size: 1.05rem;
+    margin: .15rem 0 0
+  }
+
+  .memberPreview .previewContent p {
+    font-size: .62rem
+  }
+
+  .memberPreview .previewContent div {
+    font-size: .56rem;
+    line-height: 1.5;
+    margin-top: .2rem;
+    padding-top: .55rem
+  }
+
+  @keyframes spotlight-dock-in {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 22px) scale(.96)
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1)
+    }
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .memberPreview {
+    animation: none;
+    transform: translateX(-50%)
+  }
+}
+
+/* In-place holographic profile morph. */
+@media(hover:hover) and (min-width:851px) {
+
+  .memberPreview,
+  .memberHoverDetails {
+    display: none !important
+  }
+
+  .hierarchyPerson {
+    isolation: isolate
+  }
+
+  .hierarchyPerson::after {
+    background: linear-gradient(90deg, transparent, rgb(91 213 255/75%), transparent);
+    content: "";
+    height: 1px;
+    left: 12%;
+    opacity: 0;
+    position: absolute;
+    right: 12%;
+    top: 0;
+    transform: translateY(0);
+    transition: opacity .2s;
+    z-index: 3
+  }
+
+  .hierarchyPerson:hover {
+    background: linear-gradient(155deg, #18324f, #0b192b 72%);
+    border-color: #6ddcff;
+    margin-bottom: -62px;
+    margin-inline: -40px;
+    min-height: 230px;
+    overflow: hidden;
+    padding: 1.15rem;
+    transform: translateY(-24px);
+    width: 230px;
+    z-index: 30
+  }
+
+  .hierarchyPerson:hover::after {
+    animation: profile-scan 1.8s ease-in-out infinite;
+    opacity: 1
+  }
+
+  .hierarchyPerson:hover>.memberPortrait {
+    height: 6rem;
+    transform: scale(1);
+    width: 6rem
+  }
+
+  .hierarchyPerson:hover>span {
+    gap: .4rem;
+    margin-top: .7rem
+  }
+
+  .hierarchyPerson:hover strong {
+    font-size: .82rem;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal
+  }
+
+  .hierarchyPerson:hover small {
+    font-size: .6rem;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal
+  }
+
+  .hierarchyPerson:hover em {
+    display: block;
+    font-size: .54rem;
+    line-height: 1.6;
+    max-height: none;
+    max-width: 190px;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    white-space: normal
+  }
+
+  @keyframes profile-scan {
+
+    0%,
+    100% {
+      opacity: .15;
+      top: 8%
+    }
+
+    50% {
+      opacity: 1;
+      top: 92%
+    }
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .hierarchyPerson:hover::after {
+    animation: none;
+    opacity: .6;
+    top: 0
+  }
+}
+
+/* Stable hover geometry: never recalculate or hide an active branch. */
+@media(hover:hover) and (min-width:851px) {
+
+  .hierarchyLevel,
+  .hierarchyBranch {
+    overflow: visible
+  }
+
+  .hierarchyBranch:has(.hierarchyPerson:hover),
+  .hierarchyLevel:has(.hierarchyPerson:hover) {
+    z-index: 200
+  }
+
+  .hierarchyPerson {
+    box-sizing: border-box;
+    height: 215px;
+    margin: 0;
+    min-height: 215px;
+    overflow: hidden;
+    padding: .9rem;
+    transform: none;
+    transform-origin: center top;
+    width: 180px
+  }
+
+  .hierarchyPerson>span {
+    min-height: 0
+  }
+
+  .hierarchyPerson em {
+    max-width: 150px
+  }
+
+  .hierarchyPerson:hover {
+    height: 215px;
+    margin: 0;
+    min-height: 215px;
+    overflow: visible;
+    padding: .9rem;
+    transform: scale(1.1);
+    width: 180px;
+    z-index: 300
+  }
+
+  .hierarchyPerson:hover>.memberPortrait {
+    height: 4.8rem;
+    transform: scale(1.06);
+    width: 4.8rem
+  }
+
+  .hierarchyPerson:hover>span {
+    gap: .3rem;
+    margin-top: .55rem
+  }
+
+  .hierarchyPerson:hover strong {
+    font-size: .7rem
+  }
+
+  .hierarchyPerson:hover small {
+    font-size: .54rem
+  }
+
+  .hierarchyPerson:hover em {
+    font-size: .48rem;
+    line-height: 1.5;
+    max-height: 4.5em;
+    max-width: 150px;
+    overflow: hidden;
+    -webkit-line-clamp: 3
+  }
+
+  .hierarchyFlow {
+    z-index: 0
+  }
+
+  .hierarchyPerson::after {
+    z-index: 2
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .hierarchyPerson:hover {
+    transform: none
+  }
+
+  .hierarchyPerson:hover>.memberPortrait {
+    transform: none
+  }
+}
+
+@media(hover:hover) and (min-width:851px) {
+  .hierarchyPerson:hover {
+    box-shadow: 0 1.8rem 4.5rem rgb(0 0 0/55%), 0 0 2.4rem rgb(91 213 255/24%);
+    transform: scale(1.24)
+  }
+
+  .hierarchyPerson:hover>.memberPortrait {
+    transform: scale(1.08)
+  }
+}
+
+/* Reference-inspired member cards in the Prime Softech palette. */
+@media(hover:hover) and (min-width:851px) {
+  .hierarchyBranch {
+    padding-inline: .75rem
+  }
+
+  .hierarchyPerson,
+  .hierarchyPerson:hover {
+    align-items: center;
+    background: linear-gradient(155deg, #142a44, #0d1c30);
+    border: 1px solid #355878;
+    border-radius: 1.15rem;
+    box-sizing: border-box;
+    display: flex;
+    height: 170px;
+    justify-content: flex-start;
+    margin: 2.8rem 0 0;
+    min-height: 170px;
+    overflow: visible;
+    padding: 3.7rem 1rem .9rem;
+    position: relative;
+    text-align: center;
+    transform-origin: center top;
+    width: 220px
+  }
+
+  .hierarchyPerson>.memberPortrait,
+  .hierarchyPerson:hover>.memberPortrait {
+    background: #152d49;
+    border: 3px solid #58cfee;
+    border-radius: 50%;
+    box-shadow: 0 .8rem 1.8rem rgb(0 0 0/35%), 0 0 0 5px #0b192b;
+    height: 92px;
+    left: 50%;
+    position: absolute;
+    top: -46px;
+    transform: translateX(-50%);
+    width: 92px
+  }
+
+  .hierarchyPerson>span,
+  .hierarchyPerson:hover>span {
+    align-content: start;
+    display: grid;
+    gap: .35rem;
+    justify-items: center;
+    margin: .2rem 0 0;
+    min-width: 0;
+    width: 100%
+  }
+
+  .hierarchyPerson strong,
+  .hierarchyPerson:hover strong {
+    color: #f5f9ff;
+    font-size: .82rem;
+    font-weight: 600;
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%
+  }
+
+  .hierarchyPerson small,
+  .hierarchyPerson:hover small {
+    color: #62d7ff;
+    font-size: .62rem;
+    font-weight: 500;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%
+  }
+
+  .hierarchyPerson em {
+    display: none
+  }
+
+  .hierarchyPerson:hover {
+    background: linear-gradient(155deg, #193653, #10243b);
+    border-color: #71dcff;
+    box-shadow: 0 1.8rem 4.5rem rgb(0 0 0/52%), 0 0 2.2rem rgb(91 213 255/22%);
+    transform: scale(1.15);
+    z-index: 300
+  }
+
+  .hierarchyPerson:hover>.memberPortrait {
+    box-shadow: 0 1rem 2rem rgb(0 0 0/42%), 0 0 1.4rem rgb(91 213 255/30%);
+    transform: translateX(-50%)
+  }
+
+  .hierarchyPerson:hover em {
+    color: #90a8bf;
+    display: -webkit-box;
+    font-size: .5rem;
+    line-height: 1.45;
+    margin-top: .15rem;
+    max-height: 2.9em;
+    max-width: 185px;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal
+  }
+}
+
+@media(max-width:850px), (hover:none) {
+  .hierarchyPerson {
+    background: linear-gradient(145deg, #142a44, #0d1c30);
+    border-color: #355878
+  }
+
+  .hierarchyPerson>.memberPortrait {
+    border-color: #58cfee
+  }
+
+  .hierarchyPerson strong {
+    color: #f5f9ff
+  }
+
+  .hierarchyPerson small {
+    color: #62d7ff
+  }
+}
+
+/* Keep all profile copy readable when the member card expands. */
+@media(hover:hover) and (min-width:851px) {
+  .hierarchyPerson:hover {
+    padding: 3.55rem .9rem .75rem
+  }
+
+  .hierarchyPerson:hover>span {
+    align-content: start;
+    gap: .28rem;
+    margin: 0;
+    overflow: visible
+  }
+
+  .hierarchyPerson:hover strong,
+  .hierarchyPerson:hover small {
+    display: block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal
+  }
+
+  .hierarchyPerson:hover strong {
+    font-size: .8rem;
+    line-height: 1.25;
+    max-height: 2.5em
+  }
+
+  .hierarchyPerson:hover small {
+    font-size: .6rem;
+    line-height: 1.35;
+    max-height: 2.7em
+  }
+
+  .hierarchyPerson:hover em {
+    color: #a9bbcf;
+    display: -webkit-box;
+    font-size: .54rem;
+    font-style: normal;
+    line-height: 1.45;
+    margin: .08rem auto 0;
+    max-height: 4.35em;
+    max-width: 188px;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    white-space: normal;
+    width: 100%
+  }
+}
+
+/* A shorter, more focused About-page rhythm. */
+.hero {
+  gap: clamp(3rem, 6vw, 6rem);
+  min-height: 40rem;
+  padding-bottom: 5rem;
+  padding-top: 5rem
+}
+
+.studioSystem {
+  min-height: 29rem
+}
+
+.manifesto {
+  padding: 4.5rem 0
+}
+
+.manifesto p {
+  font-size: clamp(1.8rem, 3.3vw, 3.35rem);
+  margin-top: 1.25rem;
+  max-width: 66rem
+}
+
+.story {
+  padding-bottom: 5.5rem;
+  padding-top: 5.5rem
+}
+
+.timeline {
+  margin-top: 3.5rem
+}
+
+.orgSection {
+  padding: 5rem 0
+}
+
+.orgSection .orgHeading {
+  margin-bottom: 3.5rem
+}
+
+.closing {
+  padding: 5.5rem 0
+}
+
+@media(max-width:650px) {
+  .hero {
+    padding-bottom: 3.75rem;
+    padding-top: 3.75rem
+  }
+
+  .manifesto,
+  .story,
+  .closing {
+    padding-bottom: 4rem;
+    padding-top: 4rem
+  }
+
+  .orgSection {
+    padding: 4rem 0
+  }
+
+  .orgSection .orgHeading {
+    margin-bottom: 2.5rem
+  }
+
+  .timeline {
+    margin-top: 2.5rem
+  }
+}
+
+/* The team hierarchy is explicitly opened and closed, never hover-triggered. */
+.orgSection .ownerCard {
+  cursor: pointer
+}
+
+.orgSection .ownerCard:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px
+}
+
+.ownerBranch:hover .teamHoverPanel,
+.ownerBranch:focus .teamHoverPanel,
+.ownerBranch:focus-within .teamHoverPanel {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  visibility: hidden
+}
+
+.ownerBranch.teamOpen .teamHoverPanel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible
+}
+
+.teamClose {
+  align-items: center;
+  background: #12263d;
+  border: 1px solid #365b78;
+  border-radius: .65rem;
+  color: #a9c3d9;
+  cursor: pointer;
+  display: flex;
+  height: 2.4rem;
+  justify-content: center;
+  padding: 0;
+  position: fixed;
+  right: clamp(1.5rem, 3vw, 3rem);
+  top: clamp(1.5rem, 3vh, 2.5rem);
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+  width: 2.4rem;
+  z-index: 10030
+}
+
+.teamClose:hover {
+  background: #173753;
+  border-color: #5bd5ff;
+  color: #fff;
+  transform: rotate(4deg)
+}
+
+.teamClose:focus-visible {
+  outline: 2px solid #5bd5ff;
+  outline-offset: 3px
+}
+
+@media(max-width:850px), (hover:none) {
+
+  .teamHoverPanel,
+  .ownerBranch:hover .teamHoverPanel,
+  .ownerBranch:focus .teamHoverPanel,
+  .ownerBranch:focus-within .teamHoverPanel {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden
+  }
+
+  .ownerBranch.teamOpen .teamHoverPanel {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    visibility: visible
+  }
+
+  .teamClose {
+    position: absolute;
+    right: .75rem;
+    top: .75rem
+  }
+
+  .chartTitle {
+    padding-right: 3rem
   }
 }

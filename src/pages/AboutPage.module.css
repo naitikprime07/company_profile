@@ -342,6 +342,15 @@
   width: 100%;
 }
 
+.ownerPortrait img.fallbackPortrait,
+.memberPortrait img.fallbackPortrait {
+  background: #142942;
+  box-sizing: border-box;
+  object-fit: contain !important;
+  object-position: center !important;
+  padding: 12%;
+}
+
 .ownerCard small {
   color: var(--branch);
   font: .48rem monospace;
@@ -2249,6 +2258,39 @@
   }
 }
 
+/* Final portrait guard: every tree image stays inside its circular frame. */
+.hierarchyPerson>.memberPortrait,
+.chartOwner>.memberPortrait {
+  border-radius: 50% !important;
+  clip-path: circle(50% at 50% 50%);
+  display: block;
+  overflow: hidden !important;
+  position: relative;
+}
+
+.hierarchyPerson>.memberPortrait>img,
+.chartOwner>.memberPortrait>img {
+  border-radius: 50%;
+  display: block;
+  height: 100% !important;
+  inset: 0;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover !important;
+  object-position: center top;
+  overflow: hidden;
+  position: absolute;
+  width: 100% !important;
+}
+
+.hierarchyPerson>.memberPortrait>img.fallbackPortrait,
+.chartOwner>.memberPortrait>img.fallbackPortrait {
+  background: #142942;
+  object-fit: contain !important;
+  object-position: center !important;
+  padding: 10%;
+}
+
 /* Recursive reporting tree */
 .hierarchyLevel {
   display: flex;
@@ -3933,20 +3975,50 @@
   }
 
   .ownerBranch.teamOpen .teamHoverPanel {
+    -webkit-overflow-scrolling: touch;
+    background: rgb(8 18 32/99%);
+    border: 0;
+    border-radius: 0;
     display: block;
+    height: 100dvh;
+    inset: 0;
+    max-height: 100dvh;
     opacity: 1;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    padding: calc(4.5rem + env(safe-area-inset-top)) 1rem calc(2rem + env(safe-area-inset-bottom));
     pointer-events: auto;
+    position: fixed;
+    touch-action: pan-y;
     transform: none;
-    visibility: visible
+    visibility: visible;
+    width: 100vw;
+    z-index: 10000
   }
 
   .teamClose {
-    position: absolute;
-    right: .75rem;
-    top: .75rem
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    top: max(1rem, env(safe-area-inset-top));
+    z-index: 10030
   }
 
   .chartTitle {
-    padding-right: 3rem
+    padding-right: 3rem;
+    position: static
+  }
+
+  .teamHoverPanel>.hierarchyLevel {
+    box-sizing: border-box;
+    min-width: 0;
+    padding-bottom: 1rem;
+    width: 100%
+  }
+
+  .teamHoverPanel .hierarchyBranch {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0
   }
 }

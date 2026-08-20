@@ -28,7 +28,10 @@ function UnityPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Unity game in development
           </p>
-          <h1>Building an engaging game with Unity.</h1>
+          <h1>
+            Building an engaging game
+            <span className="text-gradient"> with Unity.</span>
+          </h1>
           <p>
             Our in-house team is using Unity to shape a responsive, polished
             game from the ground up. We are currently focused on gameplay

@@ -125,7 +125,10 @@ function ServicesPage() {
       <section className={styles.hero}>
         <div className={`container ${styles.heroInner}`} data-reveal>
           <p className="eyebrow">Prime Softech services</p>
-          <h1>From difficult idea to dependable digital product.</h1>
+          <h1>
+            From difficult idea
+            <span className="text-gradient"> to dependable digital product.</span>
+          </h1>
           <p>
             Strategy, design, engineering, and delivery expertise assembled
             around the outcome your business actually needs.

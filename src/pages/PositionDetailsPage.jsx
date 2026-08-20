@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { getOneOpenings } from "../services/openingService";
+import BrandHeroHeading from "../components/common/BrandHeroHeading";
 import styles from "./PositionDetailsPage.module.css";
 
 const cachedOpeningDetails = new Map();
@@ -182,7 +183,7 @@ function PositionDetailsPage() {
                 {internship ? "INTERNSHIP" : "EXPERIENCED OPPORTUNITY"} · PRIME
                 SOFTECH
               </p>
-              <h1>{opening.title}</h1>
+              <BrandHeroHeading text={opening.title} highlightWords={2} />
               <p className={styles.summary}>{opening.description}</p>
             </div>
             <div className={styles.identity}>

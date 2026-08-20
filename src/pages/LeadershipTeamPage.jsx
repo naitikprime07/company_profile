@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, Code2, Crown, Megaphone, UsersRound } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { LEADERSHIP } from "../data/leadership";
+import BrandHeroHeading from "../components/common/BrandHeroHeading";
 import { getLeadershipTeams } from "../services/leadershipService";
 import styles from "./LeadershipTeamPage.module.css";
 import editorial from "./LeadershipTeamEditorial.module.css";
@@ -56,7 +57,10 @@ export default function LeadershipTeamPage() {
         <div className={styles.heroGrid}>
           <div className={styles.copy}>
             <p>LEADERSHIP / {team.department.toUpperCase()}</p>
-            <h1>{team.owner.statement || team.owner.bio}</h1>
+            <BrandHeroHeading
+              text={team.owner.statement || team.owner.bio}
+              highlightWords={3}
+            />
             <span>{team.summary}</span>
           </div>
           <div className={styles.ownerPanel}>

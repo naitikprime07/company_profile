@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ENVIRONMENT } from "../constants/environment";
+import BrandHeroHeading from "../components/common/BrandHeroHeading";
 import { getOpenings } from "../services/openingService";
 import styles from "./CareerOpeningsPage.module.css";
 
@@ -113,7 +114,7 @@ function CareerOpeningsPage({ type }) {
           <div className={styles.heroGrid}>
             <div>
               <p className={styles.eyebrow}>{content.eyebrow}</p>
-              <h1>{content.title}</h1>
+              <BrandHeroHeading text={content.title} />
               <p className={styles.intro}>{content.copy}</p>
             </div>
             <div

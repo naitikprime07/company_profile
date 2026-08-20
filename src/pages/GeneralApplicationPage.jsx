@@ -136,7 +136,10 @@ export default function GeneralApplicationPage() {
             <ArrowLeft size={15} /> Back to careers
           </Link>
           <small>OPEN INTRODUCTION</small>
-          <h1>Your best work may not have a title yet.</h1>
+          <h1>
+            Your best work may not
+            <span className="text-gradient"> have a title yet.</span>
+          </h1>
           <p>
             Show us what you can do, where you want to grow, and the problems
             you would love to solve.

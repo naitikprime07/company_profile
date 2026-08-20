@@ -15,7 +15,10 @@ function FlutterPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Flutter product development
           </p>
-          <h1>Building one consistent product experience across platforms.</h1>
+          <h1>
+            Building one consistent product experience
+            <span className="text-gradient"> across platforms.</span>
+          </h1>
           <p>
             Our in-house team uses Flutter to develop shared product experiences
             for iOS and Android from a single, maintainable codebase. We are

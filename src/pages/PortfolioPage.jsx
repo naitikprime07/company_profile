@@ -127,7 +127,10 @@ export default function PortfolioPage() {
             <span className="status-dot" /> Selected work
           </p>
           <div className={styles.heroGrid}>
-            <h1>Products that turn complex work into clear progress.</h1>
+            <h1>
+              Products that turn complex work
+              <span className="text-gradient"> into clear progress.</span>
+            </h1>
             <div>
               <p>
                 A selection of digital products shaped around real customer

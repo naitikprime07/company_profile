@@ -120,7 +120,8 @@ function CareerPage() {
             <span className="status-dot" /> Build your next chapter
           </p>
           <h1>
-            Do work that makes you <span>more capable.</span>
+            Do work that makes you{" "}
+            <span className="text-gradient">more capable.</span>
           </h1>
           <p>
             Prime Softech is a place for curious people who care about quality,

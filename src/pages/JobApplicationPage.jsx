@@ -230,7 +230,10 @@ function JobApplicationPage() {
               <ArrowLeft size={17} /> Back to position details
             </Link>
             <p>CAREERS · APPLICATION</p>
-            <h1>Build your next chapter with us.</h1>
+            <h1>
+              Build your next chapter
+              <span className="text-gradient"> with us.</span>
+            </h1>
             <span>Take the next step toward work that helps you grow.</span>
           </div>
           <div

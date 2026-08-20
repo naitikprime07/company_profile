@@ -11,7 +11,10 @@ function JavaPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Java backend in development
           </p>
-          <h1>Dependable systems built for long term growth.</h1>
+          <h1>
+            Dependable systems
+            <span className="text-gradient"> built for long term growth.</span>
+          </h1>
           <p>
             We use Java where our product needs strong domain modelling,
             predictable performance, secure integrations, and a backend

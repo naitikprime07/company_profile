@@ -12,7 +12,10 @@ function NodePage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Node.js backend in development
           </p>
-          <h1>The real-time engine behind our product.</h1>
+          <h1>
+            The real-time engine
+            <span className="text-gradient"> behind our product.</span>
+          </h1>
           <p>
             We are building our product backend with Node.js to support fast
             APIs, asynchronous workloads, secure data flows, and an architecture

@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Button from "../components/Button";
+import BrandHeroHeading from "../components/common/BrandHeroHeading";
 import useScrollReveal from "../hooks/useScrollReveal";
 
 const databasePages = {
@@ -192,7 +193,7 @@ function DatabasePage({ type }) {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> {page.eyebrow}
           </p>
-          <h1>{page.title}</h1>
+          <BrandHeroHeading text={page.title} />
           <p>{page.copy}</p>
           <div className="hero-actions">
             <Button href="/#contact">Plan your data platform</Button>

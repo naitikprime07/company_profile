@@ -10,6 +10,8 @@ import ChatBot from "./components/ChatBot";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
+const BlogPage = lazy(() => import("./pages/BlogPage"));
+const BlogDetailsPage = lazy(() => import("./pages/BlogDetailsPage"));
 const LeadershipTeamPage = lazy(() => import("./pages/LeadershipTeamPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const CareerPage = lazy(() => import("./pages/CareerPage"));
@@ -34,6 +36,7 @@ const AdminIntroductionDetailsPage = lazy(
   () => import("./pages/AdminIntroductionDetailsPage"),
 );
 const AdminOpeningFormPage = lazy(() => import("./pages/AdminOpeningFormPage"));
+const AdminBlogFormPage = lazy(() => import("./pages/AdminBlogFormPage"));
 const CareerOpeningsPage = lazy(() => import("./pages/CareerOpeningsPage"));
 const JobApplicationPage = lazy(() => import("./pages/JobApplicationPage"));
 const GeneralApplicationPage = lazy(
@@ -47,7 +50,9 @@ function App() {
   const showIntroductionAnimation = location.pathname === "/career/introduce";
 
   return (
-    <div className="site-shell">
+    <div
+      className={`site-shell ${isAdminRoute ? "admin-shell" : "public-shell"}`}
+    >
       {showIntroductionAnimation && (
         <div className="introduction-background-animation" aria-hidden="true">
           <DotLottieReact
@@ -70,6 +75,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogDetailsPage />} />
           <Route
             path="/about/team/:teamSlug"
             element={<LeadershipTeamPage />}
@@ -116,6 +123,11 @@ function App() {
           <Route
             path="/admin/openings/:openingId/edit"
             element={<AdminOpeningFormPage />}
+          />
+          <Route path="/admin/blogs/new" element={<AdminBlogFormPage />} />
+          <Route
+            path="/admin/blogs/:blogId/edit"
+            element={<AdminBlogFormPage />}
           />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />

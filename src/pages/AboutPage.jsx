@@ -35,20 +35,19 @@ const JOURNEY = [
 const SHOW_MOTION_RIBBON = false;
 
 function TeamPortrait({ person, owner = false }) {
-  const initials = person.name
-    ?.split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase();
+  const useFallback = (event) => {
+    event.currentTarget.onerror = null;
+    event.currentTarget.src = "/user.png";
+    event.currentTarget.classList.add(styles.fallbackPortrait);
+  };
   return (
     <span className={owner ? styles.ownerPortrait : styles.memberPortrait}>
-      {person.image ? (
-        <img src={person.image} alt="" />
-      ) : (
-        <span aria-hidden="true">{initials || "?"}</span>
-      )}
+      <img
+        src={person.image || "/user.png"}
+        alt={person.image ? person.name : ""}
+        className={!person.image ? styles.fallbackPortrait : undefined}
+        onError={useFallback}
+      />
     </span>
   );
 }
@@ -80,7 +79,26 @@ function HierarchyNodes({ members, root = false }) {
             : null;
         })
         .filter(Boolean);
-      setFlow({ width: levelBox.width, height: levelBox.height, paths });
+      const next = {
+        width: Math.round(levelBox.width),
+        height: Math.round(levelBox.height),
+        paths: paths.map((point) => ({
+          x: Math.round(point.x),
+          y: Math.round(point.y),
+        })),
+      };
+      setFlow((current) => {
+        const unchanged =
+          current.width === next.width &&
+          current.height === next.height &&
+          current.paths.length === next.paths.length &&
+          current.paths.every(
+            (point, index) =>
+              point.x === next.paths[index].x &&
+              point.y === next.paths[index].y,
+          );
+        return unchanged ? current : next;
+      });
     };
 
     measure();
@@ -196,14 +214,32 @@ function AboutPage() {
 
   useEffect(() => {
     if (!activeTeam) return undefined;
-    const previousOverflow = document.body.style.overflow;
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const root = document.documentElement;
+    const previous = {
+      bodyOverflow: body.style.overflow,
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyWidth: body.style.width,
+      rootOverflow: root.style.overflow,
+    };
     const closeOnEscape = (event) => {
       if (event.key === "Escape") setActiveTeam(null);
     };
-    document.body.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    root.style.overflow = "hidden";
     window.addEventListener("keydown", closeOnEscape);
     return () => {
-      document.body.style.overflow = previousOverflow;
+      body.style.overflow = previous.bodyOverflow;
+      body.style.position = previous.bodyPosition;
+      body.style.top = previous.bodyTop;
+      body.style.width = previous.bodyWidth;
+      root.style.overflow = previous.rootOverflow;
+      window.scrollTo(0, scrollY);
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [activeTeam]);
@@ -215,7 +251,10 @@ function AboutPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Inside Prime Softech
           </p>
-          <h1>Technology feels different when every decision has a purpose.</h1>
+          <h1>
+            Technology feels different
+            <span className="text-gradient"> when every decision has a purpose.</span>
+          </h1>
           <p>
             We are a product and technology studio for organizations with
             important problems to solve. Strategy, design, engineering, and

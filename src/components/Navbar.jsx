@@ -98,6 +98,7 @@ const technologyGroups = [
 const links = [
   { label: "About Us", to: "/about" },
   { label: "Portfolio", to: "/portfolio" },
+  { label: "Blog", to: "/blog" },
   { label: "Career", to: "/career" },
   { label: "Contact Us", to: "/contact" },
 ];

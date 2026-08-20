@@ -14,6 +14,7 @@ import {
   Mail,
   MapPin,
   Network,
+  Newspaper,
   Phone,
   Pencil,
   Plus,
@@ -41,6 +42,7 @@ import InquiryDateFilter from "../components/AdminDateRangeFilter";
 import ServerAdminRecordsTable from "../components/ServerAdminRecordsTable";
 import useConfirmDelete from "../hooks/useConfirmDelete";
 import AdminLeadershipManager from "../components/AdminLeadershipManager";
+import AdminBlogManager from "../components/AdminBlogManager";
 
 const STATUS_LABELS = {
   new: "New",
@@ -61,6 +63,7 @@ const VIEW_TITLES = {
   openings: "Career openings",
   introductions: "Open introductions",
   leadership: "People hierarchy",
+  blogs: "Blog management",
 };
 const OPENINGS_PER_PAGE = 6;
 function AdminPage() {
@@ -74,6 +77,7 @@ function AdminPage() {
       "#openings",
       "#introductions",
       "#leadership",
+      "#blogs",
     ].includes(window.location.hash)
       ? window.location.hash.slice(1)
       : sessionStorage.getItem("adminActiveView") || "dashboard",
@@ -445,6 +449,12 @@ function AdminPage() {
             onClick={() => changeView("leadership")}
           >
             <Network size={18} /> People hierarchy
+          </button>
+          <button
+            className={activeView === "blogs" ? styles.navActive : ""}
+            onClick={() => changeView("blogs")}
+          >
+            <Newspaper size={18} /> Blogs
           </button>
         </nav>
         <button className={styles.logout} onClick={logout}>
@@ -923,6 +933,8 @@ function AdminPage() {
               }}
             />
           </section>
+        ) : activeView === "blogs" ? (
+          <AdminBlogManager confirmDelete={confirmDelete} />
         ) : activeView === "leadership" ? (
           <AdminLeadershipManager confirmDelete={confirmDelete} />
         ) : (

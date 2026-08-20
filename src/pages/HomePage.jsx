@@ -24,7 +24,10 @@ function HomePage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Independent digital product studio
           </p>
-          <h1>Transform your business with cutting-edge technology.</h1>
+          <h1>
+            Transform your business
+            <span className="text-gradient"> with cutting-edge technology.</span>
+          </h1>
           <p className="hero-lede">
             Prime Softech delivers innovative mobile applications, web
             development, and digital marketing solutions. We transform ideas

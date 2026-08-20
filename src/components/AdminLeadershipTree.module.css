@@ -98,6 +98,12 @@
     width: 86px;
 }
 
+.compactControl {
+    height: 100px;
+    margin-top: 8px;
+    width: 86px
+}
+
 .compactImage img {
     height: 100%;
     object-fit: cover;

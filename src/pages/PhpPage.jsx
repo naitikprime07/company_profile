@@ -11,7 +11,10 @@ function PhpPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> PHP backend in development
           </p>
-          <h1>Practical backend delivery, shaped for our product.</h1>
+          <h1>
+            Practical backend delivery,
+            <span className="text-gradient"> shaped for our product.</span>
+          </h1>
           <p>
             We use modern PHP to build focused web capabilities quickly without
             compromising structure. Typed code, clear application boundaries,

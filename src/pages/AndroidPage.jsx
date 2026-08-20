@@ -14,7 +14,10 @@ function AndroidPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Android product in development
           </p>
-          <h1>Building our product for the Android ecosystem.</h1>
+          <h1>
+            Building our product
+            <span className="text-gradient"> for the Android ecosystem.</span>
+          </h1>
           <p>
             Our in-house team is developing an Android product from the ground
             up. We are combining focused product thinking, native engineering,

@@ -1,5 +1,6 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Button from "../components/Button";
+import BrandHeroHeading from "../components/common/BrandHeroHeading";
 import useScrollReveal from "../hooks/useScrollReveal";
 import { ENVIRONMENT } from "../constants/environment";
 
@@ -138,7 +139,7 @@ function FrontendPage({ type }) {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> {page.eyebrow}
           </p>
-          <h1>{page.title}</h1>
+          <BrandHeroHeading text={page.title} />
           <p>{page.copy}</p>
           <div className="hero-actions">
             <Button className="about-company-button" href="/about">

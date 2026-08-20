@@ -146,6 +146,50 @@ export const updateOpening = (id, data) =>
   });
 export const deleteOpening = (id) =>
   request(`/admin/openings/${id}`, { method: "DELETE" });
+export const searchAdminBlogs = (
+  query = "",
+  status = "all",
+  page = 1,
+  limit = 8,
+) =>
+  request(
+    `/admin/blogs?${new URLSearchParams({ query, status, page: String(page), limit: String(limit) })}`,
+  );
+export const getAdminBlog = (id) => request(`/admin/blogs/${id}`);
+export const createBlog = (data) =>
+  request("/admin/blogs", { method: "POST", body: JSON.stringify(data) });
+export const updateBlog = (id, data) =>
+  request(`/admin/blogs/${id}`, { method: "PUT", body: JSON.stringify(data) });
+export const deleteBlog = (id) =>
+  request(`/admin/blogs/${id}`, { method: "DELETE" });
+export const deleteBlogImage = (id, field) =>
+  request(`/admin/blogs/${id}/images/${field}`, { method: "DELETE" });
+export const deleteUnattachedBlogImage = (imageUrl) =>
+  request("/admin/blogs/image", {
+    method: "DELETE",
+    body: JSON.stringify({ imageUrl }),
+  });
+export const uploadBlogImage = async (file, previousImage = "") => {
+  const signed = await request("/admin/blogs/image-upload-url", {
+    method: "POST",
+    body: JSON.stringify({
+      fileName: file.name,
+      contentType: file.type,
+      size: file.size,
+      previousImage,
+    }),
+  });
+  const response = await fetch(signed.uploadUrl, {
+    method: "PUT",
+    headers: { "Content-Type": file.type },
+    body: file,
+  });
+  if (!response.ok)
+    throw new Error(
+      "Cover image upload failed. Check the R2 CORS configuration.",
+    );
+  return signed.fileUrl;
+};
 
 export const getAdminLeadership = () => request("/admin/leadership");
 export const createLeadershipTeam = (data) =>
@@ -157,6 +201,15 @@ export const updateLeadershipTeam = (id, data) =>
   });
 export const deleteLeadershipTeam = (id) =>
   request(`/admin/leadership/${id}`, { method: "DELETE" });
+export const deleteLeadershipImage = (teamId, personId = "owner") =>
+  request(`/admin/leadership/${teamId}/images/${personId}`, {
+    method: "DELETE",
+  });
+export const deleteUnattachedTeamImage = (imageUrl) =>
+  request("/admin/leadership/image", {
+    method: "DELETE",
+    body: JSON.stringify({ imageUrl }),
+  });
 export const uploadTeamImage = async (file, previousImage = "") => {
   const signed = await request("/admin/leadership/image-upload-url", {
     method: "POST",

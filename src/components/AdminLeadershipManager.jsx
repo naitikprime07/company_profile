@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Camera, Plus, Save, Trash2, UserRound } from "lucide-react";
 import {
   createLeadershipTeam,
+  deleteLeadershipImage,
   deleteLeadershipTeam,
+  deleteUnattachedTeamImage,
   getAdminLeadership,
   updateLeadershipTeam,
   uploadTeamImage,
@@ -58,6 +60,25 @@ const getEmployee = (members, path) =>
     children: members,
   });
 
+const findEmployeeById = (members, id) => {
+  for (const member of members || []) {
+    if (String(member._id) === String(id)) return member;
+    const nested = findEmployeeById(member.children, id);
+    if (nested) return nested;
+  }
+  return null;
+};
+
+const updateEmployeeById = (members, id, updater) =>
+  (members || []).map((member) =>
+    String(member._id) === String(id)
+      ? updater(member)
+      : {
+          ...member,
+          children: updateEmployeeById(member.children, id, updater),
+        },
+  );
+
 function EmployeeEditor({
   employee,
   path,
@@ -65,6 +86,7 @@ function EmployeeEditor({
   onAddChild,
   onRemove,
   onUpload,
+  onRemoveImage,
 }) {
   return (
     <article className={treeStyles.employeeNode}>
@@ -85,19 +107,32 @@ function EmployeeEditor({
         </div>
       </div>
       <div className={treeStyles.employeeBody}>
-        <label className={`${styles.memberImage} ${treeStyles.compactImage}`}>
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            onChange={(event) => onUpload(event.target.files?.[0], path)}
-          />
-          {employee.image ? (
-            <img src={employee.image} alt="Employee preview" />
-          ) : (
-            <UserRound size={22} />
+        <div className={`${styles.imageControl} ${treeStyles.compactControl}`}>
+          <label className={`${styles.memberImage} ${treeStyles.compactImage}`}>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={(event) => onUpload(event.target.files?.[0], path)}
+            />
+            {employee.image ? (
+              <img src={employee.image} alt="Employee preview" />
+            ) : (
+              <UserRound size={22} />
+            )}
+            <span>{employee.image ? "Change image" : "Add image"}</span>
+          </label>
+          {employee.image && (
+            <button
+              type="button"
+              className={styles.imageRemove}
+              title="Remove employee image"
+              aria-label="Remove employee image"
+              onClick={() => onRemoveImage(path)}
+            >
+              <Trash2 size={12} />
+            </button>
           )}
-          <span>{employee.image ? "Change image" : "Add image"}</span>
-        </label>
+        </div>
         <div>
           <label>
             Name
@@ -142,6 +177,7 @@ function EmployeeEditor({
               onAddChild={onAddChild}
               onRemove={onRemove}
               onUpload={onUpload}
+              onRemoveImage={onRemoveImage}
             />
           ))}
         </div>
@@ -234,6 +270,52 @@ export default function AdminLeadershipManager({ confirmDelete }) {
       setMessage(error.message);
     }
   };
+  const removeUploadedImage = async (path = [], target = "member") => {
+    const employee =
+      target === "owner" ? null : getEmployee(draft.members, path);
+    const imageUrl = target === "owner" ? draft.owner.image : employee?.image;
+    if (!imageUrl) return;
+
+    const storedTeam = teams.find((team) => team._id === draft._id);
+    const storedPerson =
+      target === "owner"
+        ? storedTeam?.owner
+        : findEmployeeById(storedTeam?.members, employee?._id);
+    setSaving(true);
+    setMessage("Removing image...");
+    try {
+      if (draft._id && storedPerson?.image) {
+        const personId = target === "owner" ? "owner" : employee._id;
+        await deleteLeadershipImage(draft._id, personId);
+      } else {
+        await deleteUnattachedTeamImage(imageUrl);
+      }
+
+      if (target === "owner") setOwner("image", "");
+      else setMember(path, "image", "");
+      if (draft._id)
+        setTeams((current) =>
+          current.map((team) => {
+            if (team._id !== draft._id) return team;
+            if (target === "owner")
+              return { ...team, owner: { ...team.owner, image: "" } };
+            return {
+              ...team,
+              members: updateEmployeeById(
+                team.members,
+                employee._id,
+                (member) => ({ ...member, image: "" }),
+              ),
+            };
+          }),
+        );
+      setMessage("Profile image removed permanently.");
+    } catch (error) {
+      setMessage(error.message);
+    } finally {
+      setSaving(false);
+    }
+  };
   const save = async (event) => {
     event.preventDefault();
     setSaving(true);
@@ -319,22 +401,37 @@ export default function AdminLeadershipManager({ confirmDelete }) {
           </div>
         </div>
         <div className={styles.ownerProfile}>
-          <label className={styles.ownerImage}>
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              onChange={(event) => upload(event.target.files?.[0], [], "owner")}
-            />
-            {draft.owner.image ? (
-              <img src={draft.owner.image} alt="Owner preview" />
-            ) : (
-              <UserRound size={28} />
+          <div className={styles.imageControl}>
+            <label className={styles.ownerImage}>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={(event) =>
+                  upload(event.target.files?.[0], [], "owner")
+                }
+              />
+              {draft.owner.image ? (
+                <img src={draft.owner.image} alt="Owner preview" />
+              ) : (
+                <UserRound size={28} />
+              )}
+              <span>
+                <Camera size={13} />
+                {draft.owner.image ? "Change photo" : "Add photo"}
+              </span>
+            </label>
+            {draft.owner.image && (
+              <button
+                type="button"
+                className={styles.imageRemove}
+                title="Remove owner image"
+                aria-label="Remove owner image"
+                onClick={() => removeUploadedImage([], "owner")}
+              >
+                <Trash2 size={12} />
+              </button>
             )}
-            <span>
-              <Camera size={13} />
-              {draft.owner.image ? "Change photo" : "Add photo"}
-            </span>
-          </label>
+          </div>
           <div className={styles.ownerFields}>
             <label>
               Owner name
@@ -403,6 +500,7 @@ export default function AdminLeadershipManager({ confirmDelete }) {
               onAddChild={addChild}
               onRemove={removeMember}
               onUpload={upload}
+              onRemoveImage={removeUploadedImage}
             />
           ))}
         </div>

@@ -22,7 +22,10 @@ function IosPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> iOS product in development
           </p>
-          <h1>Building our product for the Apple ecosystem.</h1>
+          <h1>
+            Building our product
+            <span className="text-gradient"> for the Apple ecosystem.</span>
+          </h1>
           <p>
             Our in-house team is developing an iOS product from the ground up.
             Product direction, interface design, Swift engineering, and quality

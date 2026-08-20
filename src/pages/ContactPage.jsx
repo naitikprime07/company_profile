@@ -58,7 +58,10 @@ function ContactPage() {
           <p className="eyebrow hero-eyebrow">
             <span className="status-dot" /> Contact Prime Softech
           </p>
-          <h1>Let’s turn your next challenge into meaningful progress.</h1>
+          <h1>
+            Let’s turn your next challenge
+            <span className="text-gradient"> into meaningful progress.</span>
+          </h1>
           <p>
             Tell us where your business is heading, what is getting in the way,
             and what a successful outcome would change. We will bring the right

@@ -431,6 +431,18 @@
   width: 44rem;
 }
 
+.hero-prime-field::after {
+  animation: hero-aurora-drift 12s ease-in-out infinite alternate;
+  background:
+    radial-gradient(circle at 28% 45%, rgb(47 125 246 / 15%), transparent 26%),
+    radial-gradient(circle at 68% 48%, rgb(105 76 255 / 12%), transparent 24%),
+    radial-gradient(circle at 84% 64%, rgb(91 213 255 / 11%), transparent 22%);
+  content: "";
+  filter: blur(34px);
+  inset: -12%;
+  position: absolute;
+}
+
 .hero-prime-arc {
   border: 1px solid rgb(91 213 255 / 10%);
   border-radius: 50%;
@@ -462,6 +474,89 @@
   top: 28%;
   transform: rotate(-12deg);
   width: 116%;
+}
+
+.hero-flow-network {
+  inset: 0;
+  opacity: .72;
+  position: absolute;
+}
+
+.hero-flow-lane {
+  animation: hero-flow-slide 8s linear infinite;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0 8%,
+      rgb(47 125 246 / 8%) 18%,
+      rgb(91 213 255 / 48%) 26%,
+      rgb(105 76 255 / 16%) 34%,
+      transparent 44% 58%,
+      rgb(91 213 255 / 35%) 70%,
+      transparent 82%
+    );
+  background-size: 52rem 100%;
+  border-radius: 50%;
+  height: 1px;
+  left: -18%;
+  position: absolute;
+  width: 136%;
+}
+
+.hero-flow-lane::after {
+  animation: hero-flow-node 7s ease-in-out infinite;
+  background: #5bd5ff;
+  border: 2px solid #091629;
+  border-radius: 50%;
+  box-shadow: 0 0 14px #5bd5ff;
+  content: "";
+  height: 7px;
+  left: 12%;
+  position: absolute;
+  top: -3px;
+  width: 7px;
+}
+
+.flow-one {
+  top: 18%;
+  transform: rotate(-7deg);
+}
+
+.flow-two {
+  animation-delay: -2s;
+  background-size: 68rem 100%;
+  top: 42%;
+  transform: rotate(-11deg);
+}
+
+.flow-two::after {
+  animation-delay: -1.7s;
+  background: #6657f5;
+  box-shadow: 0 0 14px #6657f5;
+}
+
+.flow-three {
+  animation-delay: -4s;
+  bottom: 27%;
+  transform: rotate(8deg);
+}
+
+.flow-three::after {
+  animation-delay: -3.4s;
+}
+
+.flow-four {
+  animation-delay: -6s;
+  background-size: 74rem 100%;
+  bottom: 10%;
+  opacity: .65;
+  transform: rotate(-4deg);
+}
+
+.flow-four::after {
+  animation-delay: -5.1s;
+  background: #3b82f6;
+  box-shadow: 0 0 14px #3b82f6;
 }
 
 .hero-prime-node {
@@ -503,6 +598,54 @@
   50% {
     box-shadow: 0 0 0 10px rgb(91 213 255 / 3%), 0 0 28px rgb(91 213 255 / 75%);
     transform: scale(1.18);
+  }
+}
+
+@keyframes hero-flow-slide {
+  to {
+    background-position: 52rem 0;
+  }
+}
+
+@keyframes hero-flow-node {
+  0% {
+    opacity: 0;
+    transform: translateX(0) scale(.7);
+  }
+
+  12%,
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(76vw) scale(1.1);
+  }
+}
+
+@keyframes hero-aurora-drift {
+  to {
+    opacity: .72;
+    transform: translate3d(4%, 3%, 0) scale(1.06);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-flow-network {
+    opacity: .42;
+  }
+
+  .hero-flow-lane::after {
+    animation-duration: 5.5s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-prime-field::after,
+  .hero-flow-lane,
+  .hero-flow-lane::after {
+    animation: none;
   }
 }
 
@@ -1338,7 +1481,30 @@ h3 {
 }
 
 .stats-section {
-  background: var(--bg-soft);
+  background:
+    radial-gradient(circle at 18% 50%, rgb(47 125 246 / 8%), transparent 26%),
+    radial-gradient(circle at 82% 50%, rgb(101 83 246 / 7%), transparent 24%),
+    var(--bg-soft);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.stats-section::before {
+  animation: stats-scan 8s linear infinite;
+  background: linear-gradient(90deg, transparent, rgb(91 213 255 / 20%), transparent);
+  content: "";
+  height: 1px;
+  left: -35%;
+  position: absolute;
+  top: 50%;
+  width: 35%;
+}
+
+@keyframes stats-scan {
+  to {
+    left: 100%;
+  }
 }
 
 .stats-grid {
@@ -9097,7 +9263,7 @@ h3 {
 
 .footer-watermark.footer-watermark-simple::before,
 .footer-watermark.footer-watermark-simple::after {
-  content: none;
+  content: '';
 }
 
 @media (max-width: 560px) {
@@ -9155,4 +9321,151 @@ h3 {
   .site-shell:has(.introduction-background-animation) main {
     background: rgb(8 17 31/58%) !important
   }
+}
+
+/* Technology pages: one cohesive visual language across every stack. */
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) {
+  background: radial-gradient(circle at 82% 8%, rgb(57 116 255 / 14%), transparent 30rem), radial-gradient(circle at 10% 46%, rgb(62 211 255 / 8%), transparent 28rem), #07111f;
+  color: #f3f7ff;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page)::before {
+  background-image: linear-gradient(rgb(94 185 255 / 4%) 1px, transparent 1px), linear-gradient(90deg, rgb(94 185 255 / 4%) 1px, transparent 1px);
+  background-size: 72px 72px;
+  content: '';
+  inset: 0;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 68%);
+  pointer-events: none;
+  position: absolute;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) > section { isolation: isolate; position: relative; }
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) > section:first-of-type {
+  align-items: center;
+  border-bottom: 1px solid rgb(101 171 224 / 14%);
+  min-height: clamp(610px, calc(100svh - 72px), 790px);
+  padding-block: clamp(4.5rem, 8vw, 7.5rem);
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) > section:first-of-type::after {
+  animation: technology-orbit 14s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgb(70 185 255 / 18%), rgb(74 85 255 / 7%) 42%, transparent 70%);
+  border: 1px solid rgb(91 213 255 / 10%);
+  border-radius: 42% 58% 62% 38%;
+  content: none;
+  height: min(42vw, 650px);
+  pointer-events: none;
+  position: absolute;
+  right: -12%;
+  top: 4%;
+  width: min(42vw, 650px);
+  z-index: -1;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) .eyebrow {
+  color: #65d9ff;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) :is(h1, h2, h3) {
+  color: #f5f8ff;
+  font-family: Poppins, sans-serif;
+  text-wrap: balance;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) h1 {
+  font-size: clamp(2.55rem, 4.5vw, 4.25rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.055em !important;
+  line-height: 1.04 !important;
+  max-width: 15ch;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) h2 {
+  font-size: clamp(1.9rem, 3.4vw, 3.15rem);
+  font-weight: 500;
+  letter-spacing: -.04em;
+  line-height: 1.1;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) p {
+  color: #91a3ba;
+  font-family: Poppins, sans-serif;
+  font-size: clamp(.84rem, .25vw + .78rem, .98rem);
+  font-weight: 400;
+  line-height: 1.78;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) article {
+  background: linear-gradient(145deg, rgb(20 38 62 / 96%), rgb(10 25 43 / 98%));
+  border: 1px solid rgb(98 165 219 / 22%);
+  border-radius: 18px;
+  box-shadow: inset 0 1px rgb(255 255 255 / 3%);
+  overflow: hidden;
+  position: relative;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) article::before {
+  background: linear-gradient(90deg, transparent, rgb(82 211 255 / 80%), rgb(92 88 255 / 55%), transparent);
+  content: '';
+  height: 1px;
+  left: 8%;
+  opacity: .55;
+  position: absolute;
+  right: 8%;
+  top: 0;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) article:hover {
+  border-color: rgb(91 213 255 / 48%);
+  box-shadow: 0 22px 54px rgb(0 8 25 / 36%), 0 0 30px rgb(43 151 255 / 8%);
+  transform: translateY(-6px);
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) article h3 {
+  font-size: clamp(1rem, .5vw + .9rem, 1.28rem);
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) :is(.ios-proof, .android-proof, .flutter-proof, .unity-proof, .node-stack, .java-proof, .php-proof, .frontend-tags, .database-tags) span {
+  background: rgb(9 25 44 / 78%);
+  border: 1px solid rgb(93 181 235 / 24%);
+  border-radius: 999px;
+  color: #b8c8db;
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  padding: .56rem .82rem;
+  transition: background .25s ease, border-color .25s ease, color .25s ease, transform .25s ease;
+}
+
+:is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) :is(.ios-proof, .android-proof, .flutter-proof, .unity-proof, .node-stack, .java-proof, .php-proof, .frontend-tags, .database-tags) span:hover {
+  background: rgb(41 121 191 / 18%);
+  border-color: rgb(91 213 255 / 52%);
+  color: #eefaff;
+  transform: translateY(-2px);
+}
+
+@keyframes technology-orbit {
+  from { transform: rotate(-8deg) translate3d(0, 0, 0); }
+  to { transform: rotate(10deg) translate3d(-5%, 5%, 0); }
+}
+
+@media (max-width: 760px) {
+  :is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) > section:first-of-type { min-height: auto; padding-block: 4.5rem 3.75rem; }
+  :is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) > section:first-of-type::after { height: 26rem; opacity: .7; right: -13rem; top: 3rem; width: 26rem; }
+  :is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) h1 { font-size: clamp(2.25rem, 11vw, 3.2rem) !important; max-width: 12ch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) > section:first-of-type::after { animation: none; }
 }

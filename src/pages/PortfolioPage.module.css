@@ -96,6 +96,326 @@
     padding: 6rem 0
 }
 
+.products {
+    background:
+        radial-gradient(circle at 14% 22%, rgb(70 205 255 / 9%), transparent 25rem),
+        radial-gradient(circle at 88% 72%, rgb(93 78 255 / 10%), transparent 28rem),
+        #091321;
+    border-bottom: 1px solid var(--line);
+    padding: 6rem 0;
+    position: relative
+}
+
+.products::before {
+    background-image:
+        linear-gradient(rgb(91 213 255 / 3%) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(91 213 255 / 3%) 1px, transparent 1px);
+    background-size: 62px 62px;
+    content: "";
+    inset: 0;
+    mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+    pointer-events: none;
+    position: absolute
+}
+
+.products>div {
+    position: relative
+}
+
+.productsHead {
+    align-items: end;
+    display: grid;
+    gap: 4rem;
+    grid-template-columns: 1fr .55fr;
+    margin-bottom: 3rem
+}
+
+.productsHead .eyebrow {
+    align-items: center;
+    display: flex;
+    gap: .5rem
+}
+
+.productsHead h2 {
+    font-size: clamp(2.25rem, 4vw, 4rem);
+    font-weight: 500;
+    letter-spacing: -.055em;
+    line-height: 1.05;
+    margin: .8rem 0 0;
+    max-width: 700px
+}
+
+.productsHead>p {
+    color: #8499b0;
+    font-size: .72rem;
+    line-height: 1.75;
+    margin: 0
+}
+
+.productGrid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr))
+}
+
+.productCard {
+    --project: #5bd5ff;
+    --project-rgb: 91 213 255;
+    background: linear-gradient(155deg, rgb(18 36 59 / 98%), rgb(9 22 38 / 98%));
+    border: 1px solid rgb(var(--project-rgb) / 24%);
+    border-radius: 1.25rem;
+    box-shadow: inset 0 1px rgb(255 255 255 / 4%);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+    transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease
+}
+
+.productCard:hover {
+    border-color: rgb(var(--project-rgb) / 62%);
+    box-shadow: 0 24px 60px rgb(0 6 18 / 42%), 0 0 34px rgb(var(--project-rgb) / 10%);
+    transform: translateY(-8px)
+}
+
+.productCardTop {
+    align-items: center;
+    border-bottom: 1px solid rgb(var(--project-rgb) / 15%);
+    display: grid;
+    font: .52rem monospace;
+    gap: .6rem;
+    grid-template-columns: auto 1fr auto;
+    letter-spacing: .08em;
+    padding: .85rem 1rem;
+    text-transform: uppercase
+}
+
+.productCardTop>span:first-child {
+    color: var(--project)
+}
+
+.productCardTop>span:nth-child(2) {
+    color: #8095ac
+}
+
+.productCardTop i {
+    background: rgb(55 205 139 / 10%);
+    border: 1px solid rgb(55 205 139 / 30%);
+    border-radius: 999px;
+    color: #5ce2a5;
+    font-style: normal;
+    letter-spacing: 0;
+    padding: .3rem .5rem;
+    text-transform: none
+}
+
+.productPreview {
+    background: radial-gradient(circle at 50% 38%, rgb(var(--project-rgb) / 18%), transparent 55%);
+    min-height: 250px;
+    overflow: hidden;
+    padding: 1.5rem 1.5rem 0;
+    position: relative
+}
+
+.productPreviewGlow {
+    animation: product-float 7s ease-in-out infinite alternate;
+    border: 1px solid rgb(var(--project-rgb) / 18%);
+    border-radius: 42% 58% 48% 52%;
+    height: 220px;
+    position: absolute;
+    right: -55px;
+    top: -70px;
+    transform: rotate(22deg);
+    width: 220px
+}
+
+.productWindow {
+    background: rgb(7 19 34 / 95%);
+    border: 1px solid rgb(var(--project-rgb) / 30%);
+    border-radius: .9rem .9rem 0 0;
+    box-shadow: 0 20px 45px rgb(0 5 15 / 40%);
+    height: 235px;
+    overflow: hidden;
+    position: relative;
+    transform: perspective(900px) rotateX(3deg) rotateY(-3deg);
+    transition: transform .4s ease
+}
+
+.productCard:hover .productWindow {
+    transform: perspective(900px) rotateX(0) rotateY(0) translateY(-4px)
+}
+
+.productWindowTop {
+    align-items: center;
+    background: #0d1c2f;
+    border-bottom: 1px solid rgb(var(--project-rgb) / 20%);
+    display: flex;
+    gap: .65rem;
+    padding: .7rem
+}
+
+.productMark {
+    align-items: center;
+    background: rgb(var(--project-rgb) / 13%);
+    border: 1px solid rgb(var(--project-rgb) / 28%);
+    border-radius: .55rem;
+    color: var(--project);
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    width: 2rem
+}
+
+.productWindowTop>span:nth-child(2) {
+    display: grid;
+    gap: .1rem
+}
+
+.productWindowTop small {
+    color: #59718a;
+    font-size: .38rem;
+    letter-spacing: .12em
+}
+
+.productWindowTop b {
+    font-size: .62rem;
+    font-weight: 500
+}
+
+.productWindowTop>i {
+    color: #5ce2a5;
+    font-size: .43rem;
+    font-style: normal;
+    margin-left: auto
+}
+
+.productWindowBody {
+    display: grid;
+    gap: .8rem;
+    grid-template-columns: .75fr 1fr;
+    padding: 1rem
+}
+
+.productSignal {
+    background: rgb(var(--project-rgb) / 7%);
+    border: 1px solid rgb(var(--project-rgb) / 18%);
+    border-radius: .65rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: .75rem
+}
+
+.productSignal span,
+.productSignal small {
+    color: #738aa1;
+    font-size: .4rem
+}
+
+.productSignal strong {
+    color: var(--project);
+    font-size: 1.45rem;
+    font-weight: 600;
+    margin: .3rem 0
+}
+
+.productPulse {
+    align-items: end;
+    border-bottom: 1px solid #263b52;
+    display: flex;
+    gap: .35rem;
+    height: 96px;
+    padding: 0 .5rem
+}
+
+.productPulse i {
+    background: linear-gradient(var(--project), rgb(var(--project-rgb) / 15%));
+    border-radius: .18rem .18rem 0 0;
+    flex: 1;
+    height: var(--bar-height)
+}
+
+.productActivity {
+    display: grid;
+    gap: .45rem;
+    grid-column: 1 / -1
+}
+
+.productActivity span {
+    background: linear-gradient(90deg, rgb(var(--project-rgb) / 18%), transparent);
+    border-radius: 999px;
+    height: .38rem
+}
+
+.productActivity span:nth-child(2) { width: 78% }
+.productActivity span:nth-child(3) { width: 55% }
+
+.productDetails {
+    border-top: 1px solid rgb(var(--project-rgb) / 16%);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.5rem
+}
+
+.productDetails>small {
+    color: var(--project);
+    font: .5rem monospace;
+    letter-spacing: .1em;
+    text-transform: uppercase
+}
+
+.productDetails h3 {
+    font-size: 1.45rem;
+    font-weight: 500;
+    letter-spacing: -.04em;
+    margin: .55rem 0 .7rem
+}
+
+.productDetails>p {
+    color: #899db2;
+    font-size: .66rem;
+    line-height: 1.72;
+    margin: 0
+}
+
+.productDetails ul {
+    display: grid;
+    gap: .55rem;
+    list-style: none;
+    margin: 1.2rem 0 1.5rem;
+    padding: 0
+}
+
+.productDetails li {
+    align-items: center;
+    color: #afc0d1;
+    display: flex;
+    font-size: .58rem;
+    gap: .45rem
+}
+
+.productDetails li svg { color: var(--project) }
+
+.productDetails a {
+    align-items: center;
+    border-top: 1px solid rgb(var(--project-rgb) / 18%);
+    color: var(--project);
+    display: flex;
+    font-size: .62rem;
+    font-weight: 600;
+    gap: .4rem;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem
+}
+
+@keyframes product-float {
+    from { transform: rotate(18deg) translate3d(0, 0, 0) }
+    to { transform: rotate(30deg) translate3d(-18px, 15px, 0) }
+}
+
 .sectionHead {
     align-items: end;
     display: grid;
@@ -501,8 +821,13 @@
 
     .heroGrid,
     .sectionHead,
+    .productsHead,
     .project {
         grid-template-columns: 1fr
+    }
+
+    .productGrid {
+        grid-template-columns: 1fr 1fr
     }
 
     .projectVisual {
@@ -546,6 +871,7 @@
     }
 
     .work,
+    .products,
     .approach,
     .cta {
         padding: 4rem 0
@@ -578,4 +904,28 @@
             linear-gradient(180deg, rgb(5 12 23/91%), rgb(6 14 27/86%)),
             url("/portfolio.jpg") center / cover no-repeat
     }
+
+    .productGrid {
+        grid-template-columns: 1fr
+    }
+
+    .productsHead {
+        gap: 1rem;
+        margin-bottom: 2rem
+    }
+
+    .productPreview {
+        min-height: 225px;
+        padding: 1rem 1rem 0
+    }
+
+    .productWindow {
+        height: 215px
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .productPreviewGlow { animation: none }
+    .productCard,
+    .productWindow { transition: none }
 }

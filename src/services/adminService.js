@@ -1,7 +1,47 @@
 import { ENVIRONMENT } from "../constants/environment";
 const inFlight = new Map();
+
+let sessionRedirectStarted = false;
+
+const decodeTokenExpiry = (token) => {
+  try {
+    const payload = token.split(".")[1];
+    if (!payload) return null;
+    const normalized = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const decoded = JSON.parse(window.atob(normalized));
+    return Number(decoded.exp) > 0 ? Number(decoded.exp) * 1000 : null;
+  } catch {
+    return null;
+  }
+};
+
+export const getAdminSessionExpiry = (token) => decodeTokenExpiry(token);
+
+export const expireAdminSession = () => {
+  sessionStorage.removeItem("adminToken");
+  sessionStorage.removeItem("adminActiveView");
+  inFlight.clear();
+
+  if (sessionRedirectStarted) return;
+  sessionRedirectStarted = true;
+
+  const loginUrl = "/admin?session=expired";
+  if (`${window.location.pathname}${window.location.search}` !== loginUrl) {
+    window.location.replace(loginUrl);
+  } else {
+    window.dispatchEvent(new CustomEvent("admin-session-expired"));
+  }
+};
+
 const executeRequest = async (path, options = {}) => {
   const token = sessionStorage.getItem("adminToken");
+
+  const expiry = token ? decodeTokenExpiry(token) : null;
+  if (path !== "/admin/login" && expiry && expiry <= Date.now()) {
+    expireAdminSession();
+    throw new Error("Your admin session has expired. Please sign in again.");
+  }
+
   const response = await fetch(`${ENVIRONMENT.apiBaseUrl}${path}`, {
     ...options,
     headers: {
@@ -9,8 +49,28 @@ const executeRequest = async (path, options = {}) => {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
-  const body = await response.json();
-  if (!response.ok) throw new Error(body.message);
+  const responseText = await response.text();
+  let body = {};
+  try {
+    body = responseText ? JSON.parse(responseText) : {};
+  } catch {
+    body = { message: responseText };
+  }
+
+  const authenticationFailure =
+    path !== "/admin/login" &&
+    Boolean(token) &&
+    (response.status === 401 ||
+      (response.status === 403 &&
+        /token|session|auth|expired|unauthor/i.test(body.message || "")));
+
+  if (authenticationFailure) {
+    expireAdminSession();
+    throw new Error("Your admin session has expired. Please sign in again.");
+  }
+
+  if (!response.ok)
+    throw new Error(body.message || `Request failed (${response.status}).`);
   return body.data;
 };
 const request = (path, options = {}) => {
@@ -54,6 +114,7 @@ export const loginAdmin = (email, password) =>
     body: JSON.stringify({ email, password }),
   });
 export const getDashboard = () => requestOnce("dashboard", "/admin/dashboard");
+export const getAdminSidebarCounts = () => request("/admin/sidebar-counts");
 export const searchContacts = (
   query = "",
   status = "all",

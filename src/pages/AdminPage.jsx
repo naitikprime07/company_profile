@@ -15,6 +15,8 @@ import {
   MapPin,
   Network,
   Newspaper,
+  PanelLeftClose,
+  PanelLeftOpen,
   Phone,
   Pencil,
   Plus,
@@ -28,6 +30,8 @@ import {
   deleteContact,
   deleteOpening,
   getDashboard,
+  getAdminSidebarCounts,
+  getAdminSessionExpiry,
   getAdminOpenings,
   loginAdmin,
   searchContacts,
@@ -36,6 +40,7 @@ import {
   searchAdminOpenings,
   deleteGeneralApplication,
   deleteApplication,
+  expireAdminSession,
 } from "../services/adminService";
 import styles from "./AdminPage.module.css";
 import InquiryDateFilter from "../components/AdminDateRangeFilter";
@@ -70,6 +75,9 @@ function AdminPage() {
   const { confirmDelete, deleteDialog } = useConfirmDelete();
   const navigate = useNavigate();
   const [token, setToken] = useState(sessionStorage.getItem("adminToken"));
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+    () => localStorage.getItem("adminSidebarCollapsed") === "true",
+  );
   const [activeView, setActiveView] = useState(
     [
       "#inquiries",
@@ -91,7 +99,17 @@ function AdminPage() {
     applicationPipeline: {},
     recentContacts: [],
   });
-  const [error, setError] = useState("");
+  const [sidebarCounts, setSidebarCounts] = useState({
+    inquiries: 0,
+    applications: 0,
+    introductions: 0,
+  });
+  const [sidebarCountRefresh, setSidebarCountRefresh] = useState(0);
+  const [error, setError] = useState(() =>
+    new URLSearchParams(window.location.search).get("session") === "expired"
+      ? "Your session expired. Please sign in again."
+      : "",
+  );
   const [loading, setLoading] = useState(false);
   const [inquirySearch, setInquirySearch] = useState("");
   const [inquiryFilter, setInquiryFilter] = useState("all");
@@ -121,6 +139,46 @@ function AdminPage() {
   const [inquiryRefresh, setInquiryRefresh] = useState(0);
   const [searchingInquiries, setSearchingInquiries] = useState(false);
   const [inquiryStatusCounts, setInquiryStatusCounts] = useState({});
+
+  useEffect(() => {
+    if (!token) return undefined;
+
+    const handleExpiredSession = () => setToken(null);
+    window.addEventListener("admin-session-expired", handleExpiredSession);
+
+    const expiresAt = getAdminSessionExpiry(token);
+    let expiryTimer;
+    if (expiresAt) {
+      const remaining = expiresAt - Date.now();
+      if (remaining <= 0) {
+        expireAdminSession();
+      } else {
+        expiryTimer = window.setTimeout(expireAdminSession, remaining);
+      }
+    }
+
+    return () => {
+      window.removeEventListener("admin-session-expired", handleExpiredSession);
+      if (expiryTimer) window.clearTimeout(expiryTimer);
+    };
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) return undefined;
+    let current = true;
+
+    getAdminSidebarCounts()
+      .then((counts) => {
+        if (current) setSidebarCounts(counts);
+      })
+      .catch((requestError) => {
+        if (current) setError(requestError.message);
+      });
+
+    return () => {
+      current = false;
+    };
+  }, [sidebarCountRefresh, token]);
   const loadDashboard = async () => {
     setLoading(true);
     setError("");
@@ -274,6 +332,7 @@ function AdminPage() {
       sessionStorage.setItem("adminActiveView", "dashboard");
       setActiveView("dashboard");
       window.history.replaceState(null, "", window.location.pathname);
+      setError("");
       setToken(data.token);
     } catch (requestError) {
       setError(requestError.message);
@@ -342,7 +401,17 @@ function AdminPage() {
 
   const logout = () => {
     sessionStorage.removeItem("adminToken");
+    sessionStorage.removeItem("adminActiveView");
+    window.history.replaceState(null, "", "/admin");
     setToken(null);
+  };
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed((current) => {
+      const next = !current;
+      localStorage.setItem("adminSidebarCollapsed", String(next));
+      return next;
+    });
   };
   const addOpening = async (event) => {
     event.preventDefault();
@@ -382,6 +451,7 @@ function AdminPage() {
           Math.ceil(Math.max(0, current.total - 1) / current.limit),
         ),
       }));
+      setSidebarCountRefresh((value) => value + 1);
       if (filteredContacts.length === 1 && inquiryPage > 1)
         setInquiryPage((page) => page - 1);
       else setInquiryRefresh((value) => value + 1);
@@ -393,14 +463,31 @@ function AdminPage() {
   };
   return (
     <main
-      className={`${styles.dashboard} ${activeView === "inquiries" ? styles.inquiriesDashboard : ""}`}
+      className={`${styles.dashboard} ${sidebarCollapsed ? styles.sidebarCollapsed : ""} ${activeView === "inquiries" ? styles.inquiriesDashboard : ""}`}
     >
-      <aside className={styles.sidebar}>
+      <aside
+        className={styles.sidebar}
+        data-collapsed={sidebarCollapsed}
+        aria-label="Admin navigation"
+      >
+        <button
+          className={styles.sidebarToggle}
+          type="button"
+          onClick={toggleSidebar}
+          aria-label={sidebarCollapsed ? "Open sidebar" : "Close sidebar"}
+          title={sidebarCollapsed ? "Open sidebar" : "Close sidebar"}
+        >
+          {sidebarCollapsed ? (
+            <PanelLeftOpen size={17} />
+          ) : (
+            <PanelLeftClose size={17} />
+          )}
+        </button>
         <div className={styles.brand}>
           <span>
             <img src="/Prime Softech logo icon.png" alt="" />
           </span>
-          <div>
+          <div className={styles.brandText}>
             <strong>Prime Softech</strong>
             <small>Admin workspace</small>
           </div>
@@ -410,56 +497,74 @@ function AdminPage() {
           <button
             className={activeView === "dashboard" ? styles.navActive : ""}
             onClick={() => changeView("dashboard")}
+            title="Dashboard"
           >
-            <LayoutDashboard size={18} /> Dashboard
+            <LayoutDashboard size={18} />
+            <span className={styles.navText}>Dashboard</span>
           </button>
           <small className={styles.navLabel}>MANAGEMENT</small>
           <button
             className={activeView === "inquiries" ? styles.navActive : ""}
             onClick={() => changeView("inquiries")}
+            title="Inquiries"
           >
-            <Inbox size={18} /> Inquiries {stats.new > 0 && <b>{stats.new}</b>}
+            <Inbox size={18} />
+            <span className={styles.navText}>Inquiries</span>
+            {sidebarCounts.inquiries > 0 && <b>{sidebarCounts.inquiries}</b>}
           </button>
           <button
             className={activeView === "applications" ? styles.navActive : ""}
             onClick={() => changeView("applications")}
+            title="Applications"
           >
-            <Files size={18} /> Applications{" "}
-            {(dashboardData.counts?.newApplications || 0) > 0 && (
-              <b>{dashboardData.counts.newApplications}</b>
+            <Files size={18} />
+            <span className={styles.navText}>Applications</span>
+            {sidebarCounts.applications > 0 && (
+              <b>{sidebarCounts.applications}</b>
             )}
           </button>
           <button
             className={activeView === "introductions" ? styles.navActive : ""}
             onClick={() => changeView("introductions")}
+            title="Talent introductions"
           >
-            <Users size={18} /> Talent introductions{" "}
-            {(dashboardData.counts?.newIntroductions || 0) > 0 && (
-              <b>{dashboardData.counts.newIntroductions}</b>
+            <Users size={18} />
+            <span className={styles.navText}>Talent introductions</span>
+            {sidebarCounts.introductions > 0 && (
+              <b>{sidebarCounts.introductions}</b>
             )}
           </button>
           <button
             className={activeView === "openings" ? styles.navActive : ""}
             onClick={() => changeView("openings")}
+            title="Career openings"
           >
-            <BriefcaseBusiness size={18} /> Career openings
+            <BriefcaseBusiness size={18} />
+            <span className={styles.navText}>Career openings</span>
           </button>
           <button
             className={activeView === "leadership" ? styles.navActive : ""}
             onClick={() => changeView("leadership")}
+            title="People hierarchy"
           >
-            <Network size={18} /> People hierarchy
+            <Network size={18} />
+            <span className={styles.navText}>People hierarchy</span>
           </button>
           <button
             className={activeView === "blogs" ? styles.navActive : ""}
             onClick={() => changeView("blogs")}
+            title="Blogs"
           >
-            <Newspaper size={18} /> Blogs
+            <Newspaper size={18} />
+            <span className={styles.navText}>Blogs</span>
           </button>
         </nav>
-        <button className={styles.logout} onClick={logout}>
-          <LogOut size={18} /> Log out
-        </button>
+        <footer className={styles.sidebarFooter}>
+          <button className={styles.logout} onClick={logout} title="Log out">
+            <LogOut size={18} />
+            <span className={styles.navText}>Log out</span>
+          </button>
+        </footer>
       </aside>
 
       <div className={styles.content}>
@@ -893,6 +998,7 @@ function AdminPage() {
                 )
                   return;
                 await deleteApplication(item._id);
+                setSidebarCountRefresh((value) => value + 1);
               }}
             />
           </section>
@@ -930,6 +1036,7 @@ function AdminPage() {
                 )
                   return;
                 await deleteGeneralApplication(item._id);
+                setSidebarCountRefresh((value) => value + 1);
               }}
             />
           </section>

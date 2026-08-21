@@ -3,6 +3,27 @@
   grid-template-rows: 3.65rem minmax(3.15rem, auto) 0.125rem;
   overflow: hidden;
   position: relative;
+  transition: transform .3s ease;
+}
+
+.stat::before {
+  background: radial-gradient(circle, rgb(91 213 255 / 13%), transparent 65%);
+  content: "";
+  inset: -35%;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(.7);
+  transition: opacity .3s ease, transform .4s ease;
+}
+
+.stat:hover {
+  transform: translateY(-.35rem);
+}
+
+.stat:hover::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .index {
@@ -109,5 +130,9 @@
   .complete .number,
   .complete .suffix {
     animation: none;
+  }
+  .stat,
+  .stat::before {
+    transition: none;
   }
 }

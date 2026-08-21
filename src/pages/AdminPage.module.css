@@ -3349,3 +3349,136 @@ td {
 .inquiryTable td>b {
     font-size: .6rem
 }
+
+/* Collapsible admin navigation rail and persistent sidebar footer. */
+.dashboard {
+    transition: grid-template-columns .28s ease
+}
+
+.sidebar {
+    min-width: 0;
+    transition: padding .28s ease;
+    z-index: 20
+}
+
+.sidebarToggle {
+    align-items: center;
+    background: #12243a;
+    border: 1px solid #31516f;
+    border-radius: 50%;
+    color: #65d7ff;
+    cursor: pointer;
+    display: flex;
+    height: 1.85rem;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    right: -.93rem;
+    top: 2rem;
+    transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    width: 1.85rem;
+    z-index: 4
+}
+
+.sidebarToggle:hover {
+    background: #183453;
+    border-color: #5bd5ff;
+    transform: scale(1.06)
+}
+
+.brandText,
+.navText {
+    min-width: 0;
+    overflow: hidden;
+    transition: opacity .18s ease, width .25s ease;
+    white-space: nowrap
+}
+
+.sidebarFooter {
+    border-top: 1px solid #1c2e46;
+    margin-top: auto;
+    padding-top: .75rem
+}
+
+.sidebarFooter .logout {
+    margin: 0 !important;
+    width: 100%
+}
+
+.sidebarCollapsed {
+    grid-template-columns: 86px minmax(0, 1fr)
+}
+
+.sidebarCollapsed .sidebar {
+    padding-inline: .75rem
+}
+
+.sidebarCollapsed .brand {
+    justify-content: center;
+    padding-inline: 0
+}
+
+.sidebarCollapsed :is(.brandText, .navText, .navLabel) {
+    display: none
+}
+
+.sidebarCollapsed .sidebar nav button,
+.sidebarCollapsed .logout {
+    justify-content: center;
+    padding-inline: .6rem;
+    position: relative
+}
+
+.sidebarCollapsed .sidebar nav button:hover {
+    transform: translateY(-1px)
+}
+
+.sidebarCollapsed .sidebar nav b {
+    align-items: center;
+    display: flex;
+    font-size: .5rem;
+    height: 1rem;
+    justify-content: center;
+    margin: 0;
+    min-width: 1rem;
+    padding: .08rem .25rem;
+    position: absolute;
+    right: .08rem;
+    top: .08rem
+}
+
+@media (max-width: 720px) {
+    .sidebarCollapsed {
+        grid-template-columns: 1fr
+    }
+
+    .sidebarToggle {
+        right: 1rem;
+        top: 1.8rem
+    }
+
+    .sidebarCollapsed .sidebar nav,
+    .sidebarCollapsed .sidebarFooter {
+        display: none
+    }
+
+    .sidebarCollapsed .brand {
+        justify-content: flex-start;
+        margin: 0;
+        padding-bottom: .5rem
+    }
+
+    .sidebarFooter .logout {
+        position: static
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard,
+    .sidebar,
+    .sidebarToggle,
+    .brandText,
+    .navText {
+        transition: none
+    }
+}

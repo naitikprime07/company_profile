@@ -3,8 +3,12 @@ import {
   ArrowUpRight,
   BarChart3,
   CheckCircle2,
+  Database,
+  Globe2,
   Layers3,
+  Package,
   ShieldCheck,
+  Smartphone,
   Sparkles,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -53,6 +57,51 @@ const projects = [
     ],
     theme: "blue",
     visual: "finance",
+  },
+];
+
+const products = [
+  {
+    number: "01",
+    name: "Prime Commerce",
+    category: "Commerce platform",
+    status: "Live",
+    description:
+      "A connected commerce workspace that brings catalog, orders, fulfilment, and operational reporting into one dependable system.",
+    platforms: "Web · Cloud",
+    capabilities: ["Order operations", "Live inventory", "Business insights"],
+    metric: "42%",
+    metricLabel: "faster order flow",
+    Icon: Globe2,
+    theme: "cyan",
+  },
+  {
+    number: "02",
+    name: "CareSync",
+    category: "Care coordination",
+    status: "Scaling",
+    description:
+      "A secure mobile product for coordinating care tasks, team communication, and patient progress without fragmented paperwork.",
+    platforms: "iOS · Android",
+    capabilities: ["Shared care plans", "Secure messaging", "Progress tracking"],
+    metric: "61%",
+    metricLabel: "less admin effort",
+    Icon: Smartphone,
+    theme: "violet",
+  },
+  {
+    number: "03",
+    name: "SignalDesk",
+    category: "Decision intelligence",
+    status: "Live",
+    description:
+      "A focused decision layer that converts dense business data into useful signals, timely alerts, and clear next actions.",
+    platforms: "Web · Data",
+    capabilities: ["Unified dashboards", "Smart alerts", "Role-based views"],
+    metric: "8h",
+    metricLabel: "saved per week",
+    Icon: Database,
+    theme: "blue",
   },
 ];
 
@@ -116,6 +165,45 @@ function ProjectVisual({ kind }) {
   );
 }
 
+function ProductPreview({ product }) {
+  const Icon = product.Icon;
+
+  return (
+    <div className={styles.productPreview} aria-hidden="true">
+      <div className={styles.productPreviewGlow} />
+      <div className={styles.productWindow}>
+        <div className={styles.productWindowTop}>
+          <span className={styles.productMark}>
+            <Icon size={18} />
+          </span>
+          <span>
+            <small>PRIME PRODUCT</small>
+            <b>{product.name}</b>
+          </span>
+          <i>{product.status}</i>
+        </div>
+        <div className={styles.productWindowBody}>
+          <div className={styles.productSignal}>
+            <span>Product signal</span>
+            <strong>{product.metric}</strong>
+            <small>{product.metricLabel}</small>
+          </div>
+          <div className={styles.productPulse}>
+            {[42, 58, 48, 72, 64, 86, 78].map((height, index) => (
+              <i key={index} style={{ "--bar-height": `${height}%` }} />
+            ))}
+          </div>
+          <div className={styles.productActivity}>
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PortfolioPage() {
   useScrollReveal();
 
@@ -158,6 +246,54 @@ export default function PortfolioPage() {
               <strong>One team</strong>
               <small>strategy to scale</small>
             </span>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.products} data-reveal>
+        <div className="container">
+          <header className={styles.productsHead}>
+            <div>
+              <p className="eyebrow">
+                <Package size={14} /> Product portfolio
+              </p>
+              <h2>Products built to do real work.</h2>
+            </div>
+            <p>
+              Focused digital products shaped around clear operational needs,
+              useful customer experiences, and foundations that can grow.
+            </p>
+          </header>
+
+          <div className={styles.productGrid}>
+            {products.map((product) => (
+              <article
+                className={[styles.productCard, styles[product.theme]].join(" ")}
+                key={product.name}
+              >
+                <div className={styles.productCardTop}>
+                  <span>{product.number}</span>
+                  <span>{product.category}</span>
+                  <i>{product.status}</i>
+                </div>
+                <ProductPreview product={product} />
+                <div className={styles.productDetails}>
+                  <small>{product.platforms}</small>
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                  <ul>
+                    {product.capabilities.map((capability) => (
+                      <li key={capability}>
+                        <CheckCircle2 size={13} /> {capability}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link to="/contact">
+                    Discuss this product <ArrowUpRight size={16} />
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>

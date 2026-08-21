@@ -16,6 +16,12 @@ function HomePage() {
           <span className="hero-prime-arc arc-one" />
           <span className="hero-prime-arc arc-two" />
           <span className="hero-prime-beam" />
+          <div className="hero-flow-network">
+            <span className="hero-flow-lane flow-one" />
+            <span className="hero-flow-lane flow-two" />
+            <span className="hero-flow-lane flow-three" />
+            <span className="hero-flow-lane flow-four" />
+          </div>
           <i className="hero-prime-node node-one" />
           <i className="hero-prime-node node-two" />
           <i className="hero-prime-node node-three" />

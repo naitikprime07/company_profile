@@ -19,6 +19,19 @@
   pointer-events: none;
   position: absolute;
 }
+.section::after {
+  animation: delivery-field-travel 15s ease-in-out infinite alternate;
+  background: linear-gradient(115deg, transparent, rgb(47 125 246 / 8%), rgb(91 213 255 / 11%), transparent);
+  content: "";
+  filter: blur(8px);
+  height: 18rem;
+  left: -22%;
+  pointer-events: none;
+  position: absolute;
+  top: 42%;
+  transform: rotate(-10deg);
+  width: 82%;
+}
 
 .layout {
   display: grid;
@@ -150,6 +163,18 @@
   position: relative;
   transition: border-color 0.25s ease, transform 0.25s ease;
 }
+.section:global(.is-revealed) .phase {
+  animation: delivery-card-arrive .65s cubic-bezier(.2, .8, .2, 1) both;
+}
+.section:global(.is-revealed) .phase:nth-of-type(2) {
+  animation-delay: .12s;
+}
+.section:global(.is-revealed) .phase:nth-of-type(3) {
+  animation-delay: .24s;
+}
+.section:global(.is-revealed) .phase:nth-of-type(4) {
+  animation-delay: .36s;
+}
 
 .phase:hover {
   border-color: rgb(91 213 255 / 28%);
@@ -227,6 +252,11 @@
   display: flex;
   gap: 1rem;
   padding: 1.5rem;
+  transition: background .25s ease, transform .25s ease;
+}
+.assurances article:hover {
+  background: rgb(91 213 255 / 5%);
+  transform: translateY(-.25rem);
 }
 
 .assurances article + article {
@@ -253,6 +283,19 @@
 @keyframes delivery-pulse {
   0%, 100% { top: 0; }
   50% { top: calc(100% - 0.4rem); }
+}
+@keyframes delivery-field-travel {
+  to {
+    left: 42%;
+    opacity: .55;
+    transform: rotate(7deg) scale(1.15);
+  }
+}
+@keyframes delivery-card-arrive {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
 }
 
 @media (max-width: 900px) {
@@ -288,6 +331,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .rail span {
+    animation: none;
+  }
+  .section::after,
+  .section:global(.is-revealed) .phase {
     animation: none;
   }
 }

@@ -19,6 +19,22 @@
   pointer-events: none;
   position: absolute;
 }
+.section::after {
+  animation: services-field-drift 13s ease-in-out infinite alternate;
+  background:
+    radial-gradient(circle, rgb(91 213 255 / 13%), transparent 58%),
+    conic-gradient(from 120deg, transparent, rgb(101 83 246 / 8%), transparent 45%);
+  border: 1px solid rgb(91 213 255 / 8%);
+  border-radius: 42% 58% 63% 37%;
+  content: "";
+  height: 34rem;
+  pointer-events: none;
+  position: absolute;
+  right: -13rem;
+  top: 20%;
+  transform: rotate(-18deg);
+  width: 34rem;
+}
 .heading {
   margin: 0 auto;
   max-width: 48rem;
@@ -66,6 +82,18 @@
     border-color 0.3s ease,
     box-shadow 0.3s ease,
     transform 0.3s ease;
+}
+.section:global(.is-revealed) .card {
+  animation: service-card-arrive .7s cubic-bezier(.2, .8, .2, 1) both;
+}
+.section:global(.is-revealed) .card:nth-child(2) {
+  animation-delay: .1s;
+}
+.section:global(.is-revealed) .card:nth-child(3) {
+  animation-delay: .2s;
+}
+.section:global(.is-revealed) .card:nth-child(4) {
+  animation-delay: .3s;
 }
 .mobile,
 .growth {
@@ -222,18 +250,6 @@
 .card:hover .visual {
   animation: visual-float 2.8s ease-in-out infinite alternate;
 }
-.design .visual::before {
-  border-radius: 35% 65% 48% 52%;
-  transform: rotate(25deg);
-}
-.design .visual::after {
-  border-radius: 65% 35% 60% 40%;
-  transform: rotate(-22deg);
-}
-.design .visualCore {
-  background: linear-gradient(145deg, #6f61ff, var(--accent));
-  border-radius: 50%;
-}
 .web .visual::before {
   border-radius: 0.6rem;
   transform: perspective(10rem) rotateY(-15deg);
@@ -275,6 +291,18 @@
   to {
     filter: drop-shadow(0 1rem 1.5rem rgb(47 125 246 / 20%));
     transform: translateY(-0.45rem) rotate(3deg);
+  }
+}
+@keyframes service-card-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(2.2rem) scale(.975);
+  }
+}
+@keyframes services-field-drift {
+  to {
+    border-radius: 60% 40% 36% 64%;
+    transform: translate(-6rem, 5rem) rotate(12deg) scale(1.12);
   }
 }
 @media (max-width: 1024px) {
@@ -328,5 +356,9 @@
   .card::before,
   .card a svg {
     transition: none;
+  }
+  .section::after,
+  .section:global(.is-revealed) .card {
+    animation: none;
   }
 }

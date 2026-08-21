@@ -22,6 +22,21 @@
   pointer-events: none;
   position: absolute;
 }
+.section::after {
+  animation: principle-orbit-field 24s linear infinite;
+  border: 1px dashed rgb(91 213 255 / 9%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 5rem rgb(47 125 246 / 2%),
+    0 0 0 10rem rgb(101 83 246 / 2%);
+  content: "";
+  height: 38rem;
+  left: calc(50% - 19rem);
+  pointer-events: none;
+  position: absolute;
+  top: calc(50% - 19rem);
+  width: 38rem;
+}
 .heading {
   align-items: end;
   display: grid;
@@ -82,7 +97,8 @@
 }
 .reason:hover {
   border-color: rgb(91 213 255 / 36%);
-  transform: translateY(-0.35rem);
+  box-shadow: 0 1.4rem 3rem rgb(0 3 12 / 26%), 0 0 2rem rgb(91 213 255 / 7%);
+  transform: translateY(-0.55rem) scale(1.015);
 }
 .topRight,
 .bottomRight {
@@ -324,6 +340,11 @@
     opacity: 0.9;
   }
 }
+@keyframes principle-orbit-field {
+  to {
+    transform: rotate(360deg);
+  }
+}
 @media (max-width: 900px) {
   .heading {
     grid-template-columns: 1fr;
@@ -380,6 +401,9 @@
   .core > div i,
   .connections i,
   .reason {
+    animation: none;
+  }
+  .section::after {
     animation: none;
   }
 }

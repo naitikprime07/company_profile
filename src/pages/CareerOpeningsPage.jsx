@@ -199,6 +199,12 @@ function CareerOpeningsPage({ type }) {
         <div className={styles.grid}>
           {state.openings.map((opening) => (
             <article key={opening._id}>
+              <Link
+                to={`/career/position/${opening._id}`}
+                className={styles.cardHitArea}
+                aria-hidden="true"
+                tabIndex={-1}
+              />
               <div className={styles.cardTop}>
                 <span>
                   {type === "internship" ? (

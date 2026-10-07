@@ -230,10 +230,16 @@ function CareerPage() {
                       </ul>
                     </div>
                   </div>
-                  <Link to={path}>
+                  <Link to={path} className={styles.cardAction}>
                     <span>{action}</span>
                     <ArrowUpRight size={18} />
                   </Link>
+                  <Link
+                    to={path}
+                    className={styles.cardHitArea}
+                    aria-hidden="true"
+                    tabIndex={-1}
+                  />
                 </article>
               ),
             )}

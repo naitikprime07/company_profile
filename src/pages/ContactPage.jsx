@@ -4,7 +4,6 @@ import {
   Clock3,
   Globe2,
   Mail,
-  MapPin,
   MessageCircle,
   Navigation,
   ShieldCheck,
@@ -120,12 +119,6 @@ function ContactPage() {
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               )}
-              <div className={styles.mapMarker} aria-hidden="true">
-                <span>
-                  <MapPin size={20} />
-                </span>
-                <i />
-              </div>
               <div className={styles.mapCoordinates} aria-hidden="true">
                 <span>STUDIO / 01</span>
                 <b>CONNECTED</b>

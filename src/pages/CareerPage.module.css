@@ -427,7 +427,7 @@
   flex: 0 0 auto;
 }
 
-.pathCard > a {
+.cardAction {
   align-items: center;
   border-top: 1px solid var(--line);
   bottom: 1.8rem;
@@ -440,14 +440,21 @@
   padding-top: 1.2rem;
   position: absolute;
   right: 1.8rem;
+  z-index: 2;
 }
 
-.pathCard > a svg {
+.cardHitArea {
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.cardAction svg {
   color: var(--cyan);
   transition: transform 0.2s ease;
 }
 
-.pathCard > a:hover svg {
+.cardAction:hover svg {
   transform: translate(0.25rem, -0.25rem);
 }
 

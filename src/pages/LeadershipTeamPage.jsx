@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, Code2, Crown, Megaphone, UsersRound } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { LEADERSHIP } from "../data/leadership";
 import BrandHeroHeading from "../components/common/BrandHeroHeading";
 import { getLeadershipTeams } from "../services/leadershipService";
 import styles from "./LeadershipTeamPage.module.css";
@@ -21,7 +20,7 @@ function Portrait({ person, owner = false }) {
 
 export default function LeadershipTeamPage() {
   const { teamSlug } = useParams();
-  const [teams, setTeams] = useState(LEADERSHIP);
+  const [teams, setTeams] = useState([]);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     let active = true;

@@ -20,10 +20,23 @@ function useScrollReveal() {
       { threshold: 0.12 },
     );
 
-    document
-      .querySelectorAll("[data-reveal]")
-      .forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    const observeRevealables = () =>
+      document
+        .querySelectorAll("[data-reveal]:not(.is-revealed)")
+        .forEach((element) => observer.observe(element));
+
+    observeRevealables();
+
+    // Sections mounted later (e.g. after an async fetch resolves) never get
+    // observed by the initial pass, leaving them stuck at opacity 0. Watch the
+    // DOM and observe those late additions as well.
+    const mutationObserver = new MutationObserver(observeRevealables);
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [pathname]);
 }
 

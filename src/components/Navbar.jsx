@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import useContentAvailability from "../hooks/useContentAvailability";
 
 const serviceGroups = [
   {
@@ -111,6 +112,7 @@ const toSlug = (value) =>
     .replace(/(^-|-$)/g, "");
 
 function Navbar() {
+  const { hasBlogs, hasPortfolio } = useContentAvailability();
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [technologyOpen, setTechnologyOpen] = useState(false);
@@ -143,6 +145,14 @@ function Navbar() {
     document.body.classList.toggle("menu-open", open);
     return () => document.body.classList.remove("menu-open");
   }, [open]);
+
+  // Show Blog / Portfolio navigation entries only when the admin has added
+  // published data; hide them while empty.
+  const visibleLinks = links.filter((link) => {
+    if (link.to === "/blog") return hasBlogs === true;
+    if (link.to === "/portfolio") return hasPortfolio === true;
+    return true;
+  });
 
   const closeMenu = () => {
     window.clearTimeout(closeTimer.current);
@@ -342,7 +352,7 @@ function Navbar() {
             </div>
           </div>
 
-          {links.map((link) =>
+          {visibleLinks.map((link) =>
             link.to ? (
               <NavLink key={link.label} to={link.to} onClick={closeMenu}>
                 {link.label}

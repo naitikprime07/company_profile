@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRight, Code2, Crown, Megaphone, Palette, X } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Button from "../components/Button";
-import { LEADERSHIP } from "../data/leadership";
 import { getLeadershipTeams } from "../services/leadershipService";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./AboutPage.module.css";
@@ -194,7 +193,7 @@ function HierarchyNodes({ members, root = false }) {
 
 function AboutPage() {
   useScrollReveal();
-  const [leadership, setLeadership] = useState(LEADERSHIP);
+  const [leadership, setLeadership] = useState([]);
   const [activeTeam, setActiveTeam] = useState(null);
 
   useEffect(() => {
@@ -388,6 +387,8 @@ function AboutPage() {
         </ol>
       </section>
 
+      {/* Leadership section renders only when the admin has added teams. */}
+      {leadership.length > 0 && (
       <section
         className={styles.orgSection}
         data-reveal
@@ -511,6 +512,7 @@ function AboutPage() {
           </p>
         </div>
       </section>
+      )}
 
       <section className={styles.closing} data-reveal>
         <div className="container">

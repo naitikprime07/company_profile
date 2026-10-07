@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./routes/ScrollToTop";
@@ -27,21 +27,6 @@ const PhpPage = lazy(() => import("./pages/PhpPage"));
 const FrontendPage = lazy(() => import("./pages/FrontendPage"));
 const DatabasePage = lazy(() => import("./pages/DatabasePage"));
 const TechStackPage = lazy(() => import("./pages/TechStackPage"));
-const AdminPage = lazy(() => import("./pages/AdminPage"));
-const AdminApplicationDetailsPage = lazy(
-  () => import("./pages/AdminApplicationDetailsPage"),
-);
-const AdminInquiryDetailsPage = lazy(
-  () => import("./pages/AdminInquiryDetailsPage"),
-);
-const AdminIntroductionDetailsPage = lazy(
-  () => import("./pages/AdminIntroductionDetailsPage"),
-);
-const AdminOpeningFormPage = lazy(() => import("./pages/AdminOpeningFormPage"));
-const AdminBlogFormPage = lazy(() => import("./pages/AdminBlogFormPage"));
-const AdminPortfolioFormPage = lazy(
-  () => import("./pages/AdminPortfolioFormPage"),
-);
 const CareerOpeningsPage = lazy(() => import("./pages/CareerOpeningsPage"));
 const JobApplicationPage = lazy(() => import("./pages/JobApplicationPage"));
 const GeneralApplicationPage = lazy(
@@ -51,13 +36,10 @@ const PositionDetailsPage = lazy(() => import("./pages/PositionDetailsPage"));
 
 function App() {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
   const showIntroductionAnimation = location.pathname === "/career/introduce";
 
   return (
-    <div
-      className={`site-shell ${isAdminRoute ? "admin-shell" : "public-shell"}`}
-    >
+    <div className="site-shell public-shell">
       {showIntroductionAnimation && (
         <div className="introduction-background-animation" aria-hidden="true">
           <DotLottieReact
@@ -68,7 +50,7 @@ function App() {
         </div>
       )}
       <ScrollToTop />
-      {!isAdminRoute && <Navbar />}
+      <Navbar />
       <Suspense
         fallback={
           <main className="route-loading" aria-live="polite">
@@ -108,40 +90,6 @@ function App() {
           <Route
             path="/career/position/:openingId"
             element={<PositionDetailsPage />}
-          />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route
-            path="/admin/applications/:applicationId"
-            element={<AdminApplicationDetailsPage />}
-          />
-          <Route
-            path="/admin/inquiries/:inquiryId"
-            element={<AdminInquiryDetailsPage />}
-          />
-          <Route
-            path="/admin/introductions/:id"
-            element={<AdminIntroductionDetailsPage />}
-          />
-          <Route
-            path="/admin/openings/new"
-            element={<AdminOpeningFormPage />}
-          />
-          <Route
-            path="/admin/openings/:openingId/edit"
-            element={<AdminOpeningFormPage />}
-          />
-          <Route path="/admin/blogs/new" element={<AdminBlogFormPage />} />
-          <Route
-            path="/admin/blogs/:blogId/edit"
-            element={<AdminBlogFormPage />}
-          />
-          <Route
-            path="/admin/portfolio/new"
-            element={<AdminPortfolioFormPage />}
-          />
-          <Route
-            path="/admin/portfolio/:portfolioId/edit"
-            element={<AdminPortfolioFormPage />}
           />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />
@@ -199,10 +147,11 @@ function App() {
             path="/technology/cms"
             element={<TechStackPage group="cms" />}
           />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
-      {!isAdminRoute && <Footer />}
-      {!isAdminRoute && <ChatBot />}
+      <Footer />
+      <ChatBot />
     </div>
   );
 }

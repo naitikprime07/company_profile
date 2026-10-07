@@ -15,6 +15,7 @@ import {
   MapPin,
   Network,
   Newspaper,
+  PanelsTopLeft,
   PanelLeftClose,
   PanelLeftOpen,
   Phone,
@@ -48,6 +49,7 @@ import ServerAdminRecordsTable from "../components/ServerAdminRecordsTable";
 import useConfirmDelete from "../hooks/useConfirmDelete";
 import AdminLeadershipManager from "../components/AdminLeadershipManager";
 import AdminBlogManager from "../components/AdminBlogManager";
+import AdminPortfolioManager from "../components/AdminPortfolioManager";
 
 const STATUS_LABELS = {
   new: "New",
@@ -69,6 +71,7 @@ const VIEW_TITLES = {
   introductions: "Open introductions",
   leadership: "People hierarchy",
   blogs: "Blog management",
+  portfolio: "Portfolio management",
 };
 const OPENINGS_PER_PAGE = 6;
 function AdminPage() {
@@ -86,6 +89,7 @@ function AdminPage() {
       "#introductions",
       "#leadership",
       "#blogs",
+      "#portfolio",
     ].includes(window.location.hash)
       ? window.location.hash.slice(1)
       : sessionStorage.getItem("adminActiveView") || "dashboard",
@@ -549,6 +553,14 @@ function AdminPage() {
           >
             <Network size={18} />
             <span className={styles.navText}>People hierarchy</span>
+          </button>
+          <button
+            className={activeView === "portfolio" ? styles.navActive : ""}
+            onClick={() => changeView("portfolio")}
+            title="Portfolio"
+          >
+            <PanelsTopLeft size={18} />
+            <span className={styles.navText}>Portfolio</span>
           </button>
           <button
             className={activeView === "blogs" ? styles.navActive : ""}
@@ -1040,6 +1052,8 @@ function AdminPage() {
               }}
             />
           </section>
+        ) : activeView === "portfolio" ? (
+          <AdminPortfolioManager confirmDelete={confirmDelete} />
         ) : activeView === "blogs" ? (
           <AdminBlogManager confirmDelete={confirmDelete} />
         ) : activeView === "leadership" ? (
@@ -1056,6 +1070,7 @@ function AdminPage() {
                 </div>
                 <button
                   type="button"
+                  className={styles.managementCreateButton}
                   onClick={() => navigate("/admin/openings/new")}
                 >
                   <Plus size={15} /> Create opening

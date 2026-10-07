@@ -9,6 +9,8 @@ import styles from "./AboutPage.module.css";
 import { ENVIRONMENT } from "../constants/environment";
 import { mailTo } from "../constants/environment";
 
+const SHOW_MOTION_RIBBON = false;
+
 const JOURNEY = [
   {
     year: "2014",
@@ -32,7 +34,6 @@ const JOURNEY = [
   },
 ];
 
-const SHOW_MOTION_RIBBON = false;
 
 function TeamPortrait({ person, owner = false }) {
   const useFallback = (event) => {
@@ -334,35 +335,18 @@ function AboutPage() {
       </section>
 
       {SHOW_MOTION_RIBBON && (
-        <section
-          className={styles.motionRibbon}
-          aria-label="From ideas to measurable impact"
-          data-reveal
-        >
+        <section className={styles.motionRibbon} aria-label="From ideas to measurable impact" data-reveal>
           <div className={styles.ribbonMotion} aria-hidden="true">
-            <DotLottieReact
-              className={styles.ribbonLottie}
-              src={ENVIRONMENT.animations.about}
-              loop
-              autoplay
-            />
+            <DotLottieReact className={styles.ribbonLottie} src={ENVIRONMENT.animations.about} loop autoplay />
           </div>
           <div className={styles.ribbonWords} aria-hidden="true">
-            <span>
-              <small>01</small>IDEAS
-            </span>
-            <i>→</i>
-            <span>
-              <small>02</small>SYSTEMS
-            </span>
-            <i>→</i>
-            <span>
-              <small>03</small>IMPACT
-            </span>
+            <span><small>01</small>IDEAS</span><i>&rarr;</i>
+            <span><small>02</small>SYSTEMS</span><i>&rarr;</i>
+            <span><small>03</small>IMPACT</span>
           </div>
           <div className={styles.ribbonCaption}>
             <span>Prime Softech / transformation in motion</span>
-            <b>KEEP SCROLLING ↓</b>
+            <b>KEEP SCROLLING &darr;</b>
           </div>
         </section>
       )}

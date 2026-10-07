@@ -112,7 +112,7 @@ export default function AdminBlogManager({ confirmDelete }) {
             ))}
             <button
               type="button"
-              className={styles.newArticle}
+              className={adminStyles.managementCreateButton}
               onClick={() => navigate("/admin/blogs/new")}
             >
               <FilePlus2 size={14} /> New article

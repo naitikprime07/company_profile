@@ -223,6 +223,54 @@ export const updateBlog = (id, data) =>
   request(`/admin/blogs/${id}`, { method: "PUT", body: JSON.stringify(data) });
 export const deleteBlog = (id) =>
   request(`/admin/blogs/${id}`, { method: "DELETE" });
+export const searchAdminPortfolio = (
+  query = "",
+  type = "all",
+  status = "all",
+  page = 1,
+  limit = 10,
+) =>
+  request(
+    `/admin/portfolio?${new URLSearchParams({ query, type, status, page: String(page), limit: String(limit) })}`,
+  );
+export const getAdminPortfolioItem = (id) => request(`/admin/portfolio/${id}`);
+export const createPortfolioItem = (data) =>
+  request("/admin/portfolio", { method: "POST", body: JSON.stringify(data) });
+export const updatePortfolioItem = (id, data) =>
+  request(`/admin/portfolio/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+export const deletePortfolioItem = (id) =>
+  request(`/admin/portfolio/${id}`, { method: "DELETE" });
+export const deletePortfolioImage = (id) =>
+  request(`/admin/portfolio/${id}/image`, { method: "DELETE" });
+export const deletePortfolioImageField = (id, field) =>
+  request(`/admin/portfolio/${id}/images/${field}`, { method: "DELETE" });
+export const deleteUnattachedPortfolioImage = (imageUrl) =>
+  request("/admin/portfolio/image", {
+    method: "DELETE",
+    body: JSON.stringify({ imageUrl }),
+  });
+export const uploadPortfolioImage = async (file, previousImage = "") => {
+  const signed = await request("/admin/portfolio/image-upload-url", {
+    method: "POST",
+    body: JSON.stringify({
+      fileName: file.name,
+      contentType: file.type,
+      size: file.size,
+      previousImage,
+    }),
+  });
+  const response = await fetch(signed.uploadUrl, {
+    method: "PUT",
+    headers: { "Content-Type": file.type },
+    body: file,
+  });
+  if (!response.ok)
+    throw new Error("Project image upload failed. Check the R2 CORS configuration.");
+  return signed.fileUrl;
+};
 export const deleteBlogImage = (id, field) =>
   request(`/admin/blogs/${id}/images/${field}`, { method: "DELETE" });
 export const deleteUnattachedBlogImage = (imageUrl) =>

@@ -10,6 +10,7 @@ import ChatBot from "./components/ChatBot";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
+const PortfolioDetailsPage = lazy(() => import("./pages/PortfolioDetailsPage"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogDetailsPage = lazy(() => import("./pages/BlogDetailsPage"));
 const LeadershipTeamPage = lazy(() => import("./pages/LeadershipTeamPage"));
@@ -37,6 +38,9 @@ const AdminIntroductionDetailsPage = lazy(
 );
 const AdminOpeningFormPage = lazy(() => import("./pages/AdminOpeningFormPage"));
 const AdminBlogFormPage = lazy(() => import("./pages/AdminBlogFormPage"));
+const AdminPortfolioFormPage = lazy(
+  () => import("./pages/AdminPortfolioFormPage"),
+);
 const CareerOpeningsPage = lazy(() => import("./pages/CareerOpeningsPage"));
 const JobApplicationPage = lazy(() => import("./pages/JobApplicationPage"));
 const GeneralApplicationPage = lazy(
@@ -75,6 +79,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/portfolio/:id" element={<PortfolioDetailsPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogDetailsPage />} />
           <Route
@@ -128,6 +133,14 @@ function App() {
           <Route
             path="/admin/blogs/:blogId/edit"
             element={<AdminBlogFormPage />}
+          />
+          <Route
+            path="/admin/portfolio/new"
+            element={<AdminPortfolioFormPage />}
+          />
+          <Route
+            path="/admin/portfolio/:portfolioId/edit"
+            element={<AdminPortfolioFormPage />}
           />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />

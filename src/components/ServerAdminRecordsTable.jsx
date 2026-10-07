@@ -20,6 +20,7 @@ export default function ServerAdminRecordsTable({
   roleLabel,
   roleValue,
   onTotalChange,
+  inquiryStatusCounts,
 }) {
   const [q, setQ] = useState(""),
     [status, setStatus] = useState("all"),

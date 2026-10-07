@@ -6,14 +6,26 @@
 
 .hero {
     background:
-        linear-gradient(90deg, rgb(5 12 23/96%) 0%, rgb(6 14 27/88%) 48%, rgb(6 14 27/68%) 100%),
-        radial-gradient(circle at 82% 15%, rgb(47 125 246/22%), transparent 38%),
-        url("/portfolio.jpg") center 38% / cover no-repeat;
+        radial-gradient(circle at 14% 18%, rgb(47 125 246/24%), transparent 27rem),
+        radial-gradient(circle at 84% 28%, rgb(79 75 255/18%), transparent 30rem),
+        linear-gradient(135deg, #07111f 0%, #0b1c31 48%, #071321 100%);
     border-bottom: 1px solid var(--line);
     isolation: isolate;
     overflow: hidden;
     padding: 7rem 0 4rem;
     position: relative
+}
+
+.hero::before {
+    background-image:
+        linear-gradient(rgb(89 211 255 / 4%) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(89 211 255 / 4%) 1px, transparent 1px);
+    background-size: 56px 56px;
+    content: "";
+    inset: 0;
+    mask-image: radial-gradient(ellipse at center, #000 20%, transparent 78%);
+    pointer-events: none;
+    position: absolute
 }
 
 .hero::after {
@@ -158,6 +170,46 @@
     grid-template-columns: repeat(3, minmax(0, 1fr))
 }
 
+.productFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem;
+    margin: -1rem 0 1.6rem
+}
+
+.productFilters button {
+    background: #0d1b2d;
+    border: 1px solid #29415d;
+    border-radius: 999px;
+    color: #8ca2b9;
+    cursor: pointer;
+    font: inherit;
+    font-size: .62rem;
+    padding: .55rem .9rem;
+    transition: .25s ease
+}
+
+.productFilters button:hover,
+.productFilters .productFilterActive {
+    background: #123a5b;
+    border-color: #42c8ff;
+    color: #dff8ff
+}
+
+.productEmpty {
+    align-items: center;
+    background: #0d1b2d;
+    border: 1px dashed #2b4866;
+    border-radius: 1rem;
+    color: #8ea4bb;
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: center;
+    min-height: 280px;
+    padding: 2rem;
+    text-align: center
+}
+
 .productCard {
     --project: #5bd5ff;
     --project-rgb: 91 213 255;
@@ -216,6 +268,48 @@
     overflow: hidden;
     padding: 1.5rem 1.5rem 0;
     position: relative
+}
+
+.productImagePreview {
+    background: #081321;
+    height: 250px;
+    overflow: hidden;
+    position: relative
+}
+
+.productImagePreview::after {
+    background: linear-gradient(180deg, transparent 45%, rgb(5 13 24 / 85%));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute
+}
+
+.productImagePreview img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+    width: 100%
+}
+
+.productCard:hover .productImagePreview img {
+    transform: scale(1.045)
+}
+
+.productImagePreview span {
+    align-items: center;
+    background: rgb(7 19 34 / 88%);
+    border: 1px solid rgb(var(--project-rgb) / 35%);
+    border-radius: 999px;
+    bottom: 1rem;
+    color: var(--project);
+    display: flex;
+    font-size: .58rem;
+    gap: .4rem;
+    left: 1rem;
+    padding: .45rem .65rem;
+    position: absolute;
+    z-index: 1
 }
 
 .productPreviewGlow {
@@ -817,6 +911,263 @@
     padding: .9rem 1.15rem
 }
 
+.portfolioHeroCopy {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem auto 1rem;
+    max-width: 920px;
+    text-align: center
+}
+
+.portfolioHeroCopy h1 { max-width: 900px }
+
+.portfolioHeroCopy>p {
+    color: #9bacc0;
+    font-size: .82rem;
+    line-height: 1.75;
+    margin: 1.4rem auto 1.6rem;
+    max-width: 680px
+}
+
+.portfolioHeroCopy .heroLink {
+    background: linear-gradient(110deg, #257df1, #38c7ef);
+    border: 1px solid #65d8ff;
+    border-radius: .7rem;
+    box-shadow: 0 12px 32px rgb(36 142 226 / 28%);
+    color: #fff;
+    padding: .75rem 1rem
+}
+
+.projectRibbon {
+    align-items: center;
+    display: flex;
+    margin: 3.4rem -4rem -5.5rem;
+    min-width: calc(100% + 8rem);
+    overflow: hidden;
+    position: relative;
+    z-index: 2
+}
+
+.projectRibbon::before {
+    background: radial-gradient(ellipse, rgb(50 172 255 / 22%), transparent 65%);
+    content: "";
+    inset: -3rem 10%;
+    pointer-events: none;
+    position: absolute
+}
+
+.projectRibbonTrack {
+    animation: ribbon-marquee 32s linear infinite;
+    display: flex;
+    gap: 1.25rem;
+    padding: 1rem 0 2rem;
+    width: max-content;
+    will-change: transform
+}
+
+.projectRibbon:hover .projectRibbonTrack {
+    animation-play-state: paused
+}
+
+.ribbonCard {
+    animation: ribbon-float 4.5s ease-in-out infinite alternate;
+    background: #102136;
+    border: 1px solid #365c7d;
+    border-radius: .9rem;
+    box-shadow: 0 20px 45px rgb(0 5 15 / 48%);
+    flex: 0 0 clamp(190px, 16vw, 285px);
+    height: clamp(145px, 13vw, 225px);
+    overflow: hidden;
+    transform: rotate(-6deg)
+}
+
+.ribbonCard:nth-child(even) {
+    animation-delay: -2.2s;
+    transform: translateY(16px) rotate(6deg)
+}
+
+.projectRibbon img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%
+}
+
+@keyframes ribbon-float { to { translate: 0 -10px } }
+
+@keyframes ribbon-marquee {
+    from { transform: translateX(0) }
+    to { transform: translateX(calc(-50% - .625rem)) }
+}
+
+.products { padding-top: 10rem }
+
+.productGrid {
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+}
+
+.productCard {
+    background: linear-gradient(155deg, #102238, #0b1829);
+    border-color: #2d4865;
+    border-radius: 1.15rem;
+    display: block;
+    height: clamp(590px, 47vw, 680px);
+    padding: .8rem
+}
+
+.cardOpenLink {
+    inset: 0;
+    position: absolute;
+    z-index: 4
+}
+
+.productCard:nth-child(even) { margin-top: 4.5rem }
+
+.galleryImage {
+    background: #071321;
+    border-radius: .85rem;
+    height: 62%;
+    overflow: hidden;
+    position: relative
+}
+
+.galleryImage::after {
+    background: linear-gradient(180deg, transparent 60%, rgb(4 13 24 / 70%));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute
+}
+
+.galleryImage>img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    width: 100%
+}
+
+.productCard:hover .galleryImage>img { transform: scale(1.045) }
+
+.galleryImage>span {
+    background: rgb(6 20 35 / 90%);
+    border: 1px solid rgb(var(--project-rgb) / 48%);
+    border-radius: 999px;
+    bottom: .8rem;
+    color: var(--project);
+    font-size: .5rem;
+    letter-spacing: .12em;
+    padding: .38rem .55rem;
+    position: absolute;
+    right: .8rem;
+    z-index: 1
+}
+
+.galleryImage .productPreview { height: 100%; min-height: 100% }
+
+.galleryBody {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1.15rem .25rem .65rem
+}
+
+.galleryBody small { color: var(--project); font-size: .58rem }
+
+.galleryBody h3 {
+    font-size: clamp(1.05rem, 2vw, 1.55rem);
+    font-weight: 520;
+    margin: .3rem 0 0;
+    overflow-wrap: anywhere
+}
+
+.galleryArrow {
+    align-items: center;
+    background: #142c46;
+    border: 1px solid #356180;
+    border-radius: 50%;
+    color: #6bdcff;
+    display: flex;
+    flex: 0 0 auto;
+    height: 2.6rem;
+    justify-content: center;
+    transition: .25s ease;
+    width: 2.6rem
+}
+
+.productCard:hover .galleryArrow { background: #1d82bc; color: #fff; transform: rotate(45deg) }
+
+.galleryExcerpt {
+    color: #8499af;
+    font-size: .66rem;
+    line-height: 1.65;
+    margin: 0;
+    min-height: 3.25em;
+    padding: 0 .25rem
+}
+
+.galleryMeta {
+    align-items: center;
+    border-top: 1px solid #293e56;
+    color: #71889e;
+    display: flex;
+    font-size: .52rem;
+    justify-content: space-between;
+    margin: 1rem .25rem 0;
+    padding-top: .8rem
+}
+
+.galleryMeta strong { color: var(--project); font-size: .72rem; font-weight: 550 }
+.galleryMeta strong small { color: #758aa0; font-size: .48rem; font-weight: 400 }
+
+.publicPagination {
+    align-items: center;
+    border-top: 1px solid #29415a;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+    padding-top: 1.25rem
+}
+
+.publicPagination>span {
+    color: #71889f;
+    font-size: .58rem
+}
+
+.publicPagination>div {
+    display: flex;
+    gap: .45rem
+}
+
+.publicPagination button {
+    align-items: center;
+    background: #0d1d30;
+    border: 1px solid #294762;
+    border-radius: .5rem;
+    color: #91a6ba;
+    cursor: pointer;
+    display: flex;
+    font: 500 .58rem Poppins, sans-serif;
+    gap: .35rem;
+    justify-content: center;
+    min-height: 34px;
+    min-width: 34px;
+    padding: .45rem .65rem
+}
+
+.publicPagination button:hover:not(:disabled),
+.publicPagination .currentPage {
+    background: #176390;
+    border-color: #4fcaf5;
+    color: #fff
+}
+
+.publicPagination button:disabled {
+    cursor: not-allowed;
+    opacity: .38
+}
+
 @media(max-width:900px) {
 
     .heroGrid,
@@ -854,6 +1205,11 @@
 
     .proofBar span:nth-child(-n+2) {
         border-bottom: 1px solid #253a53
+    }
+
+    .projectRibbon {
+        justify-content: flex-start;
+        overflow: hidden
     }
 }
 
@@ -901,12 +1257,51 @@
 
     .hero {
         background:
-            linear-gradient(180deg, rgb(5 12 23/91%), rgb(6 14 27/86%)),
-            url("/portfolio.jpg") center / cover no-repeat
+            radial-gradient(circle at 50% 10%, rgb(47 125 246/22%), transparent 24rem),
+            linear-gradient(160deg, #07111f, #0a1a2d)
     }
 
     .productGrid {
         grid-template-columns: 1fr
+    }
+
+    .products {
+        padding: 8rem 0 4rem
+    }
+
+    .productCard:nth-child(even) {
+        margin-top: 0
+    }
+
+    .productCard {
+        height: auto;
+        min-height: 560px
+    }
+
+    .projectRibbon {
+        gap: .75rem;
+        margin-bottom: -4.5rem;
+        margin-top: 2.4rem
+    }
+
+    .ribbonCard {
+        flex-basis: 175px;
+        height: 135px
+    }
+
+    .galleryImage {
+        height: 260px
+    }
+
+    .publicPagination {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: .8rem;
+        margin-top: 2.5rem
+    }
+
+    .publicPagination>div {
+        flex-wrap: wrap
     }
 
     .productsHead {
@@ -926,6 +1321,8 @@
 
 @media (prefers-reduced-motion: reduce) {
     .productPreviewGlow { animation: none }
+    .projectRibbonTrack,
+    .ribbonCard { animation: none }
     .productCard,
     .productWindow { transition: none }
 }

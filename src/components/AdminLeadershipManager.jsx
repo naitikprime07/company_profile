@@ -9,6 +9,7 @@ import {
   updateLeadershipTeam,
   uploadTeamImage,
 } from "../services/adminService";
+import adminStyles from "../pages/AdminPage.module.css";
 import styles from "./AdminLeadershipManager.module.css";
 import treeStyles from "./AdminLeadershipTree.module.css";
 
@@ -373,6 +374,7 @@ export default function AdminLeadershipManager({ confirmDelete }) {
         </div>
         <button
           type="button"
+          className={adminStyles.managementCreateButton}
           disabled={teams.length >= 2}
           onClick={() => setDraft(blankTeam())}
         >

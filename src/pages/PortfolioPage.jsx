@@ -2,17 +2,18 @@ import {
   ArrowRight,
   ArrowUpRight,
   BarChart3,
+  ChevronLeft,
+  ChevronRight,
   CheckCircle2,
   Database,
   Globe2,
-  Layers3,
   Package,
-  ShieldCheck,
   Smartphone,
-  Sparkles,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useScrollReveal from "../hooks/useScrollReveal";
+import { getPortfolioItems } from "../services/portfolioService";
 import styles from "./PortfolioPage.module.css";
 
 const projects = [
@@ -105,23 +106,6 @@ const products = [
   },
 ];
 
-const approach = [
-  [
-    Sparkles,
-    "Find the signal",
-    "Clarify the business problem and the customer outcome before choosing the solution.",
-  ],
-  [
-    Layers3,
-    "Design the system",
-    "Connect journeys, interfaces, data, and operations into one maintainable product.",
-  ],
-  [
-    ShieldCheck,
-    "Prove the outcome",
-    "Launch carefully, measure real use, and improve what creates meaningful value.",
-  ],
-];
 
 function ProjectVisual({ kind }) {
   return (
@@ -166,7 +150,16 @@ function ProjectVisual({ kind }) {
 }
 
 function ProductPreview({ product }) {
-  const Icon = product.Icon;
+  const Icon = product.type === "app" ? Smartphone : Globe2;
+
+  if (product.image) {
+    return (
+      <div className={styles.productImagePreview}>
+        <img src={product.image} alt={product.title} />
+        <span><Icon size={15} /> {product.type === "app" ? "App project" : "Web project"}</span>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.productPreview} aria-hidden="true">
@@ -178,9 +171,9 @@ function ProductPreview({ product }) {
           </span>
           <span>
             <small>PRIME PRODUCT</small>
-            <b>{product.name}</b>
+            <b>{product.title}</b>
           </span>
-          <i>{product.status}</i>
+          <i>{product.isFeatured ? "FEATURED" : product.type.toUpperCase()}</i>
         </div>
         <div className={styles.productWindowBody}>
           <div className={styles.productSignal}>
@@ -206,163 +199,139 @@ function ProductPreview({ product }) {
 
 export default function PortfolioPage() {
   useScrollReveal();
+  const [products, setProducts] = useState([]);
+  const [productType, setProductType] = useState("all");
+  const [productPage, setProductPage] = useState(1);
+  const [pagination, setPagination] = useState({ page: 1, total: 0, totalPages: 1 });
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [productsError, setProductsError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+    setProductsLoading(true);
+    setProductsError("");
+    getPortfolioItems(productPage, productType, 10)
+      .then((data) => {
+        if (!active) return;
+        setProducts(data.items);
+        setPagination(data.pagination);
+      })
+      .catch((error) => active && setProductsError(error.message))
+      .finally(() => active && setProductsLoading(false));
+    return () => {
+      active = false;
+    };
+  }, [productPage, productType]);
 
   return (
     <main className={styles.page}>
       <section className={styles.hero} data-reveal>
         <div className="container">
           <p className="eyebrow">
-            <span className="status-dot" /> Selected work
+            <span className="status-dot" /> Prime portfolio
           </p>
-          <div className={styles.heroGrid}>
-            <h1>
-              Products that turn complex work
-              <span className="text-gradient"> into clear progress.</span>
-            </h1>
-            <div>
-              <p>
-                A selection of digital products shaped around real customer
-                needs, resilient technology, and outcomes teams can measure.
-              </p>
-              <Link className={styles.heroLink} to="/contact">
-                Start a project <ArrowUpRight size={17} />
-              </Link>
-            </div>
-          </div>
-          <div className={styles.proofBar}>
-            <span>
-              <strong>80+</strong>
-              <small>products delivered</small>
-            </span>
-            <span>
-              <strong>9</strong>
-              <small>markets reached</small>
-            </span>
-            <span>
-              <strong>12+</strong>
-              <small>years of delivery</small>
-            </span>
-            <span>
-              <strong>One team</strong>
-              <small>strategy to scale</small>
-            </span>
+          <div className={styles.portfolioHeroCopy}>
+            <h1>Our digital <span className="text-gradient">masterpieces.</span></h1>
+            <p>
+              Discover App and Web experiences built around meaningful ideas,
+              polished interfaces, and technology made to perform.
+            </p>
+            <a className={styles.heroLink} href="#portfolio-projects">
+              Explore projects <ArrowRight size={17} />
+            </a>
           </div>
         </div>
+        {products.some((product) => product.image) && (
+          <div className={styles.projectRibbon} aria-label="Featured project previews">
+            <div className={styles.projectRibbonTrack}>
+              {Array.from({ length: 4 }, () => products.filter((product) => product.image))
+                .flat()
+                .slice(0, 16)
+                .map((product, index) => (
+                  <div className={styles.ribbonCard} key={product._id + "-" + index}>
+                    <img src={product.image} alt="" />
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
       </section>
 
-      <section className={styles.products} data-reveal>
+      <section className={styles.products} id="portfolio-projects" data-reveal>
         <div className="container">
           <header className={styles.productsHead}>
             <div>
               <p className="eyebrow">
-                <Package size={14} /> Product portfolio
+                <Package size={14} /> Selected creations
               </p>
-              <h2>Products built to do real work.</h2>
+              <h2>Witness our impactful creations.</h2>
             </div>
             <p>
-              Focused digital products shaped around clear operational needs,
-              useful customer experiences, and foundations that can grow.
+              Browse projects created for mobile and web, each shaped around a
+              clear business goal and a useful customer experience.
             </p>
           </header>
+
+          <div className={styles.productFilters} aria-label="Filter portfolio projects">
+            {["all", "app", "web"].map((type) => (
+              <button
+                type="button"
+                key={type}
+                className={productType === type ? styles.productFilterActive : ""}
+                onClick={() => {
+                  setProductType(type);
+                  setProductPage(1);
+                }}
+              >
+                {type === "all" ? "All work" : type === "app" ? "Apps" : "Web"}
+              </button>
+            ))}
+          </div>
 
           <div className={styles.productGrid}>
-            {products.map((product) => (
+            {productsLoading ? (
+              <div className={styles.productEmpty}>Loading our work...</div>
+            ) : productsError ? (
+              <div className={styles.productEmpty}>{productsError}</div>
+            ) : products.length === 0 ? (
+              <div className={styles.productEmpty}>No {productType === "all" ? "portfolio" : productType} projects are published yet.</div>
+            ) : products.map((product, index) => (
               <article
-                className={[styles.productCard, styles[product.theme]].join(" ")}
-                key={product.name}
+                className={[styles.productCard, styles[product.type === "app" ? "violet" : index % 2 ? "blue" : "cyan"]].join(" ")}
+                key={product._id}
               >
-                <div className={styles.productCardTop}>
-                  <span>{product.number}</span>
-                  <span>{product.category}</span>
-                  <i>{product.status}</i>
+                <Link className={styles.cardOpenLink} to={"/portfolio/" + product._id} aria-label={"View " + product.title} />
+                <div className={styles.galleryImage}>
+                  {product.image ? <img src={product.image} alt={product.title} /> : <ProductPreview product={product} />}
+                  <span>{product.type === "app" ? "APP" : "WEB"}</span>
                 </div>
-                <ProductPreview product={product} />
-                <div className={styles.productDetails}>
-                  <small>{product.platforms}</small>
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                  <ul>
-                    {product.capabilities.map((capability) => (
-                      <li key={capability}>
-                        <CheckCircle2 size={13} /> {capability}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to="/contact">
-                    Discuss this product <ArrowUpRight size={16} />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.work} data-reveal>
-        <div className="container">
-          <header className={styles.sectionHead}>
-            <div>
-              <p className="eyebrow">Case-study snapshots</p>
-              <h2>Selected transformations.</h2>
-            </div>
-            <p>
-              Representative engagements showing how strategy, design, and
-              engineering work together.
-            </p>
-          </header>
-          <div className={styles.projectList}>
-            {projects.map((project) => (
-              <article
-                className={[styles.project, styles[project.theme]].join(" ")}
-                key={project.number}
-              >
-                <div className={styles.projectCopy}>
-                  <span className={styles.projectMeta}>
-                    {project.number} / {project.type}
-                  </span>
-                  <h3>{project.title}</h3>
-                  <p>{project.summary}</p>
-                  <ul>
-                    {project.services.map((service) => (
-                      <li key={service}>
-                        <CheckCircle2 size={14} /> {service}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className={styles.results}>
-                    {project.results.map(([value, label]) => (
-                      <span key={label}>
-                        <strong>{value}</strong>
-                        <small>{label}</small>
-                      </span>
-                    ))}
+                <div className={styles.galleryBody}>
+                  <div>
+                    <small>{product.category}</small>
+                    <h3>{product.title}</h3>
                   </div>
+                  <span className={styles.galleryArrow}><ArrowUpRight size={18} /></span>
                 </div>
-                <ProjectVisual kind={project.visual} />
+                <p className={styles.galleryExcerpt}>{product.excerpt}</p>
+                <div className={styles.galleryMeta}>
+                  <span>{product.platforms?.join(" · ") || (product.type === "app" ? "Mobile application" : "Web platform")}</span>
+                  {product.metric && <strong>{product.metric} <small>{product.metricLabel}</small></strong>}
+                </div>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className={styles.approach} data-reveal>
-        <div className="container">
-          <header>
-            <p className="eyebrow">The pattern behind the work</p>
-            <h2>Different products. One disciplined approach.</h2>
-          </header>
-          <div className={styles.approachGrid}>
-            {approach.map(([Icon, title, copy], index) => (
-              <article key={title}>
-                <span>
-                  <Icon size={19} />
-                </span>
-                <small>0{index + 1}</small>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </article>
-            ))}
-          </div>
+          {!productsLoading && !productsError && pagination.totalPages > 1 && (
+            <nav className={styles.publicPagination} aria-label="Portfolio pagination">
+              <span>Page {pagination.page} of {pagination.totalPages}</span>
+              <div>
+                <button type="button" disabled={productPage <= 1} onClick={() => setProductPage((page) => page - 1)}><ChevronLeft size={15} /> Previous</button>
+                {Array.from({ length: pagination.totalPages }, (_, index) => index + 1).map((page) => (
+                  <button type="button" className={page === productPage ? styles.currentPage : ""} key={page} onClick={() => setProductPage(page)}>{page}</button>
+                ))}
+                <button type="button" disabled={productPage >= pagination.totalPages} onClick={() => setProductPage((page) => page + 1)}>Next <ChevronRight size={15} /></button>
+              </div>
+            </nav>
+          )}
         </div>
       </section>
 

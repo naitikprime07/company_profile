@@ -9,7 +9,6 @@ import {
   Navigation,
   ShieldCheck,
 } from "lucide-react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import ContactForm from "../components/sections/ContactForm";
 import { ENVIRONMENT, mailTo } from "../constants/environment";
 import useScrollReveal from "../hooks/useScrollReveal";
@@ -38,20 +37,6 @@ function ContactPage() {
           <i />
         </span>
         <span className={styles.noise} />
-      </div>
-      <div className={styles.contactAnimationLayer} aria-hidden="true">
-        <span className={styles.animationHalo} />
-        <DotLottieReact
-          className={styles.contactLottie}
-          src={ENVIRONMENT.animations.contact}
-          loop
-          autoplay
-        />
-        <span className={styles.animationTrace}>
-          <i />
-          <i />
-          <i />
-        </span>
       </div>
       <section className={`${styles.hero} container`} data-reveal>
         <div className={styles.intro}>

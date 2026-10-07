@@ -2593,6 +2593,43 @@ td {
     padding: .65rem .8rem
 }
 
+/* Shared primary create action used by every admin management page. */
+.managementCreateButton {
+    align-items: center !important;
+    background: #19476f !important;
+    border: 1px solid #3b739a !important;
+    border-radius: .55rem !important;
+    color: #76ddff !important;
+    cursor: pointer;
+    display: inline-flex !important;
+    flex: none;
+    font-family: inherit;
+    font-size: .62rem !important;
+    font-weight: 750 !important;
+    gap: .4rem !important;
+    justify-content: center;
+    margin: 0 !important;
+    min-height: 34px;
+    padding: .65rem .8rem !important;
+    white-space: nowrap
+}
+
+.managementCreateButton:hover:not(:disabled) {
+    background: #205a87 !important;
+    border-color: #4b91bd !important;
+    color: #b8efff !important
+}
+
+.managementCreateButton:focus-visible {
+    outline: 2px solid #64d7ff;
+    outline-offset: 2px
+}
+
+.managementCreateButton:disabled {
+    cursor: not-allowed;
+    opacity: .45
+}
+
 .openingFilters {
     display: flex;
     gap: .4rem;

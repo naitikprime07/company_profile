@@ -448,6 +448,18 @@
     margin-left: .25rem
 }
 
+.portfolioHeadActions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem;
+    justify-content: flex-end
+}
+
+.portfolioHeadActions>span {
+    margin-right: .15rem
+}
+
 .blogPanel>p {
     align-items: center;
     display: flex;

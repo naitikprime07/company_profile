@@ -1,0 +1,119 @@
+.hero {
+    aspect-ratio: 16/9;
+    background: #0a1727 !important;
+    border-bottom: 1px solid #29445f;
+    min-height: 0;
+    overflow: hidden;
+    padding: 6.5rem 0 0 !important;
+    position: relative;
+    width: 100%
+}
+
+.hero::before {
+    background-image: linear-gradient(rgb(93 208 255 / 5%) 1px, transparent 1px), linear-gradient(90deg, rgb(93 208 255 / 5%) 1px, transparent 1px) !important;
+    background-size: 46px 46px !important;
+    content: "";
+    inset: 0;
+    opacity: .42;
+    pointer-events: none;
+    position: absolute;
+    z-index: 3
+}
+
+.background {
+    height: 100%;
+    inset: 0;
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    width: 100%;
+    z-index: 1
+}
+
+.backdrop {
+    filter: blur(26px) saturate(.75) brightness(.48);
+    height: calc(100% + 56px);
+    inset: -28px;
+    object-fit: cover;
+    opacity: .78;
+    position: absolute;
+    transform: scale(1.04);
+    width: calc(100% + 56px)
+}
+
+.uncropped {
+    background: #06101c;
+    object-fit: contain !important;
+    object-position: center !important
+}
+
+.shade {
+    background: linear-gradient(90deg, rgb(3 10 20 / 88%) 0%, rgb(3 10 20 / 62%) 48%, rgb(3 10 20 / 25%) 100%), linear-gradient(180deg, rgb(3 10 20 / 24%) 0%, rgb(3 10 20 / 12%) 45%, #07101d 100%);
+    inset: 0;
+    position: absolute;
+    z-index: 2
+}
+
+.hero>div:last-child {
+    height: calc(100% - 6.5rem);
+    min-height: 0;
+    position: relative;
+    z-index: 4
+}
+
+.back {
+    color: #8ce4ff !important;
+    position: relative;
+    z-index: 3
+}
+
+.content {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 2rem);
+    justify-content: flex-end;
+    min-height: 0;
+    padding: 2rem 0 4.5rem
+}
+
+.type {
+    background: rgb(5 18 32 / 74%);
+    border: 1px solid rgb(91 213 255 / 42%);
+    border-radius: 999px;
+    padding: .45rem .7rem
+}
+
+.content h1 {
+    font-size: clamp(3.2rem, 7vw, 7.2rem);
+    font-weight: 470;
+    letter-spacing: -.065em;
+    line-height: .92;
+    margin: 1rem 0 0;
+    max-width: 1050px;
+    overflow-wrap: anywhere;
+    text-shadow: 0 12px 35px rgb(0 4 12 / 55%)
+}
+
+@media(max-width:600px) {
+    .hero {
+        aspect-ratio: auto;
+        min-height: 620px;
+        padding-top: 5rem !important
+    }
+
+    .hero>div:last-child {
+        height: auto;
+        min-height: 540px
+    }
+
+    .content {
+        height: auto;
+        min-height: 500px;
+        padding: 2rem 0 3rem
+    }
+
+    .content h1 {
+        font-size: clamp(2.8rem, 15vw, 4.5rem)
+    }
+}

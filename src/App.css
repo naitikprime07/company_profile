@@ -9469,3 +9469,286 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   :is(.ios-page, .android-page, .flutter-page, .unity-page, .node-page, .java-page, .php-page, .frontend-page, .database-page) > section:first-of-type::after { animation: none; }
 }
+
+/* PRIME PUBLIC CTA SYSTEM
+   Shared Uiverse-inspired interaction for primary public actions only.
+   Utility controls (filters, pagination, carousels, accordions) stay compact. */
+.public-shell {
+  --prime-cta-start: #246ff0;
+  --prime-cta-end: #38c9ef;
+  --prime-cta-border: rgb(132 225 255 / 48%);
+  --prime-cta-glow: rgb(30 132 226 / 34%);
+}
+
+.public-shell :is(
+  .button,
+  main button[type="submit"],
+  main a[href="/contact"],
+  main a[href="#contact-form"],
+  main a[href="#career-paths"],
+  main a[href="/career/introduce"],
+  main a[href^="/career/apply/"],
+  main a[href="#portfolio-projects"],
+  main a[class*="projectLink"],
+  main a[class*="primaryAction"]
+) {
+  align-items: center !important;
+  background: linear-gradient(110deg, var(--prime-cta-start), var(--prime-cta-end)) !important;
+  border: 2px solid var(--prime-cta-border) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 10px 24px rgb(0 4 16 / 28%),
+    0 12px 30px var(--prime-cta-glow) !important;
+  color: #fff !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  font-size: .7rem !important;
+  font-weight: 500 !important;
+  gap: .6rem !important;
+  justify-content: center;
+  line-height: 1.2;
+  min-height: 46px;
+  outline: none;
+  overflow: hidden;
+  padding: .68rem 1.15rem !important;
+  position: relative;
+  isolation: isolate;
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease,
+    transform .25s ease !important;
+}
+
+.public-shell :is(
+  .button,
+  main button[type="submit"],
+  main a[href="/contact"],
+  main a[href="#contact-form"],
+  main a[href="#career-paths"],
+  main a[href="/career/introduce"],
+  main a[href^="/career/apply/"],
+  main a[href="#portfolio-projects"],
+  main a[class*="projectLink"],
+  main a[class*="primaryAction"]
+)::before {
+  background: linear-gradient(
+    120deg,
+    transparent 25%,
+    rgb(255 255 255 / 78%) 50%,
+    transparent 75%
+  );
+  content: "";
+  height: 100%;
+  left: -7rem;
+  opacity: .55;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: skewX(-18deg);
+  width: 5.5rem;
+  z-index: -1;
+}
+
+.public-shell :is(
+  .button,
+  main button[type="submit"],
+  main a[href="/contact"],
+  main a[href="#contact-form"],
+  main a[href="#career-paths"],
+  main a[href="/career/introduce"],
+  main a[href^="/career/apply/"],
+  main a[href="#portfolio-projects"],
+  main a[class*="projectLink"],
+  main a[class*="primaryAction"]
+):is(:hover, :focus-visible) {
+  border-color: rgb(210 246 255 / 82%) !important;
+  box-shadow:
+    0 14px 30px rgb(0 4 16 / 34%),
+    0 16px 38px rgb(39 161 235 / 42%) !important;
+  transform: translateY(-2px) scale(1.025) !important;
+}
+
+.public-shell :is(
+  .button,
+  main button[type="submit"],
+  main a[href="/contact"],
+  main a[href="#contact-form"],
+  main a[href="#career-paths"],
+  main a[href="/career/introduce"],
+  main a[href^="/career/apply/"],
+  main a[href="#portfolio-projects"],
+  main a[class*="projectLink"],
+  main a[class*="primaryAction"]
+):hover::before {
+  animation: prime-cta-shine 1.45s ease-out infinite;
+}
+
+.public-shell :is(
+  .button,
+  main button[type="submit"],
+  main a[href="/contact"],
+  main a[href="#contact-form"],
+  main a[href="#career-paths"],
+  main a[href="/career/introduce"],
+  main a[href^="/career/apply/"],
+  main a[href="#portfolio-projects"],
+  main a[class*="projectLink"],
+  main a[class*="primaryAction"]
+) svg {
+  flex: 0 0 auto;
+  height: 1.15rem;
+  position: relative;
+  transition: transform .25s ease !important;
+  width: 1.15rem;
+  z-index: 1
+}
+
+.public-shell :is(
+  .button,
+  main button[type="submit"],
+  main a[href="/contact"],
+  main a[href="#contact-form"],
+  main a[href="#career-paths"],
+  main a[href="/career/introduce"],
+  main a[href^="/career/apply/"],
+  main a[href="#portfolio-projects"],
+  main a[class*="projectLink"],
+  main a[class*="primaryAction"]
+):hover svg {
+  transform: translateX(4px) !important
+}
+
+.public-shell main button[type="submit"]:disabled {
+  cursor: not-allowed;
+  filter: grayscale(.35);
+  opacity: .58;
+  transform: none !important
+}
+
+@keyframes prime-cta-shine {
+  0% { left: -7rem }
+  60%, 100% { left: calc(100% + 7rem) }
+}
+
+@media(max-width:600px) {
+  .public-shell :is(
+    .button,
+    main button[type="submit"],
+    main a[href="/contact"],
+    main a[href="#contact-form"],
+    main a[href="#career-paths"],
+    main a[href="/career/introduce"],
+    main a[href^="/career/apply/"],
+    main a[href="#portfolio-projects"],
+    main a[class*="projectLink"],
+    main a[class*="primaryAction"]
+  ) {
+    font-size: .65rem !important;
+    min-height: 43px;
+    padding: .62rem 1rem !important
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .public-shell :is(
+    .button,
+    main button[type="submit"],
+    main a[href="/contact"],
+    main a[href="#contact-form"],
+    main a[href="#career-paths"],
+    main a[href="/career/introduce"],
+    main a[href^="/career/apply/"],
+    main a[href="#portfolio-projects"],
+    main a[class*="projectLink"],
+    main a[class*="primaryAction"]
+  )::before {
+    animation: none !important;
+    display: none
+  }
+}
+/* TECHNOLOGY CTA CONFLICT FIX
+   Remove legacy about-company button layers before using the shared CTA system. */
+.public-shell .about-company-button {
+  min-height: 46px !important;
+  padding: .68rem 1.15rem !important
+}
+
+.public-shell .about-company-button::before {
+  bottom: auto;
+  inset: auto;
+  left: -7rem;
+  right: auto;
+  top: 0;
+  transform: skewX(-18deg);
+  transition: none
+}
+
+.public-shell .about-company-button:is(:hover, :focus-visible)::before {
+  transform: skewX(-18deg)
+}
+
+.public-shell .about-company-button svg {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  height: 1.15rem !important;
+  padding: 0 !important;
+  width: 1.15rem !important
+}
+
+.public-shell .about-company-button:hover svg {
+  transform: translateX(4px) !important
+}
+
+/* Secondary Technology hero action: matching footprint with a quieter surface. */
+.public-shell main .hero-actions .text-link {
+  align-items: center;
+  background: rgb(11 30 50 / 84%);
+  border: 1px solid #315978;
+  border-radius: 999px;
+  color: #a9dff1;
+  display: inline-flex;
+  font-size: .68rem;
+  font-weight: 500 !important;
+  gap: .55rem;
+  justify-content: center;
+  min-height: 46px;
+  padding: .68rem 1.05rem;
+  transition:
+    background .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease,
+    color .22s ease,
+    transform .22s ease
+}
+
+.public-shell main .hero-actions .text-link:is(:hover, :focus-visible) {
+  background: #123955;
+  border-color: #56cceb;
+  box-shadow: 0 12px 28px rgb(25 140 211 / 18%);
+  color: #e9faff;
+  transform: translateY(-2px)
+}
+
+.public-shell main .hero-actions .text-link svg {
+  height: 1.05rem;
+  transition: transform .22s ease;
+  width: 1.05rem
+}
+
+.public-shell main .hero-actions .text-link:hover svg {
+  transform: translateX(4px)
+}
+
+@media(max-width:600px) {
+  .public-shell .hero-actions {
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: .7rem
+  }
+
+  .public-shell .hero-actions :is(.button, .text-link) {
+    min-height: 43px;
+    width: max-content
+  }
+}

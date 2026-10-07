@@ -6,7 +6,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import styles from "./ProfessionalServices.module.css";
-import { mailTo } from "../../../constants/environment";
+import { contactMailHref } from "../../../constants/environment";
 
 const PROFESSIONAL_SERVICES = [
   {
@@ -71,7 +71,12 @@ function ProfessionalServices() {
                 <div className={styles.content}>
                   <h3>{title}</h3>
                   <p>{copy}</p>
-                  <a href={mailTo()} aria-label={`Discuss ${title}`}>
+                  <a
+                    href={contactMailHref()}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Discuss ${title}`}
+                  >
                     <span>Discuss your project</span>
                     <ArrowUpRight size={17} />
                   </a>

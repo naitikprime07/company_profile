@@ -6,8 +6,10 @@ import { LEADERSHIP } from "../data/leadership";
 import { getLeadershipTeams } from "../services/leadershipService";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./AboutPage.module.css";
-import { ENVIRONMENT } from "../constants/environment";
-import { mailTo } from "../constants/environment";
+import {
+  ENVIRONMENT,
+  contactMailHref,
+} from "../constants/environment";
 
 const SHOW_MOTION_RIBBON = false;
 
@@ -263,7 +265,9 @@ function AboutPage() {
             people understand and businesses can depend on.
           </p>
           <div className="hero-actions">
-            <Button href={mailTo()}>Start a conversation</Button>
+            <Button href={contactMailHref()} target="_blank">
+              Start a conversation
+            </Button>
             <a className="text-link" href="#our-story">
               Discover our story <ArrowRight size={17} />
             </a>
@@ -516,7 +520,9 @@ function AboutPage() {
             We will bring the clarity, craft, and engineering discipline to move
             it forward.
           </p>
-          <Button href={mailTo()}>Build something meaningful</Button>
+          <Button href={contactMailHref()} target="_blank">
+            Build something meaningful
+          </Button>
         </div>
       </section>
     </main>

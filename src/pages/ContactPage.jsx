@@ -6,15 +6,21 @@ import {
   Mail,
   MessageCircle,
   Navigation,
+  Phone,
   ShieldCheck,
 } from "lucide-react";
 import ContactForm from "../components/sections/ContactForm";
-import { ENVIRONMENT, mailTo } from "../constants/environment";
+import usePhoneContact from "../hooks/usePhoneContact";
+import {
+  ENVIRONMENT,
+  contactMailHref,
+} from "../constants/environment";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./ContactPage.module.css";
 
 function ContactPage() {
   useScrollReveal();
+  const phoneContact = usePhoneContact();
 
   return (
     <main className={styles.page} id="top">
@@ -52,13 +58,26 @@ function ContactPage() {
             senior team to the conversation.
           </p>
           <div className={styles.direct}>
-            <a href={mailTo()}>
+            <a href={contactMailHref()} target="_blank" rel="noreferrer">
               <span>
                 <Mail size={19} />
               </span>
               <div>
                 <small>Start with an email</small>
                 <strong>{ENVIRONMENT.contactEmail}</strong>
+              </div>
+            </a>
+            <a href={phoneContact.href} onClick={phoneContact.onClick}>
+              <span>
+                <Phone size={19} />
+              </span>
+              <div>
+                <small>
+                  {phoneContact.copied
+                    ? "Number copied to clipboard ✓"
+                    : "Call our team"}
+                </small>
+                <strong>{phoneContact.phone}</strong>
               </div>
             </a>
             <div>

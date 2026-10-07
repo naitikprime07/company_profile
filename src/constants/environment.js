@@ -10,15 +10,27 @@ export const ENVIRONMENT = Object.freeze({
   ).replace(/\/$/, ""),
   contactEmail: readEnvironmentValue(
     "VITE_CONTACT_EMAIL",
-    "hello@primesoftech.com",
+    "info@primesoftechs.com",
+  ),
+  contactMobile: readEnvironmentValue(
+    "VITE_CONTACT_MOBILE",
+    "+91 70647 02015",
   ),
   careersEmail: readEnvironmentValue(
     "VITE_CAREERS_EMAIL",
-    "careers@primesoftech.com",
+    "hr@primesoftechs.com",
   ),
   linkedInUrl: readEnvironmentValue(
     "VITE_LINKEDIN_URL",
-    "https://www.linkedin.com",
+    "https://in.linkedin.com/company/primesoftech",
+  ),
+  instagramUrl: readEnvironmentValue(
+    "VITE_INSTAGRAM_URL",
+    "https://www.instagram.com/prime_softech/",
+  ),
+  facebookUrl: readEnvironmentValue(
+    "VITE_FACEBOOK_URL",
+    "https://www.facebook.com/primesoftech67",
   ),
   office: Object.freeze({
     name: readEnvironmentValue("VITE_OFFICE_NAME", "Prime Softech Studio"),
@@ -54,3 +66,16 @@ export const ENVIRONMENT = Object.freeze({
 });
 
 export const mailTo = (email = ENVIRONMENT.contactEmail) => `mailto:${email}`;
+
+// Opens the real Gmail send-mail (compose) page in the browser with To,
+// subject and body prefilled. Works on every device without a default mail
+// app — `tf=1` forces the full compose window instead of a small draft popup.
+export const contactMailHref = (
+  email = ENVIRONMENT.contactEmail,
+  subject = "Contact via Prime Softech website",
+  body = "Hello Prime Softech team,\n\nI would like to discuss:\n\n\nThanks & regards,\n",
+) =>
+  `https://mail.google.com/mail/?view=cm&tf=1&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+export const telTo = (phone = ENVIRONMENT.contactMobile) =>
+  `tel:${String(phone).replace(/[^\d+]/g, "")}`;

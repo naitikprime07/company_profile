@@ -1,13 +1,45 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { useEffect, useState } from "react";
 import AnimatedStat from "../components/common/AnimatedStat";
 import ProfessionalServices from "../components/sections/ProfessionalServices";
 import DeliveryStandard from "../components/sections/DeliveryStandard";
 import WhyChooseUs from "../components/sections/WhyChooseUs";
 import useScrollReveal from "../hooks/useScrollReveal";
 import { ENVIRONMENT } from "../constants/environment";
+import { getHomeStats } from "../services/homeStatService";
+
+const DEFAULT_STATS = [
+  { value: 12, suffix: "+", label: "Years creating digital products" },
+  { value: 80, suffix: "+", label: "Products shipped with care" },
+  { value: 24, suffix: "", label: "Senior specialists on our team" },
+  { value: 9, suffix: "", label: "Countries our clients call home" },
+];
 
 function HomePage() {
   useScrollReveal();
+  const [stats, setStats] = useState(DEFAULT_STATS);
+
+  useEffect(() => {
+    let active = true;
+    getHomeStats()
+      .then((data) => {
+        if (active && Array.isArray(data) && data.length)
+          setStats(
+            data.map((item) => ({
+              value: item.value,
+              suffix: item.suffix || "",
+              label: item.label,
+            })),
+          );
+      })
+      .catch(() => {
+        /* keep defaults if the API is unavailable */
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
 
   return (
     <main id="top">
@@ -63,27 +95,15 @@ function HomePage() {
 
       <section className="stats-section" data-reveal>
         <div className="container stats-grid">
-          <AnimatedStat
-            value={12}
-            suffix="+"
-            label="Years creating digital products"
-          />
-          <AnimatedStat
-            value={80}
-            suffix="+"
-            label="Products shipped with care"
-            delay={120}
-          />
-          <AnimatedStat
-            value={24}
-            label="Senior specialists on our team"
-            delay={240}
-          />
-          <AnimatedStat
-            value={9}
-            label="Countries our clients call home"
-            delay={360}
-          />
+          {stats.map((stat, index) => (
+            <AnimatedStat
+              key={index}
+              value={stat.value}
+              suffix={stat.suffix}
+              label={stat.label}
+              delay={index * 120}
+            />
+          ))}
         </div>
       </section>
       <ProfessionalServices />

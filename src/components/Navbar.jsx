@@ -335,8 +335,8 @@ function Navbar() {
                             className="technology-item-link"
                             to={
                               title === "Infra & DevOps"
-                                ? "/services#devops"
-                                : "/services#web-development"
+                                ? "/technology/infra-devops"
+                                : "/technology/cms"
                             }
                             key={item}
                             onClick={closeMenu}

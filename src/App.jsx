@@ -26,6 +26,7 @@ const JavaPage = lazy(() => import("./pages/JavaPage"));
 const PhpPage = lazy(() => import("./pages/PhpPage"));
 const FrontendPage = lazy(() => import("./pages/FrontendPage"));
 const DatabasePage = lazy(() => import("./pages/DatabasePage"));
+const TechStackPage = lazy(() => import("./pages/TechStackPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
 const AdminApplicationDetailsPage = lazy(
   () => import("./pages/AdminApplicationDetailsPage"),
@@ -189,6 +190,14 @@ function App() {
           <Route
             path="/technology/redis"
             element={<DatabasePage type="redis" />}
+          />
+          <Route
+            path="/technology/infra-devops"
+            element={<TechStackPage group="infra" />}
+          />
+          <Route
+            path="/technology/cms"
+            element={<TechStackPage group="cms" />}
           />
         </Routes>
       </Suspense>

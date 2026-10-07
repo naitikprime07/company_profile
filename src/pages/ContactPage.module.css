@@ -159,17 +159,19 @@
   align-items: center;
   background: var(--button-bg);
   border: 1px solid var(--button-border);
-  border-radius: 999px;
-  color: white;
+  border-radius: 12px;
+  box-shadow: var(--button-shadow);
+  color: #fff;
   display: flex;
   flex: 0 0 auto;
-  font-weight: 800;
-  gap: 1rem;
-  min-height: 3.5rem;
-  padding: 0 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
 }
 .ready > a span {
-  font-size: 1.2rem;
+  font-size: inherit;
 }
 @media (max-width: 1000px) {
   .hero {
@@ -411,15 +413,18 @@
 }
 .officeCard > a {
   align-items: center;
-  background: linear-gradient(110deg, var(--accent), var(--cyan));
-  border-radius: 999px;
-  color: white;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  border-radius: 12px;
+  box-shadow: var(--button-shadow);
+  color: #fff;
   display: flex;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 700;
+  gap: 10px;
   justify-content: space-between;
-  min-height: 3.1rem;
-  padding: 0 1.1rem;
+  min-height: 52px;
+  padding: 0 22px;
 }
 @keyframes contact-aurora {
   to {

@@ -173,15 +173,18 @@
 
 .page footer button {
     align-items: center;
-    background: #194b77;
-    border: 1px solid #3d789f;
-    border-radius: .6rem;
-    color: #78dfff;
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
+    border-radius: 12px;
+    box-shadow: var(--button-shadow);
+    color: #fff;
     cursor: pointer;
     display: flex;
-    font-weight: 800;
-    gap: .5rem;
-    padding: .8rem 1rem
+    font-size: 0.95rem;
+    font-weight: 700;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 22px
 }
 
 .error,

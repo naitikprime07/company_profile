@@ -5,11 +5,12 @@ import {
   GraduationCap,
   HeartHandshake,
   Lightbulb,
+  Mail,
   Rocket,
   Sparkles,
 } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { ENVIRONMENT } from "../constants/environment";
+import { ENVIRONMENT, contactMailHref } from "../constants/environment";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./CareerPage.module.css";
 import { Link } from "react-router-dom";
@@ -340,9 +341,23 @@ function CareerPage() {
             Tell us what you are great at, what you want to learn, and the kind
             of impact you want to make.
           </p>
-          <Link to="/career/introduce">
-            Introduce yourself <ArrowUpRight size={18} />
-          </Link>
+          <div className={styles.closingActions}>
+            <Link to="/career/introduce">
+              Introduce yourself <ArrowUpRight size={18} />
+            </Link>
+            <a
+              className={styles.secondaryAction}
+              href={contactMailHref(
+                ENVIRONMENT.careersEmail,
+                "Career opportunity — Prime Softech",
+                "Hello HR team,\n\nI am interested in joining Prime Softech. Here is a little about me:\n\n\nThanks & regards,\n",
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Mail size={18} /> Email {ENVIRONMENT.careersEmail}
+            </a>
+          </div>
         </div>
       </section>
     </main>

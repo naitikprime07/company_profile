@@ -305,7 +305,7 @@
 .about-company-button {
   background: var(--button-bg);
   border: 1px solid var(--button-border);
-  border-radius: 999px;
+  border-radius: 12px;
   box-shadow:
     0 0 0 0 rgb(91 213 255 / 0%),
     0 16px 36px rgb(32 104 222 / 28%);
@@ -9493,27 +9493,26 @@ h3 {
   main a[class*="primaryAction"]
 ) {
   align-items: center !important;
-  background: linear-gradient(110deg, var(--prime-cta-start), var(--prime-cta-end)) !important;
-  border: 2px solid var(--prime-cta-border) !important;
-  border-radius: 999px !important;
-  box-shadow:
-    0 10px 24px rgb(0 4 16 / 28%),
-    0 12px 30px var(--prime-cta-glow) !important;
+  background: var(--button-bg) !important;
+  border: 1px solid var(--button-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--button-shadow) !important;
   color: #fff !important;
   cursor: pointer;
   display: inline-flex !important;
-  font-size: .7rem !important;
-  font-weight: 500 !important;
-  gap: .6rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  gap: 10px !important;
   justify-content: center;
   line-height: 1.2;
-  min-height: 46px;
+  min-height: 52px;
   outline: none;
   overflow: hidden;
-  padding: .68rem 1.15rem !important;
+  padding: 0 22px !important;
   position: relative;
   isolation: isolate;
   transition:
+    background .25s ease,
     border-color .25s ease,
     box-shadow .25s ease,
     transform .25s ease !important;
@@ -9561,11 +9560,12 @@ h3 {
   main a[class*="projectLink"],
   main a[class*="primaryAction"]
 ):is(:hover, :focus-visible) {
-  border-color: rgb(210 246 255 / 82%) !important;
+  background: var(--button-bg-hover) !important;
+  border-color: rgb(210 246 255 / 60%) !important;
   box-shadow:
     0 14px 30px rgb(0 4 16 / 34%),
     0 16px 38px rgb(39 161 235 / 42%) !important;
-  transform: translateY(-2px) scale(1.025) !important;
+  transform: translateY(-2px) !important;
 }
 
 .public-shell :is(
@@ -9643,9 +9643,9 @@ h3 {
     main a[class*="projectLink"],
     main a[class*="primaryAction"]
   ) {
-    font-size: .65rem !important;
-    min-height: 43px;
-    padding: .62rem 1rem !important
+    font-size: 0.85rem !important;
+    min-height: 48px;
+    padding: 0 18px !important
   }
 }
 
@@ -9669,8 +9669,8 @@ h3 {
 /* TECHNOLOGY CTA CONFLICT FIX
    Remove legacy about-company button layers before using the shared CTA system. */
 .public-shell .about-company-button {
-  min-height: 46px !important;
-  padding: .68rem 1.15rem !important
+  min-height: 52px !important;
+  padding: 0 22px !important
 }
 
 .public-shell .about-company-button::before {
@@ -9705,15 +9705,15 @@ h3 {
   align-items: center;
   background: rgb(11 30 50 / 84%);
   border: 1px solid #315978;
-  border-radius: 999px;
+  border-radius: 12px;
   color: #a9dff1;
   display: inline-flex;
-  font-size: .68rem;
-  font-weight: 500 !important;
+  font-size: .85rem;
+  font-weight: 600 !important;
   gap: .55rem;
   justify-content: center;
-  min-height: 46px;
-  padding: .68rem 1.05rem;
+  min-height: 52px;
+  padding: 0 22px;
   transition:
     background .22s ease,
     border-color .22s ease,

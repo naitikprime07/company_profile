@@ -89,24 +89,48 @@
 .hero > div:first-child > a,
 .closing a {
   align-items: center;
-  background: linear-gradient(110deg, var(--accent), var(--cyan));
-  border-radius: 999px;
-  color: white;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  border-radius: 12px;
+  box-shadow: var(--button-shadow);
+  color: #fff;
   display: inline-flex;
-  font-size: 0.85rem;
-  font-weight: 800;
-  gap: 0.8rem;
-  min-height: 3.4rem;
-  padding: 0 1.35rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
   transition:
-    box-shadow 0.25s ease,
-    transform 0.25s ease;
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .hero > div:first-child > a:hover,
 .closing a:hover {
-  box-shadow: 0 1rem 2.5rem rgb(47 125 246 / 35%);
-  transform: translateY(-0.25rem);
+  background: var(--button-bg-hover);
+  box-shadow: 0 15px 34px rgb(10 70 155 / 42%);
+  transform: translateY(-2px);
+}
+
+.closingActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.closing .secondaryAction {
+  background: transparent;
+  border: 1px solid var(--button-border);
+  box-shadow: none;
+  color: var(--cyan);
+}
+
+.closing .secondaryAction:hover {
+  background: rgb(91 213 255 / 12%);
+  box-shadow: 0 15px 34px rgb(10 70 155 / 30%);
 }
 
 .heroSystem {

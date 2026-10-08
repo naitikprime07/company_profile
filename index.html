@@ -14,9 +14,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Prime Softech company profile" />
     <title>Prime Softech | Digital Solutions</title>
+    <style>
+      /* Full-screen boot loader: paints instantly (before React + the site-config
+         bootstrap finish) so a refresh never shows a blank page. The same classes
+         are reused by the in-app route loader, so the two blend seamlessly. */
+      #prime-boot-loader,
+      .prime-loader {
+        align-items: center;
+        background: #080d18;
+        color: #f6f9ff;
+        display: flex;
+        flex-direction: column;
+        font-family: Inter, system-ui, sans-serif;
+        gap: 1.7rem;
+        inset: 0;
+        justify-content: center;
+        position: fixed;
+        z-index: 9999;
+      }
+
+      #prime-boot-loader {
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      #prime-boot-loader.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+
+      .prime-loader__logo {
+        animation: primeLoaderPulse 1.6s ease-in-out infinite;
+        height: auto;
+        width: 68px;
+      }
+
+      .prime-loader__spinner {
+        animation: primeLoaderSpin 0.8s linear infinite;
+        border: 3px solid rgb(91 213 255 / 22%);
+        border-radius: 50%;
+        border-top-color: #5bd5ff;
+        height: 44px;
+        width: 44px;
+      }
+
+      .prime-loader__text {
+        color: #5bd5ff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+      }
+
+      .prime-loader__skeleton {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        width: min(320px, 72vw);
+      }
+
+      .prime-loader__skeleton span {
+        animation: primeLoaderShimmer 1.5s ease-in-out infinite;
+        background: linear-gradient(90deg, #131d2e 25%, #1f3050 37%, #131d2e 63%);
+        background-size: 400% 100%;
+        border-radius: 999px;
+        display: block;
+        height: 0.65rem;
+      }
+
+      .prime-loader__skeleton span:nth-child(2) {
+        width: 82%;
+      }
+
+      .prime-loader__skeleton span:nth-child(3) {
+        width: 62%;
+      }
+
+      @keyframes primeLoaderSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes primeLoaderPulse {
+        0%,
+        100% {
+          opacity: 0.65;
+          transform: scale(0.96);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes primeLoaderShimmer {
+        0% {
+          background-position: 100% 0;
+        }
+        100% {
+          background-position: -100% 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .prime-loader__logo,
+        .prime-loader__spinner,
+        .prime-loader__skeleton span {
+          animation: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <div
+      id="prime-boot-loader"
+      class="prime-loader"
+      role="status"
+      aria-live="polite"
+      aria-label="Loading Prime Softech"
+    >
+      <img
+        class="prime-loader__logo"
+        src="/Prime%20Softech%20logo.png"
+        alt="Prime Softech"
+      />
+      <div class="prime-loader__spinner"></div>
+      <div class="prime-loader__text">Prime Softech</div>
+      <div class="prime-loader__skeleton">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

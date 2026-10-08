@@ -1,9 +1,10 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./routes/ScrollToTop";
+import AppLoader from "./components/AppLoader";
 import "./App.css";
 import ChatBot from "./components/ChatBot";
 
@@ -41,6 +42,19 @@ function App() {
   const location = useLocation();
   const showIntroductionAnimation = location.pathname === "/career/introduce";
 
+  // Fade out the pre-React boot splash once the shell has committed. By then the
+  // route Suspense fallback (identical .prime-loader markup) is already painted,
+  // so the hand-off never leaves a blank frame.
+  useEffect(() => {
+    const splash = document.getElementById("prime-boot-loader");
+    if (!splash) return undefined;
+    const frame = window.requestAnimationFrame(() => {
+      splash.classList.add("is-hidden");
+      window.setTimeout(() => splash.remove(), 550);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <div className="site-shell public-shell">
       {showIntroductionAnimation && (
@@ -54,13 +68,7 @@ function App() {
       )}
       <ScrollToTop />
       <Navbar />
-      <Suspense
-        fallback={
-          <main className="route-loading" aria-live="polite">
-            Loading…
-          </main>
-        }
-      >
+      <Suspense fallback={<AppLoader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

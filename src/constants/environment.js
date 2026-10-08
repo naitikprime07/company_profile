@@ -40,6 +40,10 @@ export const ENVIRONMENT = Object.freeze({
       "VITE_OFFICE_TIMEZONE",
       "India Standard Time · UTC+5:30",
     ),
+    hours: readEnvironmentValue(
+      "VITE_OFFICE_HOURS",
+      "Monday to Saturday: 10:00am - 7:00pm",
+    ),
     mapEmbedUrl: readEnvironmentValue("VITE_MAP_EMBED_URL", ""),
     directionsUrl: readEnvironmentValue(
       "VITE_MAP_DIRECTIONS_URL",

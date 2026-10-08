@@ -1,4 +1,4 @@
-import { Check, Mail, MessageCircle, Phone } from "lucide-react";
+import { Check, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import usePhoneContact from "../../../hooks/usePhoneContact";
 import {
@@ -39,28 +39,60 @@ function Footer() {
               Independent digital product studio for ambitious teams building
               what is next.
             </p>
-            <a
-              className="footer-email"
-              href={contactMailHref()}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {ENVIRONMENT.contactEmail}
-            </a>
-            <a
-              className="footer-email"
-              href={phoneContact.href}
-              onClick={phoneContact.onClick}
-              title={
-                phoneContact.isMobile
-                  ? "Tap to call"
-                  : "Click to copy the number"
-              }
-            >
-              {phoneContact.copied
-                ? "Number copied to clipboard ✓"
-                : phoneContact.phone}
-            </a>
+            <div className="footer-meta">
+              <a
+                className="footer-metaItem"
+                href={ENVIRONMENT.office.directionsUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <MapPin size={16} aria-hidden="true" />
+                <span>{ENVIRONMENT.office.address}</span>
+              </a>
+              <div className="footer-metaItem">
+                <Mail size={16} aria-hidden="true" />
+                <span>
+                  <a
+                    href={contactMailHref()}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {ENVIRONMENT.contactEmail}
+                  </a>
+                  <a
+                    href={contactMailHref(
+                      ENVIRONMENT.careersEmail,
+                      "HR / Career enquiry at Prime Softech",
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {ENVIRONMENT.careersEmail}
+                  </a>
+                </span>
+              </div>
+              <a
+                className="footer-metaItem"
+                href={phoneContact.href}
+                onClick={phoneContact.onClick}
+                title={
+                  phoneContact.isMobile
+                    ? "Tap to call"
+                    : "Click to copy the number"
+                }
+              >
+                <Phone size={16} aria-hidden="true" />
+                <span>
+                  {phoneContact.copied
+                    ? "Number copied to clipboard ✓"
+                    : phoneContact.phone}
+                </span>
+              </a>
+              <div className="footer-metaItem">
+                <Clock size={16} aria-hidden="true" />
+                <span>{ENVIRONMENT.office.hours}</span>
+              </div>
+            </div>
             <div className="footer-socials" aria-label="Social media">
               <a
                 href={ENVIRONMENT.linkedInUrl}

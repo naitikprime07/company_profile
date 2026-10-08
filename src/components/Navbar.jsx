@@ -120,6 +120,33 @@ function Navbar() {
   const technologyId = useId();
   const closeTimer = useRef(null);
   const technologyCloseTimer = useRef(null);
+  const [canHover, setCanHover] = useState(() =>
+    window.matchMedia("(hover: hover)").matches,
+  );
+  // Dropdowns may open on hover only for mouse devices in the desktop bar;
+  // inside the mobile (hamburger) menu they must open on click only.
+  const hoverEnabled = canHover && !open;
+
+  useEffect(() => {
+    const media = window.matchMedia("(hover: hover)");
+    const syncHover = () => setCanHover(media.matches);
+    media.addEventListener("change", syncHover);
+    return () => media.removeEventListener("change", syncHover);
+  }, []);
+
+  // On touch devices or in the mobile menu there is no mouseleave, so a tap
+  // outside the dropdowns closes them.
+  useEffect(() => {
+    if (canHover && !open) return undefined;
+    const closeOnOutsideTap = (event) => {
+      if (!event.target.closest(".services-menu, .technology-menu")) {
+        setServicesOpen(false);
+        setTechnologyOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", closeOnOutsideTap);
+    return () => document.removeEventListener("pointerdown", closeOnOutsideTap);
+  }, [canHover, open]);
 
   useEffect(() => {
     const closeOnEscape = (event) => {
@@ -210,8 +237,9 @@ function Navbar() {
         <div className={open ? "nav-links nav-links-open" : "nav-links"}>
           <div
             className="services-menu"
-            onMouseEnter={openServices}
-            onMouseLeave={scheduleServicesClose}
+            {...(hoverEnabled
+              ? { onMouseEnter: openServices, onMouseLeave: scheduleServicesClose }
+              : {})}
           >
             <button
               className="services-trigger"
@@ -221,6 +249,7 @@ function Navbar() {
               onClick={() => {
                 window.clearTimeout(closeTimer.current);
                 setServicesOpen(!servicesOpen);
+                setTechnologyOpen(false);
               }}
             >
               Services <ChevronDown size={15} aria-hidden="true" />
@@ -232,7 +261,7 @@ function Navbar() {
                   : "services-mega-menu"
               }
               id={servicesId}
-              onMouseEnter={openServices}
+              {...(hoverEnabled ? { onMouseEnter: openServices } : {})}
             >
               <div className="mega-menu-groups">
                 {serviceGroups.map(({ icon: Icon, title, items }) => (
@@ -265,8 +294,12 @@ function Navbar() {
 
           <div
             className="technology-menu"
-            onMouseEnter={openTechnology}
-            onMouseLeave={scheduleTechnologyClose}
+            {...(hoverEnabled
+              ? {
+                  onMouseEnter: openTechnology,
+                  onMouseLeave: scheduleTechnologyClose,
+                }
+              : {})}
           >
             <button
               className="technology-trigger"
@@ -288,7 +321,7 @@ function Navbar() {
                   : "technology-mega-menu"
               }
               id={technologyId}
-              onMouseEnter={openTechnology}
+              {...(hoverEnabled ? { onMouseEnter: openTechnology } : {})}
             >
               <div className="technology-menu-groups">
                 {technologyGroups.map(({ icon: Icon, title, items }) => (

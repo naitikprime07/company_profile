@@ -316,14 +316,14 @@
     }
 
     .chatbot-toggle {
-        width: 56px;
-        height: 56px;
+        width: 96px;
+        height: 96px;
     }
 
     .chatbot-toggle img,
     .chatbot-toggle svg {
-        width: 28px;
-        height: 28px;
+        width: 100%;
+        height: 100%;
     }
 
     .chatbot-window {

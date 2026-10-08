@@ -1,0 +1,241 @@
+.page {
+    background: var(--bg);
+}
+
+/* Hero — same visual language as the services page */
+.hero {
+    background: radial-gradient(circle at 82% 32%, rgb(91 213 255 / 13%), transparent 27rem), linear-gradient(145deg, #0d1729, #080d18 65%);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    position: relative;
+}
+
+.hero::before {
+    background-image: linear-gradient(rgb(255 255 255 / 3%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 3%) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    content: "";
+    inset: 0;
+    mask-image: radial-gradient(circle at 75% 45%, #000, transparent 65%);
+    position: absolute;
+}
+
+.heroInner {
+    padding-bottom: 4.5rem;
+    padding-top: 6.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: clamp(3rem, 5.4vw, 5.2rem);
+    letter-spacing: -0.07em;
+    line-height: 0.95;
+    margin: 1rem 0 1.8rem;
+    max-width: 34rem;
+}
+
+.heroCopy>p:not(.eyebrow) {
+    color: var(--text-soft);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 34rem;
+}
+
+.meta {
+    align-items: center;
+    color: var(--cyan);
+    display: inline-flex;
+    font-size: .78rem;
+    font-weight: 650;
+    gap: .55rem;
+    letter-spacing: .02em;
+    margin-top: 1.6rem;
+}
+
+/* Left-side sticky table of contents beside the details */
+.toc {
+    background: rgb(255 255 255 / 3%);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.1rem;
+    position: sticky;
+    top: 6.5rem;
+}
+
+.jumpNav {
+    display: grid;
+    gap: .3rem;
+}
+
+.jumpNavLabel {
+    color: rgb(117 173 255 / 55%);
+    font: 700 .6rem/1 ui-monospace, monospace;
+    letter-spacing: .16em;
+    margin: 0 0 .7rem;
+    text-transform: uppercase;
+}
+
+.jumpNav a {
+    align-items: center;
+    border-radius: 10px;
+    color: var(--text-soft);
+    display: flex;
+    font-size: .74rem;
+    gap: .6rem;
+    line-height: 1.35;
+    padding: .55rem .65rem;
+    transition: background .2s ease, color .2s ease;
+}
+
+.jumpNav a:hover {
+    background: rgb(91 213 255 / 8%);
+    color: var(--cyan);
+}
+
+.jumpNav a span {
+    color: rgb(117 173 255 / 55%);
+    flex: 0 0 auto;
+    font: 700 .62rem/1 ui-monospace, monospace;
+}
+
+/* Document */
+.document {
+    padding: 2rem 0 7rem;
+}
+
+.documentInner {
+    align-items: start;
+    display: grid;
+    gap: 2.8rem;
+    grid-template-columns: minmax(15rem, 17.5rem) minmax(0, 1fr);
+    max-width: 74rem;
+}
+
+.section {
+    border-bottom: 1px solid var(--line);
+    padding: 3.2rem 0;
+    scroll-margin-top: 6rem;
+}
+
+.section:first-child {
+    padding-top: 0;
+}
+
+.sectionHead {
+    margin-bottom: 1.4rem;
+}
+
+.sectionNumber {
+    color: rgb(117 173 255 / 46%);
+    font: 700 .62rem/1 ui-monospace, monospace;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.sectionHead h2 {
+    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    line-height: 1.18;
+    margin: .9rem 0 0;
+}
+
+.sectionBody {
+    color: var(--muted);
+}
+
+.sectionBody p {
+    font-size: .92rem;
+    line-height: 1.8;
+    margin: 0 0 1.15rem;
+}
+
+.sectionBody ul {
+    display: grid;
+    gap: .65rem;
+    margin: 0 0 1.3rem;
+    padding-left: 1.15rem;
+}
+
+.sectionBody li {
+    font-size: .9rem;
+    line-height: 1.7;
+}
+
+.sectionBody li::marker {
+    color: var(--cyan);
+}
+
+.address {
+    color: var(--text-soft);
+    display: grid;
+    font-style: normal;
+    gap: .3rem;
+    margin-bottom: 1.3rem;
+}
+
+.address strong {
+    color: var(--text);
+    font-size: .95rem;
+}
+
+.address span {
+    font-size: .88rem;
+    line-height: 1.65;
+}
+
+.mailLink {
+    color: var(--text);
+    font-weight: 650;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.mailLink:hover {
+    color: var(--cyan);
+}
+
+.backToTop {
+    align-items: center;
+    color: rgb(117 173 255 / 66%);
+    display: inline-flex;
+    font-size: .72rem;
+    font-weight: 700;
+    gap: .45rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transition: color .2s ease;
+}
+
+.backToTop:hover {
+    color: var(--cyan);
+}
+
+@media (max-width: 1024px) {
+    .documentInner {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        position: static;
+    }
+
+    .hero h1 {
+        max-width: 46rem;
+    }
+
+    .heroCopy>p:not(.eyebrow) {
+        max-width: 42rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .section {
+        padding: 2.6rem 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .heroInner {
+        padding-bottom: 3.6rem;
+        padding-top: 5rem;
+    }
+}

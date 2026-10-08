@@ -33,6 +33,9 @@ const GeneralApplicationPage = lazy(
   () => import("./pages/GeneralApplicationPage"),
 );
 const PositionDetailsPage = lazy(() => import("./pages/PositionDetailsPage"));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
+const TermsPage = lazy(() => import("./pages/TermsPage"));
+const CookiesPage = lazy(() => import("./pages/CookiesPage"));
 
 function App() {
   const location = useLocation();
@@ -92,6 +95,9 @@ function App() {
             element={<PositionDetailsPage />}
           />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/cookies" element={<CookiesPage />} />
           <Route path="/technology/ios" element={<IosPage />} />
           <Route path="/technology/android" element={<AndroidPage />} />
           <Route path="/technology/flutter" element={<FlutterPage />} />

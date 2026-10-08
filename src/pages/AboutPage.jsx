@@ -3,6 +3,7 @@ import { ArrowRight, Code2, Crown, Megaphone, Palette, X } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Button from "../components/Button";
 import { getLeadershipTeams } from "../services/leadershipService";
+import { getAboutGalleryImages } from "../services/aboutGalleryService";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./AboutPage.module.css";
 import {
@@ -195,6 +196,17 @@ function AboutPage() {
   useScrollReveal();
   const [leadership, setLeadership] = useState([]);
   const [activeTeam, setActiveTeam] = useState(null);
+  const [gallery, setGallery] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    getAboutGalleryImages().then((items) => {
+      if (active) setGallery(items);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -512,6 +524,37 @@ function AboutPage() {
           </p>
         </div>
       </section>
+      )}
+
+      {/* Company image strip renders only when the admin has uploaded images. */}
+      {gallery.length > 0 && (
+        <section
+          className={styles.gallerySection}
+          data-reveal
+          aria-labelledby="gallery-title"
+        >
+          <header className={styles.galleryHeading}>
+            <p className="eyebrow">Life at Prime Softech</p>
+            <h2 id="gallery-title">Moments from our workspace</h2>
+          </header>
+          <div className={styles.galleryViewport}>
+            <div className={styles.galleryTrack}>
+              {(gallery.length < 4
+                ? [...gallery, ...gallery, ...gallery, ...gallery]
+                : [...gallery, ...gallery]
+              ).map((item, index) => (
+                <figure className={styles.galleryCard} key={`${item._id}-${index}`}>
+                  <img
+                    src={item.image}
+                    alt={item.alt || "Prime Softech company moment"}
+                    loading={index < gallery.length ? "eager" : "lazy"}
+                  />
+                  {item.alt && <figcaption>{item.alt}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
       )}
 
       <section className={styles.closing} data-reveal>

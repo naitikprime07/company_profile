@@ -4022,3 +4022,101 @@
     min-width: 0
   }
 }
+
+/* Admin-uploaded company image marquee (hidden until images exist) */
+.gallerySection {
+  background: linear-gradient(180deg, #080d18, #0b1423 50%, #080d18);
+  border-block: 1px solid var(--line);
+  color: var(--text);
+  overflow: hidden;
+  padding: 5.5rem 0 6rem
+}
+
+.galleryHeading {
+  margin: 0 auto 3rem;
+  max-width: 70rem;
+  padding: 0 1.5rem;
+  text-align: center
+}
+
+.galleryHeading h2 {
+  color: var(--text);
+  font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+  margin: .6rem 0 0
+}
+
+.galleryViewport {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  overflow: hidden;
+  width: 100%
+}
+
+.galleryTrack {
+  animation: galleryScroll 40s linear infinite;
+  display: flex;
+  width: max-content
+}
+
+.galleryViewport:hover .galleryTrack,
+.galleryViewport:focus-within .galleryTrack {
+  animation-play-state: paused
+}
+
+@keyframes galleryScroll {
+  from {
+    transform: translateX(0)
+  }
+
+  to {
+    transform: translateX(-50%)
+  }
+}
+
+.galleryCard {
+  border: 1px solid #293f5b;
+  border-radius: 1.1rem;
+  margin: 0 1.4rem 0 0;
+  overflow: hidden;
+  position: relative;
+  width: clamp(16rem, 26vw, 24rem)
+}
+
+.galleryCard img {
+  aspect-ratio: 4 / 3;
+  display: block;
+  object-fit: cover;
+  transition: transform .35s ease;
+  width: 100%
+}
+
+.galleryCard:hover img {
+  transform: scale(1.04)
+}
+
+.galleryCard figcaption {
+  background: linear-gradient(180deg, transparent, rgb(4 9 17 / 82%));
+  bottom: 0;
+  color: #c2cfdd;
+  font-size: .78rem;
+  left: 0;
+  padding: 2.2rem 1rem .85rem;
+  position: absolute;
+  right: 0
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galleryTrack {
+    animation: none
+  }
+}
+
+@media (max-width: 650px) {
+  .gallerySection {
+    padding: 4rem 0 4.5rem
+  }
+
+  .galleryCard {
+    margin-right: 1rem;
+    width: 14.5rem
+  }
+}

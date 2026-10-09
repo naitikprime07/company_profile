@@ -4,6 +4,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Button from "../components/Button";
 import { getLeadershipTeams } from "../services/leadershipService";
 import { getAboutGalleryImages } from "../services/aboutGalleryService";
+import { getHomeStats } from "../services/homeStatService";
 import useScrollReveal from "../hooks/useScrollReveal";
 import styles from "./AboutPage.module.css";
 import {
@@ -12,6 +13,43 @@ import {
 } from "../constants/environment";
 
 const SHOW_MOTION_RIBBON = false;
+
+// The Home page stats use long descriptive labels; the About hero is a compact
+// 3-item strip, so we keep only the first 3 stats and shorten each label to its
+// leading two words (dropping a trailing connector like "our/with/on").
+const LABEL_CONNECTORS = new Set([
+  "our",
+  "with",
+  "on",
+  "in",
+  "of",
+  "for",
+  "the",
+  "a",
+  "an",
+  "and",
+  "to",
+  "at",
+  "by",
+]);
+function shortenStatLabel(label) {
+  const words = String(label ?? "").trim().split(/\s+/).slice(0, 2);
+  while (
+    words.length > 1 &&
+    LABEL_CONNECTORS.has(words[words.length - 1].toLowerCase())
+  ) {
+    words.pop();
+  }
+  return words.join(" ").toLowerCase();
+}
+
+// Fallback shown until the (admin-managed) home stats load, so the About hero
+// keeps the same numbers the Home page displays.
+const DEFAULT_HERO_STATS = [
+  { value: 12, suffix: "+", label: "years creating" },
+  { value: 80, suffix: "+", label: "products delivered" },
+  { value: 9, suffix: "", label: "countries reached" },
+];
 
 const JOURNEY = [
   {
@@ -197,6 +235,26 @@ function AboutPage() {
   const [leadership, setLeadership] = useState([]);
   const [activeTeam, setActiveTeam] = useState(null);
   const [gallery, setGallery] = useState([]);
+  const [heroStats, setHeroStats] = useState(DEFAULT_HERO_STATS);
+
+  useEffect(() => {
+    let active = true;
+    getHomeStats()
+      .then((data) => {
+        if (active && Array.isArray(data) && data.length)
+          setHeroStats(
+            data.slice(0, 3).map((item) => ({
+              value: item.value,
+              suffix: item.suffix || "",
+              label: shortenStatLabel(item.label),
+            })),
+          );
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -284,18 +342,15 @@ function AboutPage() {
             </a>
           </div>
           <div className={styles.heroFacts}>
-            <span>
-              <strong>12+</strong>
-              <small>years creating</small>
-            </span>
-            <span>
-              <strong>80+</strong>
-              <small>products delivered</small>
-            </span>
-            <span>
-              <strong>9</strong>
-              <small>countries reached</small>
-            </span>
+            {heroStats.map((stat, index) => (
+              <span key={index}>
+                <strong>
+                  {stat.value}
+                  {stat.suffix}
+                </strong>
+                <small>{stat.label}</small>
+              </span>
+            ))}
           </div>
         </div>
         <div

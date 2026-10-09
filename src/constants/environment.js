@@ -14,12 +14,21 @@ const clean = (value) =>
 const readValue = (runtimeValue, envName, fallback) =>
   clean(runtimeValue) || clean(import.meta.env[envName]) || fallback;
 
+// Production deploys must never talk to localhost. If VITE_API_BASE_URL is not
+// baked into the build (e.g. the Vercel env var was removed or left as the
+// localhost default), fall back to the deployed API. Otherwise every request —
+// including the runtime GET /site-config that carries the Lottie animation
+// URLs — silently fails on the live site.
+const PRODUCTION_API_BASE_URL = "https://company-profile-be.vercel.app/api";
+
+const resolveApiBaseUrl = () =>
+  clean(import.meta.env.VITE_API_BASE_URL) ||
+  (import.meta.env.PROD
+    ? PRODUCTION_API_BASE_URL
+    : "http://localhost:5000/api");
+
 export const ENVIRONMENT = Object.freeze({
-  apiBaseUrl: readValue(
-    "",
-    "VITE_API_BASE_URL",
-    "http://localhost:5000/api",
-  ).replace(/\/$/, ""),
+  apiBaseUrl: resolveApiBaseUrl().replace(/\/$/, ""),
   contactEmail: readValue(
     runtimeConfig.contactEmail,
     "VITE_CONTACT_EMAIL",

@@ -10,7 +10,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { getPortfolioItem } from "../services/portfolioService";
 import styles from "./PortfolioDetailsPage.module.css";
 import heroStyles from "./PortfolioDetailsHero.module.css";
@@ -21,6 +21,7 @@ export default function PortfolioDetailsPage() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
   const [error, setError] = useState("");
+  const [notFound, setNotFound] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [carouselPaused, setCarouselPaused] = useState(false);
 
@@ -32,7 +33,13 @@ export default function PortfolioDetailsPage() {
         setActiveSlide(0);
         setProject(item);
       })
-      .catch((requestError) => active && setError(requestError.message));
+      .catch((requestError) => {
+        if (!active) return;
+        // The project was removed or unpublished: send the visitor home
+        // instead of leaving them on a dead-end page.
+        if (requestError.status === 404) setNotFound(true);
+        else setError(requestError.message);
+      });
     return () => { active = false; };
   }, [id]);
 
@@ -49,6 +56,8 @@ export default function PortfolioDetailsPage() {
     return () => window.clearInterval(timer);
   }, [project, carouselPaused]);
 
+  if (notFound)
+    return <Navigate to="/" replace />;
   if (error)
     return <main className={styles.state}><h1>Project unavailable</h1><p>{error}</p><Link to="/portfolio">Back to portfolio</Link></main>;
   if (!project)

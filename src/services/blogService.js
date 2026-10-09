@@ -7,8 +7,11 @@ const inFlightRequests = new Map();
 
 const parse = async (response) => {
   const body = await response.json();
-  if (!response.ok)
-    throw new Error(body.message || "Unable to load blog posts.");
+  if (!response.ok) {
+    const error = new Error(body.message || "Unable to load blog posts.");
+    error.status = response.status;
+    throw error;
+  }
   return body.data;
 };
 

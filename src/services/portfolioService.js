@@ -23,6 +23,10 @@ export const getPortfolioItems = async (page = 1, type = "all", limit = 10) => {
 export const getPortfolioItem = async (id) => {
   const response = await fetch(`${ENVIRONMENT.apiBaseUrl}/portfolio/${id}`);
   const body = await response.json();
-  if (!response.ok) throw new Error(body.message || "Unable to load this project.");
+  if (!response.ok) {
+    const error = new Error(body.message || "Unable to load this project.");
+    error.status = response.status;
+    throw error;
+  }
   return body.data;
 };

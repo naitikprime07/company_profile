@@ -3,7 +3,10 @@
 // info, and animation URLs live in the server's .env (not in this client
 // bundle). If the request fails we fall back to bundled defaults seamlessly.
 const apiBaseUrl = String(
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api",
+  import.meta.env.VITE_API_BASE_URL ||
+    (import.meta.env.PROD
+      ? "https://company-profile-be.vercel.app/api"
+      : "http://localhost:5000/api"),
 ).replace(/\/$/, "");
 
 async function loadSiteConfig() {

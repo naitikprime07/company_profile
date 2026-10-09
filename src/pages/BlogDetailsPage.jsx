@@ -6,7 +6,7 @@ import {
   List,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { getBlogBySlug, getBlogs } from "../services/blogService";
 import styles from "./BlogPage.module.css";
 
@@ -32,6 +32,7 @@ export default function BlogDetailsPage() {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState("");
+  const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [relatedPosts, setRelatedPosts] = useState([]);
@@ -75,7 +76,13 @@ export default function BlogDetailsPage() {
     let active = true;
     getBlogBySlug(slug)
       .then((data) => active && setPost(data))
-      .catch((requestError) => active && setError(requestError.message));
+      .catch((requestError) => {
+        if (!active) return;
+        // The article was removed or unpublished: send the visitor home
+        // instead of leaving them on a dead-end page.
+        if (requestError.status === 404) setNotFound(true);
+        else setError(requestError.message);
+      });
     return () => {
       active = false;
     };
@@ -124,6 +131,8 @@ export default function BlogDetailsPage() {
     });
     return () => observer.disconnect();
   }, [articleNavigation]);
+  if (notFound)
+    return <Navigate to="/" replace />;
   if (error)
     return (
       <main className={styles.detailState}>

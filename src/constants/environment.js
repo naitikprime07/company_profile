@@ -27,6 +27,35 @@ const resolveApiBaseUrl = () =>
     ? PRODUCTION_API_BASE_URL
     : "http://localhost:5000/api");
 
+// The Contact page shows the company's official phone number. It is managed via
+// the COMPANY_MOBILE backend env and delivered through /site-config as
+// `companyMobile`. When it is not set we fall back to contactMobile so the page
+// never renders an empty number.
+const contactMobileValue = readValue(
+  runtimeConfig.contactMobile,
+  "VITE_CONTACT_MOBILE",
+  "+91 70647 02015",
+);
+const companyMobileValue = readValue(
+  runtimeConfig.companyMobile,
+  "VITE_COMPANY_MOBILE",
+  contactMobileValue,
+);
+
+// The footer shows its own address via the FOOTER_OFFICE_ADDRESS backend env
+// (delivered as office.footerAddress). When it is not set we fall back to the
+// standard office address so the footer never renders an empty line.
+const officeAddressValue = readValue(
+  runtimeConfig.office?.address,
+  "VITE_OFFICE_ADDRESS",
+  "Surat, Gujarat, India",
+);
+const footerOfficeAddressValue = readValue(
+  runtimeConfig.office?.footerAddress,
+  "VITE_FOOTER_OFFICE_ADDRESS",
+  officeAddressValue,
+);
+
 export const ENVIRONMENT = Object.freeze({
   apiBaseUrl: resolveApiBaseUrl().replace(/\/$/, ""),
   contactEmail: readValue(
@@ -34,11 +63,8 @@ export const ENVIRONMENT = Object.freeze({
     "VITE_CONTACT_EMAIL",
     "info@primesoftechs.com",
   ),
-  contactMobile: readValue(
-    runtimeConfig.contactMobile,
-    "VITE_CONTACT_MOBILE",
-    "+91 70647 02015",
-  ),
+  contactMobile: contactMobileValue,
+  companyMobile: companyMobileValue,
   careersEmail: readValue(
     runtimeConfig.careersEmail,
     "VITE_CAREERS_EMAIL",
@@ -66,11 +92,8 @@ export const ENVIRONMENT = Object.freeze({
       "VITE_OFFICE_LOCATION",
       "Surat, Gujarat, India",
     ),
-    address: readValue(
-      runtimeConfig.office?.address,
-      "VITE_OFFICE_ADDRESS",
-      "Surat, Gujarat, India",
-    ),
+    address: officeAddressValue,
+    footerAddress: footerOfficeAddressValue,
     timezone: readValue(
       runtimeConfig.office?.timezone,
       "VITE_OFFICE_TIMEZONE",

@@ -8,8 +8,12 @@ const MOBILE_USER_AGENT = /android|iphone|ipad|ipod|mobile|tablet/i;
  * - On mobile devices the tel: href opens the dial pad with the number.
  * - On desktop (no dialer exists) clicking copies the number to the
  *   clipboard and exposes a short-lived `copied` flag for UI feedback.
+ *
+ * Pass a specific `phoneNumber` to control which number is shown/used.
+ * Defaults to the company number (COMPANY_MOBILE) used on the Contact page;
+ * the Footer passes the contact number (CONTACT_MOBILE) instead.
  */
-export default function usePhoneContact() {
+export default function usePhoneContact(phoneNumber = ENVIRONMENT.companyMobile) {
   const [copied, setCopied] = useState(false);
   const isMobile =
     typeof navigator !== "undefined" &&
@@ -19,7 +23,7 @@ export default function usePhoneContact() {
     if (isMobile) return; // let the native tel: link open the dial pad
     event.preventDefault(); // desktop has no dialer — copy instead
     navigator.clipboard
-      ?.writeText(ENVIRONMENT.contactMobile)
+      ?.writeText(phoneNumber)
       .then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -28,10 +32,10 @@ export default function usePhoneContact() {
   };
 
   return {
-    href: telTo(),
+    href: telTo(phoneNumber),
     onClick,
     copied,
     isMobile,
-    phone: ENVIRONMENT.contactMobile,
+    phone: phoneNumber,
   };
 }

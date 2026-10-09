@@ -75,7 +75,7 @@ const capabilityGroups = [
 ];
 
 function Footer() {
-  const phoneContact = usePhoneContact();
+  const phoneContact = usePhoneContact(ENVIRONMENT.contactMobile);
   const { hasBlogs, hasPortfolio } = useContentAvailability();
   const [openGroups, setOpenGroups] = useState({});
   const toggleGroup = (title) =>
@@ -120,7 +120,7 @@ function Footer() {
                 rel="noreferrer"
               >
                 <MapPin size={16} aria-hidden="true" />
-                <span>{ENVIRONMENT.office.address}</span>
+                <span>{ENVIRONMENT.office.footerAddress}</span>
               </a>
               <div className="footer-metaItem">
                 <Mail size={16} aria-hidden="true" />
